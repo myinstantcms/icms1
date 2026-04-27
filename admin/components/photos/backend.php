@@ -240,7 +240,7 @@ if(!defined('VALID_CMS_ADMIN')) { die('ACCESS DENIED'); }
 
 			cmsCore::addSessionMessage($_LANG['AD_ALBUM'].' "'.stripslashes($album['title']).'", '.$_LANG['AD_EMBEDED_PHOTOS_REMOVED'].'.', 'success');
 
-			cmsPhoto::getInstance()->deleteAlbum($album['id'], '', $model->initUploadClass($album));
+			cmsPhoto::getInstance()->deleteAlbum($album['id'], $model->initUploadClass($album), '');
 
 		}
 

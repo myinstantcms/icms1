@@ -522,10 +522,10 @@ class cms_model_clubs{
 							   'owner'=>'club'));
 
 		// Создаем корневой фотоальбом
-		$this->inDB->addRootNsCategory('cms_photo_albums', 'club'.$club_id,
+		$this->inDB->addRootNsCategory('cms_photo_albums',
 										array('user_id'=>$club_id,
 											  'title'=>$_LANG['CLUB_PHOTOALBUMS'].' - '.$item['title'],
-											  'orderform'=>0));
+											  'orderform'=>0), 'club'.$club_id);
 
 		// Устанавливаем рейтинг
 		$this->setClubRating($club_id);
@@ -751,7 +751,7 @@ class cms_model_clubs{
         $inBlog->deleteBlog($this->getClubBlogId($club_id));
 
         //Удаляем фотоальбомы клуба
-		$inPhoto->deleteAlbum($this->inDB->getNsRootCatId('cms_photo_albums', 'club'.$club_id), 'club'.$club_id, $this->initUploadClass());
+		$inPhoto->deleteAlbum($this->inDB->getNsRootCatId('cms_photo_albums', 'club'.$club_id), $this->initUploadClass(), 'club'.$club_id);
         $this->inDB->query("DELETE FROM cms_photo_albums WHERE NSDiffer = 'club{$club_id}'");
 
 		cmsActions::removeObjectLog('add_club', $club_id);

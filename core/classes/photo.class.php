@@ -162,7 +162,7 @@ class cmsPhoto {
 
 		$photo = cmsCore::callEvent('DELETE_PHOTO', $photo);
 
-		if(!$this->deletePhotoFile($photo['file'], $inUploadPhoto)){ return false; }
+		if(!$this->deletePhotoFile($inUploadPhoto, $photo['file'])){ return false; }
 
 		cmsCore::deleteComments($this->getTarget('comments_photo'), $photo['id']);
 		cmsCore::deleteRatings($this->getTarget('rating'), $photo['id']);
@@ -213,7 +213,7 @@ class cmsPhoto {
      * Удаляет файл фото с папок загрузки
      * @return bool
      */
-	public function deletePhotoFile($file='', $inUploadPhoto){
+	public function deletePhotoFile($inUploadPhoto, $file=''){
 
 		if (!($file && is_object($inUploadPhoto))) { return false; }
 
@@ -297,7 +297,7 @@ class cmsPhoto {
      * @param obj $inUploadPhoto
      * @return bool
      */
-    public function deleteAlbum($album_id, $differ = '', $inUploadPhoto) {
+    public function deleteAlbum($album_id, $inUploadPhoto, $differ = '') {
 
 		$album = $this->inDB->getNsCategory('cms_photo_albums', $album_id, $differ);
 		if(!$album) { return false; }

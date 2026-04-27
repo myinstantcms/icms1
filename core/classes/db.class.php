@@ -640,7 +640,7 @@ class cmsDatabase {
 // ============================================================================ //
 // ============================================================================ //
 
-	public function addRootNsCategory($table, $differ='', $cat){
+	public function addRootNsCategory($table, $cat, $differ=''){
 
 		$cat_id = cmsCore::getInstance()->nestedSetsInit($table)->AddRootNode($differ);
 		if(!$cat_id) { return false; }

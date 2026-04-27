@@ -372,7 +372,7 @@ if ($do=='additem'){
 
 		if($cat['is_photos']){
 			// Загружаем фото
-			$file = $model->uploadPhoto('', $cat);
+			$file = $model->uploadPhoto($cat, '');
 		} else {
 			$file['filename'] = '';
 			cmsCore::addSessionMessage($_LANG['INFO_CAT_NO_PHOTO'], 'info');
@@ -537,7 +537,7 @@ if ($do=='edititem'){
 
 		if($cat['is_photos']){
 			// Загружаем фото
-			$file = $model->uploadPhoto($item['file'], $cat);
+			$file = $model->uploadPhoto($cat, $item['file']);
 		}
 
 		$update['file'] = $file['filename'] ? $file['filename'] : $item['file'];

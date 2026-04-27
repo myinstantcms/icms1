@@ -859,7 +859,7 @@ if ($do=='delete_album'){
 
 	if(!$is_admin && !$is_moder) { cmsCore::halt(); }
 
-	$inPhoto->deleteAlbum($album['id'], 'club'.$club['id'], $model->initUploadClass());
+	$inPhoto->deleteAlbum($album['id'], $model->initUploadClass(), 'club'.$club['id']);
 
 	cmsCore::addSessionMessage($_LANG['ALBUM_DELETED'], 'success');
 
