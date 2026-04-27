@@ -256,7 +256,7 @@ CREATE TABLE `#__board_cats` (
   `is_photos` tinyint(1) NOT NULL DEFAULT '1',
   `icon` varchar(200) DEFAULT 'folder_grey.png',
   `obtypes` text NOT NULL,
-  `form_id` int(11) NOT NULL,
+  `form_id` int(11) NOT NULL DEFAULT '0',
   `pagetitle` varchar(200) NOT NULL DEFAULT '',
   `meta_keys` varchar(250) NOT NULL DEFAULT '',
   `meta_desc` varchar(250) NOT NULL DEFAULT '',
@@ -700,7 +700,7 @@ INSERT INTO `#__forms` (`id`, `title`, `description`, `email`, `sendto`, `user_i
 DROP TABLE IF EXISTS `#__form_fields`;
 CREATE TABLE `#__form_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `form_id` int(11) NOT NULL,
+  `form_id` int(11) NOT NULL DEFAULT '0',
   `title` varchar(200) NOT NULL,
   `description` varchar(200) NOT NULL default '',
   `ordering` int(11) NOT NULL,
