@@ -285,7 +285,7 @@ CREATE TABLE `#__board_items` (
   `pubdays` int(11) NOT NULL,
   `published` tinyint(1) NOT NULL,
   `file` varchar(250) NOT NULL,
-  `more_images` text NOT NULL,
+  `more_images` text NOT NULL DEFAULT '',
   `hits` int(11) unsigned NOT NULL DEFAULT '0',
   `is_vip` tinyint(1) NOT NULL DEFAULT '0',
   `vipdate` datetime NOT NULL,
