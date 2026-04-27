@@ -10,7 +10,7 @@
 [ сайт:      ] www.instantcms.ru
 
 [ требуется: ] apache + mod_rewrite
-[            ] php 5.3+ (+GD, iconv, mbstrings)
+[            ] php 8.2+ или 5.3-8.1 (+GD, iconv, mbstrings)
 [            ] mysql 5
 
 Система распространяется по принципу "КАК ЕСТЬ" и БЕЗ ГАРАНТИЙНЫХ ОБЯЗАТЕЛЬСТВ.

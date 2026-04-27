@@ -2145,8 +2145,7 @@ class cmsCore {
         }
 
         $string = trim((string)$input);
-        //Если magic_quotes_gpc = On, сначала убираем экранирование
-        $string = (@get_magic_quotes_gpc()) ? stripslashes($string) : $string;
+        $string = stripslashes($string);
         $string = rtrim($string, ' \\');
         if ($strip_tags) {
             $string = cmsDatabase::getInstance()->escape_string(strip_tags($string));

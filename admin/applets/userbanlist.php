@@ -76,7 +76,7 @@ function applet_userbanlist(){
                        'autodelete'=>array('autodelete', 'int', 0),
                        'int_num'=>array('int_num', 'int', 0),
                        'int_period'=>array('int_period', 'str', '',
-                                        create_function('$p', 'if(!in_array($p, array("MONTH","DAY","HOUR","MINUTE"))){ $p = "MINUTE"; } return $p;')));
+                                         function($p) { if(!in_array($p, array("MONTH","DAY","HOUR","MINUTE"))){ $p = "MINUTE"; } return $p; })));
 
         $items = cmsCore::getArrayFromRequest($types);
 

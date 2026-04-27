@@ -919,10 +919,13 @@ class bbcode {
 
         return preg_replace_callback(
           '#<a href="/go/url=([^"]+)"#',
-          create_function(
-              '$matches',
-              'if (!strstr($matches[1], $_SERVER[\'HTTP_HOST\'])){ return "<a rel=\"nofollow\" title=\"".htmlspecialchars($matches[1])."\" href=\"/go/url=-".base64_encode($matches[1])."\""; } else { return "<a href=\"".htmlspecialchars($matches[1])."\""; }'
-          ),
+          function($matches) {
+              if (!strstr($matches[1], $_SERVER['HTTP_HOST'])) {
+                  return '<a rel="nofollow" title="'.htmlspecialchars($matches[1]).'" href="/go/url=-'.base64_encode($matches[1]).'"';
+              } else {
+                  return '<a href="'.htmlspecialchars($matches[1]).'"';
+              }
+          },
           $text
         );
 

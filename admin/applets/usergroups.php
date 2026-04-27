@@ -77,7 +77,7 @@ function applet_usergroups(){
                        'alias'=>array('alias', 'str', ''),
                        'is_admin'=>array('is_admin', 'int', 0),
                        'access'=>array('access', 'array_str', array(),
-                                        create_function('$a_list', 'return implode(\',\', $a_list);')));
+                                         function($a_list) { return implode(',', $a_list); }));
 
         $items = cmsCore::getArrayFromRequest($types);
 

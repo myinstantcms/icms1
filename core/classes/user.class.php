@@ -14,6 +14,7 @@ define('USER_UPDATER', -1);
 define('USER_MASSMAIL', -2);
 define('ONLINE_INTERVAL', 3); // интервал в минутах, когда пользователь считается online
 
+#[AllowDynamicProperties]
 class cmsUser {
 
     const PROFILE_LINK_PREFIX  = 'users/';
