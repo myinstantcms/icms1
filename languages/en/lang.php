@@ -285,3 +285,7 @@ $_LANG['SEO_PAGETITLE_HINT'] = 'If not specified, will use the same name';
 $_LANG['SEO_METAKEYS']       = 'Keywords, meta keywords tag';
 $_LANG['SEO_METADESCR']      = 'Descripion, meta description tag';
 $_LANG['SEO_METADESCR_HINT'] = 'Max length 250 characters';
+
+$_LANG['UPLOAD']             = 'Upload';
+$_LANG['UPLOAD_ERROR']       = 'Upload error';
+$_LANG['ERR_LARGE_FILE']     = 'File is too large';

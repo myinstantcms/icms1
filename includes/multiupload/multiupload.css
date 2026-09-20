@@ -1,0 +1,52 @@
+/* InstantCMS HTML5 multi-uploader */
+
+.mu-select-btn {
+    display: inline-block;
+    padding: 8px 18px;
+    border: 1px solid #9db668;
+    border-radius: 4px;
+    background: #7ea144;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.mu-select-btn:hover {
+    background: #6d8f3a;
+}
+
+.mu-row {
+    margin: 4px 0;
+    font-size: 11px;
+}
+
+.mu-row .mu-name {
+    display: block;
+    margin-bottom: 2px;
+}
+
+.mu-bar {
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.mu-fill {
+    height: 100%;
+    width: 0;
+    background: #7ea144;
+    transition: width .15s;
+}
+
+.mu-ok .mu-fill {
+    background: #4c9b4c;
+}
+
+.mu-fail .mu-fill {
+    background: #b94a48;
+}
+
+.mu-fail .mu-name {
+    color: #b94a48;
+}

@@ -4,60 +4,36 @@
 {/if}
 {if !$stop_photo}
 	{if $uload_type == 'multi'}
-{add_js file='includes/swfupload/swfupload.js'}
-{add_js file='includes/swfupload/swfupload.queue.js'}
-{add_js file='includes/swfupload/fileprogress.js'}
-{add_js file='includes/swfupload/handlers.js'}
-{add_css file='includes/swfupload/swfupload.css'}
+{add_js file='includes/multiupload/multiupload.js'}
+{add_css file='includes/multiupload/multiupload.css'}
 
 <script type="text/javascript">
-    var swfu;
     var uploadedCount = 0;
 
     window.onload = function() {
-        var settings = {
-            flash_url : "/includes/swfupload/swfupload.swf",
-            upload_url: "/components/users/ajax/upload_photo.php",
-            post_params: { "sess_id" : "{$sess_id}" },
-            file_size_limit : "20 MB",
-            file_types : "*.jpg;*.png;*.gif;*.jpeg;*.JPG;*.PNG;*.GIF;*.JPEG",
-            file_types_description : "{$LANG.ALL_PHOTOS}",
-            file_upload_limit : {if $max_limit}{$max_files}{else}100{/if},
-            file_queue_limit : 0,
-            custom_settings : {
-                progressTarget : "fsUploadProgress",
-                cancelButtonId : "btnCancel"
-            },
-            debug: false,
-            // Button settings
-            button_image_url: "/includes/swfupload/uploadbtn199x36.png",
-            button_width: "199",
-            button_height: "36",
-            button_placeholder_id: "spanButtonPlaceHolder",
-            // The event handler functions are defined in handlers.js
-            file_queued_handler : fileQueued,
-            file_queue_error_handler : fileQueueError,
-            file_dialog_complete_handler : fileDialogComplete,
-            upload_start_handler : uploadStart,
-            upload_progress_handler : uploadProgress,
-            upload_error_handler : uploadError,
-            upload_success_handler : uploadSuccess,
-            upload_complete_handler : uploadComplete,
-            queue_complete_handler : queueComplete	// Queue plugin event
-        };
-
-        swfu = new SWFUpload(settings);
+        new MultiUpload({
+            uploadUrl: '/components/users/ajax/upload_photo.php',
+            params: { "sess_id" : "{$sess_id}" },
+            accept: '.jpg,.jpeg,.png,.gif',
+            maxFiles: {if $max_limit}{$max_files}{else}100{/if},
+            maxBytes: 20971520,
+            fileField: 'Filedata',
+            buttonLabel: '{$LANG.UPLOAD}',
+            buttonTarget: 'spanButtonPlaceHolder',
+            progressTarget: 'fsUploadProgress',
+            cancelBtn: 'btnCancel',
+            langError: '{$LANG.UPLOAD_ERROR}',
+            langTooLarge: '{$LANG.ERR_LARGE_FILE}',
+            onQueueComplete: function(uploaded) {
+                if (uploaded > 0){
+                    uploadedCount += uploaded;
+                    document.getElementById('divStatus').style.display = 'block';
+                    document.getElementById('continue').style.display = 'inline';
+                    document.getElementById('files_count').innerHTML = uploadedCount;
+                }
+            }
+        });
     };
-
-    function queueComplete(numFilesUploaded) {
-        if (numFilesUploaded>0){
-            uploadedCount += numFilesUploaded;
-            $('#divStatus').show();
-            $('#continue').show();
-            $("#files_count").html(uploadedCount);
-        }
-    }
-
 </script>
 
 <form id="usr_photos_upload_form" action="" method="post" enctype="multipart/form-data">

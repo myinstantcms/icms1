@@ -284,3 +284,7 @@ $_LANG['SEO_PAGETITLE_HINT'] = 'Если не указано, будет сов�
 $_LANG['SEO_METAKEYS']       = 'Ключевые слова, тег meta keywords';
 $_LANG['SEO_METADESCR']      = 'Описание, тег meta description';
 $_LANG['SEO_METADESCR_HINT'] = 'Не более 250 символов';
+
+$_LANG['UPLOAD']             = 'Загрузить';
+$_LANG['UPLOAD_ERROR']       = 'Ошибка загрузки';
+$_LANG['ERR_LARGE_FILE']     = 'Файл слишком большой';
