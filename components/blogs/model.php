@@ -11,6 +11,8 @@
 //                                                                            //
 /******************************************************************************/
 
+#[\AllowDynamicProperties]
+
 class cms_model_blogs{
 
 	public function __construct(){

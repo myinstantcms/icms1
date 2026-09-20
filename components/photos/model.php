@@ -11,6 +11,8 @@
 //                                                                            //
 /******************************************************************************/
 
+#[\AllowDynamicProperties]
+
 class cms_model_photos{
 
 	public function __construct(){

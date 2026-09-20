@@ -11,6 +11,8 @@
 //                                                                            //
 /******************************************************************************/
 
+#[\AllowDynamicProperties]
+
 class cmsPhoto {
 
     private static $instance;

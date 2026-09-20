@@ -11,6 +11,8 @@
 //                                                                            //
 /******************************************************************************/
 
+#[\AllowDynamicProperties]
+
 class cms_model_forum{
 
     private $abstract_array = array();

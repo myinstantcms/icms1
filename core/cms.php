@@ -1935,12 +1935,12 @@ class cmsCore {
 	    global $_LANG;
 
 		// формируем входную $date с учетом смещения
-        $date = date('Y-m-d H:i:s', strtotime($date)+($inConf->timediff*3600));
+        $date = date('Y-m-d H:i:s', strtotime($date)+((int)$inConf->timediff*3600));
 
 		// сегодняшняя дата
-		$today     = date('Y-m-d', strtotime(date('Y-m-d H:i:s'))+($inConf->timediff*3600));
+		$today     = date('Y-m-d', strtotime(date('Y-m-d H:i:s'))+((int)$inConf->timediff*3600));
 		// вчерашняя дата
-		$yesterday = date('Y-m-d', strtotime(date('Y-m-d H:i:s'))-(86400)+($inConf->timediff*3600));
+		$yesterday = date('Y-m-d', strtotime(date('Y-m-d H:i:s'))-(86400)+((int)$inConf->timediff*3600));
 
 		// получаем значение даты и времени
 		list($day, $time) = explode(' ', $date);
@@ -1994,7 +1994,7 @@ class cmsCore {
 
 	    global $_LANG;
 
-        $d = date('w', strtotime($date)+(cmsConfig::getConfig('timediff')*3600));
+        $d = date('w', strtotime($date)+((int)cmsConfig::getConfig('timediff')*3600));
 
         $days_week = array($_LANG['SUNDAY'], $_LANG['MONDAY'], $_LANG['TUESDAY'], $_LANG['WEDNESDAY'], $_LANG['THURSDAY'], $_LANG['FRIDAY'], $_LANG['SATURDAY']);
 

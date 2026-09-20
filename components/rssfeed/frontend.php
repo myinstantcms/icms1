@@ -80,7 +80,7 @@ if ($inCore->do == 'view'){
 				foreach ($items as $item){
 					$rss .= '<item>' ."\n";
 						$rss .= '<title>'.trim(htmlspecialchars(strip_tags($item['title']))).'</title>' ."\n";
-						$rss .= '<pubDate>'.date('r', strtotime($item['pubdate'])+($inConf->timediff*3600)).'</pubDate>' ."\n";
+						$rss .= '<pubDate>'.date('r', strtotime($item['pubdate'])+((int)$inConf->timediff*3600)).'</pubDate>' ."\n";
 						$rss .= '<guid>'.$item['link'].'</guid>' ."\n";
 						$rss .= '<link>'.$item['link'].'</link>' ."\n";
 						if (!empty($item['description'])){

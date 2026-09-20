@@ -11,6 +11,8 @@
 //                                                                            //
 /******************************************************************************/
 
+#[\AllowDynamicProperties]
+
 class cms_model_content{
 
 	public function __construct(){

@@ -28,6 +28,7 @@ class cmsPage {
     private $modules;
     private $tpl_info;
     private $default_tpl_info = array('author'=>'InstantCMS Team', 'renderer'=>'smartyTpl', 'ext'=>'tpl');
+    private $site_cfg;
 
     private static $instance;
 

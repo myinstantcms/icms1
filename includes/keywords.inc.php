@@ -53,6 +53,8 @@ end.
 Also added '&nbsp;', '&trade;', '&reg;'.
 ******************************************************************/
 
+#[\AllowDynamicProperties]
+
 class autokeyword {
 
 	//declare variables

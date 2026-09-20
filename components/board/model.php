@@ -13,6 +13,8 @@
 
 if(!defined('VALID_CMS')) { die('ACCESS DENIED'); }
 
+#[\AllowDynamicProperties]
+
 class cms_model_board{
 
 	public $root_cat  = array();

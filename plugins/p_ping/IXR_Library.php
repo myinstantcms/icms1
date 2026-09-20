@@ -39,6 +39,9 @@
  */
 
 
+#[\AllowDynamicProperties]
+
+
 class IXR_Value
 {
     var $data;
@@ -168,6 +171,7 @@ class IXR_Value
  * @since 1.5
  *
  */
+#[\AllowDynamicProperties]
 class IXR_Message
 {
     var $message;
@@ -339,6 +343,7 @@ class IXR_Message
  * @package IXR
  * @since 1.5
  */
+#[\AllowDynamicProperties]
 class IXR_Server
 {
     var $data;
@@ -543,6 +548,7 @@ EOD;
  * @package IXR
  * @since 1.5
  */
+#[\AllowDynamicProperties]
 class IXR_Request
 {
     var $method;
@@ -587,6 +593,7 @@ EOD;
  * @since 1.5
  *
  */
+#[\AllowDynamicProperties]
 class IXR_Client
 {
     var $server;
@@ -737,6 +744,7 @@ class IXR_Client
  * @package IXR
  * @since 1.5
  */
+#[\AllowDynamicProperties]
 class IXR_Error
 {
     var $code;
@@ -779,6 +787,7 @@ EOD;
  * @package IXR
  * @since 1.5
  */
+#[\AllowDynamicProperties]
 class IXR_Date {
     var $year;
     var $month;
@@ -842,6 +851,7 @@ class IXR_Date {
  * @package IXR
  * @since 1.5
  */
+#[\AllowDynamicProperties]
 class IXR_Base64
 {
     var $data;
@@ -863,6 +873,7 @@ class IXR_Base64
  * @package IXR
  * @since 1.5
  */
+#[\AllowDynamicProperties]
 class IXR_IntrospectionServer extends IXR_Server
 {
     var $signatures;
@@ -1026,6 +1037,7 @@ class IXR_IntrospectionServer extends IXR_Server
  * @package IXR
  * @since 1.5
  */
+#[\AllowDynamicProperties]
 class IXR_ClientMulticall extends IXR_Client
 {
     var $calls = array();
@@ -1062,6 +1074,7 @@ class IXR_ClientMulticall extends IXR_Client
  * @copyright (c) 2004-2005 Jason Stirk
  * @package IXR
  */
+#[\AllowDynamicProperties]
 class IXR_ClientSSL extends IXR_Client
 {
     /**
@@ -1286,6 +1299,7 @@ class IXR_ClientSSL extends IXR_Client
  * @copyright Copyright (c) 2005 Jason Stirk
  * @package IXR
  */
+#[\AllowDynamicProperties]
 class IXR_ClassServer extends IXR_Server
 {
     var $_objects;

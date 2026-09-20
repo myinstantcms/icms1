@@ -12,6 +12,8 @@
 /******************************************************************************/
 if(!defined('VALID_CMS')) { die('ACCESS DENIED'); }
 
+#[\AllowDynamicProperties]
+
 class cms_model_faq{
 
 	public function __construct(){

@@ -11,6 +11,8 @@
 //                                                                            //
 /******************************************************************************/
 
+#[\AllowDynamicProperties]
+
 class cmsBlogs {
 
     private static $instance;
@@ -538,7 +540,7 @@ class cmsBlogs {
      * @param obj $ownerModel
      * @return array $posts
      */
-    public function getPosts($show_all = false, $ownerModel, $is_short = false){
+    public function getPosts($show_all = false, $ownerModel = null, $is_short = false){
 
 		$pub_where = ($show_all ? '1=1' : 'p.published = 1');
 

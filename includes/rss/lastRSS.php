@@ -31,6 +31,7 @@
 * lastRSS
 * Simple yet powerfull PHP class to parse RSS files.
 */
+#[\AllowDynamicProperties]
 class lastRSS {
 	// -------------------------------------------------------------------
 	// Public properties

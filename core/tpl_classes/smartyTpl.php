@@ -45,6 +45,14 @@ class smartyTpl{
 
         $smarty = new Smarty();
 
+        // Smarty 4.5+ признаёт вызов незарегистрированных функций в модификаторах
+        // устаревшим: регистрируем те, что используются в поставляемых шаблонах
+        foreach (array('ceil', 'floor', 'round', 'abs', 'str_repeat', 'icms_ucfirst') as $modifier) {
+            if (function_exists($modifier)) {
+                $smarty->registerPlugin('modifier', $modifier, $modifier);
+            }
+        }
+
         $smarty->setCompileDir(PATH.'/cache/');
         $smarty->setCacheDir(PATH.'/cache/');
         $smarty->assign('is_ajax', cmsCore::isAjax());
