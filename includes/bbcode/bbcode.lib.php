@@ -691,7 +691,8 @@ class bbcode {
                     }
                     if ( !$val['name'] ) {
                         end($open_tags);
-                        list($ult_key, $ultimate) = each($open_tags);
+                        $ult_key = key($open_tags);
+                        $ultimate = current($open_tags);
                         $val['name'] = $ultimate;
                         $structure[++$structure_key] = $val;
                         $structure[$structure_key]['level'] = --$level;
