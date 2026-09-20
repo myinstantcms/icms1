@@ -496,14 +496,7 @@ body[data-theme="dark"] .ico-moon { display: none; }
     margin-bottom: 12px;
 }
 
-.license {
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 3px 14px;
-    margin-top: 4px;
-}
-
-.license:focus-within { border-color: var(--blue); }
+.license { margin-top: 10px; }
 
 /* ------------------------------------------------------------------ пароль */
 

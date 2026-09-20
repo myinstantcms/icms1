@@ -465,7 +465,10 @@ $steps = array(
                 </div>
 
                 <div class="actions">
-                    <button type="button" class="btn btn--ghost" data-nav="back"><?php echo $_LANG['INS_BACK']; ?></button>
+                    <button type="button" class="btn btn--ghost" data-nav="back">
+                        <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+                        <?php echo $_LANG['INS_BACK']; ?>
+                    </button>
                     <button type="button" class="btn btn--primary" data-nav="next">
                         <?php echo $_LANG['INS_NEXT']; ?>
                         <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -521,7 +524,10 @@ $steps = array(
                 </div>
 
                 <div class="actions">
-                    <button type="button" class="btn btn--ghost" data-nav="back"><?php echo $_LANG['INS_BACK']; ?></button>
+                    <button type="button" class="btn btn--ghost" data-nav="back">
+                        <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+                        <?php echo $_LANG['INS_BACK']; ?>
+                    </button>
                     <button type="button" class="btn btn--primary" data-nav="next" disabled>
                         <?php echo $_LANG['INS_NEXT']; ?>
                         <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -592,7 +598,10 @@ $steps = array(
                 </div>
 
                 <div class="actions">
-                    <button type="button" class="btn btn--ghost" data-nav="back"><?php echo $_LANG['INS_BACK']; ?></button>
+                    <button type="button" class="btn btn--ghost" data-nav="back">
+                        <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+                        <?php echo $_LANG['INS_BACK']; ?>
+                    </button>
                     <button type="button" class="btn btn--primary" data-nav="next">
                         <?php echo $_LANG['INS_NEXT']; ?>
                         <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -616,7 +625,10 @@ $steps = array(
                 <div class="alert alert--warning"><?php echo $_LANG['INS_DELETE_TODO']; ?></div>
 
                 <div class="actions">
-                    <button type="button" class="btn btn--ghost" data-nav="back"><?php echo $_LANG['INS_BACK']; ?></button>
+                    <button type="button" class="btn btn--ghost" data-nav="back">
+                        <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+                        <?php echo $_LANG['INS_BACK']; ?>
+                    </button>
                     <button type="submit" class="btn btn--primary" name="install" value="1" id="btnInstall">
                         <?php echo $_LANG['INS_DO_INSTALL']; ?>
                         <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>

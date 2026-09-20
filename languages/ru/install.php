@@ -62,8 +62,8 @@ $_LANG['INS_GO_SITE']                    = 'Перейти на сайт';
 $_LANG['INS_GO_CP']                      = 'Панель управления';
 $_LANG['INS_GO_HANDBOOK']                = 'Учебник для начинающих';
 $_LANG['INS_GO_ADDONS']                  = 'Дополнения';
-$_LANG['INS_NEXT']                       = 'Далее →';
-$_LANG['INS_BACK']                       = '← Назад';
+$_LANG['INS_NEXT']                       = 'Далее';
+$_LANG['INS_BACK']                       = 'Назад';
 
 $_LANG['INS_INCOMPLETE']                 = 'Установка не завершена';
 $_LANG['INS_DELETE_INST_MIGRATE']        = 'Если процесс установки был закончен,<br/> удалите папки "install" и "migrate" на сервере и обновите страницу.';

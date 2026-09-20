@@ -62,8 +62,8 @@ $_LANG['INS_GO_SITE']                    = 'Go to site';
 $_LANG['INS_GO_CP']                      = 'Control Panel';
 $_LANG['INS_GO_HANDBOOK']                = 'Handbook for beginners';
 $_LANG['INS_GO_ADDONS']                  = 'Addons';
-$_LANG['INS_NEXT']                       = 'Next →';
-$_LANG['INS_BACK']                       = '← Back';
+$_LANG['INS_NEXT']                       = 'Next';
+$_LANG['INS_BACK']                       = 'Back';
 
 $_LANG['INS_INCOMPLETE']                 = 'Installation is not completed';
 $_LANG['INS_DELETE_INST_MIGRATE']        = 'If the installation process has been completed,<br/> delete folders "install" and "migrate" on the server and reload page.';
