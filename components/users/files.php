@@ -132,7 +132,7 @@ if ($fdo=='addfile'){
 
             if(!$ext){ continue; }
 
-			if(in_array($ext, array('php','htm','html','htaccess'), true)) {
+			if(in_array($ext, array('php','php3','php4','php5','php6','php7','php8','phtml','pht','phar','phps','htm','html','htaccess','cgi','pl','py','jsp','asp','aspx','shtml','shtm'), true)) {
 
                 cmsCore::addSessionMessage($_LANG['ERROR_TYPE_FILE'].': '.$model->config['filestype'], 'error');
                 cmsCore::redirectBack();
