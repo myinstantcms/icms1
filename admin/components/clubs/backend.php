@@ -234,7 +234,7 @@ if ($opt == 'add' || $opt == 'edit'){
     if(!isset($mod['admin_id'])) { $mod['admin_id'] = $inUser->id; }
     if(!isset($mod['clubtype'])) { $mod['clubtype'] = 'public'; }
 
-    require('../includes/jwtabs.php');
+    require(PATH.'/includes/jwtabs.php');
     $GLOBALS['cp_page_head'][] = jwHeader();
 
     ob_start(); ?>

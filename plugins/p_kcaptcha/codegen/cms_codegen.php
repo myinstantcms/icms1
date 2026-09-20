@@ -20,7 +20,7 @@ $captcha_id = trim($_GET['id']);
 
 if (!preg_match('/^[0-9a-f]{32}$/i', $captcha_id)){ die; }
 
-include('kcaptcha.php');
+include(__DIR__.'/kcaptcha.php');
 $captcha = new KCAPTCHA();
 
 $_SESSION['p_kcaptcha'][$captcha_id] = $captcha->getKeyString();

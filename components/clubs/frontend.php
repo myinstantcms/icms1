@@ -1113,7 +1113,7 @@ if ($do=='add_photo'){
     $inPage->addPathway($club['title'], '/clubs/'.$club['id']);
 	$inPage->addPathway($album['title'], '/clubs/photoalbum'.$album['id']);
 
-	include 'components/clubs/add_photo.php';
+	include PATH.'components/clubs/add_photo.php';
 
 }
 ///////////////////////// БЛОГИ КЛУБОВ /////////////////////////////////////////
@@ -1128,7 +1128,7 @@ if ($do=='club_blogs'){
     $inBlog = $model->initBlog();
     $inPage->addHeadJsLang(array('NEW_CAT','RENAME_CAT','YOU_REALY_DELETE_CAT','YOU_REALY_DELETE_POST','NO_PUBLISHED'));
 
-	include 'components/clubs/club_blogs.php';
+	include PATH.'components/clubs/club_blogs.php';
 
 }
 

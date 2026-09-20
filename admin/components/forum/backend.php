@@ -284,7 +284,7 @@ if($opt == 'delete_forum'){
 
 if ($opt == 'config') {
 
-    require('../includes/jwtabs.php');
+    require(PATH.'/includes/jwtabs.php');
     $GLOBALS['cp_page_head'][] = jwHeader();
     cpAddPathway($_LANG['AD_SETTINGS']);
 

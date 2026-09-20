@@ -55,7 +55,7 @@ class p_ckeditor extends cmsPlugin {
 
         ob_start(); ?>
 
-        <textarea class="ckeditor" id="<?php echo $item['name']; ?>" name="<?php echo $item['name']; ?>" style="width: <?php echo $width; ?>; height: <?php echo $height; ?>;"><?php echo htmlspecialchars($item['text']); ?></textarea>
+        <textarea class="ckeditor" id="<?php echo $item['name']; ?>" name="<?php echo $item['name']; ?>" style="width: <?php echo $width; ?>; height: <?php echo $height; ?>;"><?php echo htmlspecialchars((string)$item['text']); ?></textarea>
         <script type="text/javascript">
                 $(function (){
                     if(typeof CKEDITOR == 'undefined') {

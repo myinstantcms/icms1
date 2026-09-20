@@ -482,7 +482,7 @@ if ($do=='messages'){
 	$inPage->addPathway($usr['nickname'], cmsUser::getProfileURL($usr['login']));
 	$inPage->addPathway($_LANG['MY_MESS'], '/users/'.$id.'/messages.html');
 
-	include 'components/users/messages.php';
+	include PATH.'components/users/messages.php';
 
 }
 
@@ -834,7 +834,7 @@ if ($do=='photos'){
 
     $pdo = cmsCore::request('pdo', 'str', '');
 
-    include 'components/users/photos.php';
+    include PATH.'components/users/photos.php';
 
 }
 //============================================================================//
@@ -1175,7 +1175,7 @@ if ($do=='files'){
 
     $fdo = cmsCore::request('fdo', 'str', '');
 
-    include 'components/users/files.php';
+    include PATH.'components/users/files.php';
 
 }
 

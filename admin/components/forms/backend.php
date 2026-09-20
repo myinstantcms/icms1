@@ -64,7 +64,7 @@ function moveField($id, $form_id, $dir) {
 
 }
 
-require('../includes/jwtabs.php');
+require(PATH.'/includes/jwtabs.php');
 
 $GLOBALS['cp_page_head'][] = '<script language="JavaScript" type="text/javascript" src="js/forms.js"></script>';
 $GLOBALS['cp_page_head'][] = jwHeader();

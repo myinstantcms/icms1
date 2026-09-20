@@ -492,7 +492,7 @@ function applet_modules(){
 
    if ($do == 'add' || $do == 'edit'){
 
-    require('../includes/jwtabs.php');
+    require(PATH.'/includes/jwtabs.php');
     $GLOBALS['cp_page_head'][] = jwHeader();
 
     $langs = cmsCore::getDirsList('/languages');

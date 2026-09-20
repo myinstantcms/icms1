@@ -255,7 +255,7 @@ if ($do=='addphoto'){
 		}
 	}
 
-	include 'components/photos/add_photo.php';
+	include PATH.'components/photos/add_photo.php';
 
 }
 

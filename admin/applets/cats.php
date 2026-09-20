@@ -233,7 +233,7 @@ function applet_cats(){
 
    if ($do == 'add' || $do == 'edit'){
 
-	 	require('../includes/jwtabs.php');
+	 	require(PATH.'/includes/jwtabs.php');
 		$GLOBALS['cp_page_head'][] = jwHeader();
 
  		$toolmenu = array();

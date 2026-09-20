@@ -288,7 +288,7 @@ function cpProceedBody(){
     }
 
     cmsCore::loadLanguage('admin/applets/applet_'.$GLOBALS['applet']);
-	include('applets/'.$file);
+	include(PATH.'/admin/applets/'.$file);
 
 	call_user_func('applet_'.$GLOBALS['applet']);
 
@@ -652,7 +652,7 @@ function cpListTable($table, $_fields, $_actions, $where='', $orderby='title'){
                                 $link   = $_actions[$key]['link'];
 
                                 foreach($item as $f=>$v){
-                                    $link = str_replace('%'.$f.'%', $v, $link);
+                                    $link = str_replace('%'.$f.'%', (string)$v, $link);
                                 }
 
 								if (!isset($_actions[$key]['confirm'])){

@@ -497,7 +497,7 @@ if ($opt == 'add_item'){
 
 if ($opt == 'add_cat' || $opt == 'edit_cat'){
 
-    require('../includes/jwtabs.php');
+    require(PATH.'/includes/jwtabs.php');
     $GLOBALS['cp_page_head'][] = jwHeader();
 
     if ($opt=='add_cat'){

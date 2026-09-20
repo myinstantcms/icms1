@@ -47,7 +47,7 @@ if(!defined('VALID_CMS_ADMIN')) { die('ACCESS DENIED'); }
 
 	}
 
-    require('../includes/jwtabs.php');
+    require(PATH.'/includes/jwtabs.php');
     $GLOBALS['cp_page_head'][] = jwHeader();
 
 ?>

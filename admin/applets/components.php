@@ -12,11 +12,12 @@
 /******************************************************************************/
 
 function cpComponentHasConfig($item){
-	return file_exists('components/'.$item['link'].'/backend.php');
+	if (!is_array($item) || empty($item['link'])) { return false; }
+	return file_exists(PATH.'/components/'.$item['link'].'/backend.php');
 }
 
 function cpComponentCanRemove($item){
-	if($item['system']) { return false; }
+	if (!is_array($item) || empty($item['link']) || !empty($item['system'])) { return false; }
 	global $adminAccess;
 	return cmsUser::isAdminCan('admin/com_'.$item['link'], $adminAccess);
 }
