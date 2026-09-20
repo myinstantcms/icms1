@@ -17,6 +17,14 @@ header('Content-Type: text/html; charset=utf-8');
 
 define('VALID_CMS', 1);
 define('PATH', $_SERVER['DOCUMENT_ROOT']);
+
+// Защита от повторного запуска установщика на уже установленном сайте
+if (file_exists(PATH . '/includes/config.inc.php')) {
+    header('HTTP/1.1 403 Forbidden');
+    header('Content-Type: text/plain; charset=utf-8');
+    die("InstantCMS is already installed.\nFor security reasons remove the /install and /migrate directories.\n\nInstantCMS уже установлена.\nВ целях безопасности удалите папки /install и /migrate.");
+}
+
 include(PATH . '/core/cms.php');
 cmsCore::includeFile('install/function.php');
 cmsCore::loadClass('config');
