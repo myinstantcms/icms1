@@ -52,12 +52,19 @@ $( ".uibtn" ).button({});
 //умолчания см. http://api.jqueryui.com/button/
 
 //доступны те же опции
-$( ".uibtnset" ).buttonset({});
+// jQuery UI 1.13+ удалил виджет buttonset — заменён на связку controlgroup + checkboxradio
+$( ".uibtnset" ).each(function(){
+    var el = $(this);
+    el.find( "input" ).checkboxradio();
+    if ($.fn.controlgroup) { el.controlgroup(); }
+});
 
 // ========================================================================== //
 //Установка дат
 
-$( "#pubdate, #enddate, #answerdate" ).datepicker({
+// настройки вынесены в переменную: нужны и при загрузке страницы,
+// и для форм, которые подгружаются в админке AJAX-ом (табы)
+var icmsDatepickerOptions = {
 //умолчания см. http://api.jqueryui.com/datepicker/
 
 //altField: "",
@@ -114,6 +121,18 @@ showOtherMonths: true,
 
 //no events
 
+};
+
+// инициализация при загрузке страницы
+$( "#pubdate, #enddate, #answerdate" ).datepicker(icmsDatepickerOptions);
+
+// ленивая инициализация для форм, подгружаемых AJAX-ом (в админке)
+$( document ).on( "focus", "#pubdate, #enddate, #answerdate", function(){
+    var input = $( this );
+    if ( !input.hasClass( "hasDatepicker" ) ) {
+        input.datepicker( icmsDatepickerOptions );
+        input.datepicker( "show" );
+    }
 });
 //$( "#enddate" ).datepicker("option", "dateFormat", "yy-mm-dd");
 // ========================================================================== //

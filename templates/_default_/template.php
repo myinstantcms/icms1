@@ -21,7 +21,10 @@
 
     // подключаем jQuery и js ядра в самое начало
     $this->prependHeadJS('core/js/common.js');
-    $this->prependHeadJS('includes/jquery/jquery.js');
+    // jQuery Migrate — ПОСЛЕ jquery.js и до плагинов (порядок важен):
+    // вызываем раньше, чтобы в итоговом списке он оказался сразу за jQuery
+    $this->prependHeadJS('includes/jquery/jquery-migrate.js?v=3.4.1');
+    $this->prependHeadJS('includes/jquery/jquery.js?v=3.7.1');
     // Подключаем стили шаблона
     $this->addHeadCSS('templates/'.TEMPLATE.'/css/reset.css');
     $this->addHeadCSS('templates/'.TEMPLATE.'/css/text.css');

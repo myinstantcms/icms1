@@ -105,7 +105,9 @@ function cpHead(){
     if (!empty($GLOBALS['cp_jquery'])){
         array_unshift($inPage->page_head, '<script type="text/javascript" src="'.$GLOBALS['cp_jquery'].'"></script>');
     } else {
-        array_unshift($inPage->page_head, '<script type="text/javascript" src="/includes/jquery/jquery.js"></script>');
+        array_unshift($inPage->page_head,
+            '<script type="text/javascript" src="/includes/jquery/jquery.js?v=3.7.1"></script>',
+            '<script type="text/javascript" src="/includes/jquery/jquery-migrate.js?v=3.4.1"></script>');
     }
 
 	foreach($GLOBALS['cp_page_head'] as $key=>$value) {

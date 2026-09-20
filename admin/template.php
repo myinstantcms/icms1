@@ -21,13 +21,13 @@
 <link href="css/styles.css?17" rel="stylesheet" type="text/css" />
 <link href="js/hmenu/hmenu.css" rel="stylesheet" type="text/css" />
 <link href="/includes/jquery/tablesorter/style.css" rel="stylesheet" type="text/css" />
-<link href="/includes/jqueryui/css/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="/includes/jqueryui/css/smoothness/jquery-ui.min.css?v=1.14.1" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/admin.js"></script>
 <script type="text/javascript" src="/includes/jquery/jquery.columnfilters.js"></script>
 <script type="text/javascript" src="/includes/jquery/tablesorter/jquery.tablesorter.min.js"></script>
 <script type="text/javascript" src="/includes/jquery/jquery.preload.js"></script>
-<script type="text/javascript" src="/includes/jqueryui/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/includes/jqueryui/init-ui.js"></script>
+<script type="text/javascript" src="/includes/jqueryui/jquery-ui.min.js?v=1.14.1"></script>
+<script type="text/javascript" src="/includes/jqueryui/init-ui.js?v=1.14.1"></script>
 <script type="text/javascript" src="/includes/jqueryui/i18n/jquery.ui.datepicker-<?php echo cmsConfig::getConfig('lang'); ?>.min.js"></script>
 <script type="text/javascript" src="/includes/jquery/jquery.form.js"></script>
 <script type="text/javascript" src="js/hltable.js"></script>

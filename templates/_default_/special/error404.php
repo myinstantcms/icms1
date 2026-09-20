@@ -53,7 +53,8 @@
 
             </ul>
         </div>
-        <script type="text/javascript" src="/includes/jquery/jquery.js"></script>
+        <script type="text/javascript" src="/includes/jquery/jquery.js?v=3.7.1"></script>
+        <script type="text/javascript" src="/includes/jquery/jquery-migrate.js?v=3.4.1"></script>
         <script type="text/javascript" src="/includes/jquery/colorbox/jquery.colorbox.js"></script>
         <link href="/includes/jquery/colorbox/colorbox.css" rel="stylesheet" type="text/css" />
         <script>
