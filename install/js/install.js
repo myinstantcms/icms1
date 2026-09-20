@@ -1,11 +1,14 @@
 /**
- * InstantCMS installer — vanilla JS (2026 redesign, style guide: banki.ru).
- * Степпер, валидация, индикатор пароля, проверка соединения с БД, темы.
+ * InstantCMS installer — two-column wizard (5 steps).
+ * Vanilla JS: stepper, gating, validation, password meter, DB check, summary.
  */
 (function () {
     'use strict';
 
     var L = (window.INSTALL && window.INSTALL.langJS) || {};
+    var current = 1;
+    var total = 5;
+    var dbOk = false;
 
     /* ------------------------------------------------------------- тема */
 
@@ -17,11 +20,8 @@
         if (btn) {
             btn.addEventListener('click', function () {
                 var dark = document.body.getAttribute('data-theme') === 'dark';
-                if (dark) {
-                    document.body.removeAttribute('data-theme');
-                } else {
-                    document.body.setAttribute('data-theme', 'dark');
-                }
+                if (dark) { document.body.removeAttribute('data-theme'); }
+                else { document.body.setAttribute('data-theme', 'dark'); }
                 try { localStorage.setItem('inst_theme', dark ? 'light' : 'dark'); } catch (e) {}
             });
         }
@@ -33,32 +33,25 @@
         var btn = document.getElementById('langs-btn');
         var list = document.getElementById('langs-list');
         if (!btn || !list) { return; }
-        btn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            list.hidden = !list.hidden;
-        });
+        btn.addEventListener('click', function (e) { e.stopPropagation(); list.hidden = !list.hidden; });
         document.addEventListener('click', function () { list.hidden = true; });
         list.addEventListener('click', function (e) {
             var li = e.target.closest('li');
             if (!li || li.classList.contains('is-current')) { return; }
             var input = document.getElementById('langform-input');
-            if (input) {
-                input.value = li.getAttribute('data-lang');
-                document.getElementById('langform').submit();
-            }
+            if (input) { input.value = li.getAttribute('data-lang'); document.getElementById('langform').submit(); }
         });
     }
 
     /* ------------------------------------------------------------- степпер */
 
-    var current = 1;
-    var total = 4;
+    function stepEl(n) { return document.querySelector('.step[data-step="' + n + '"]'); }
 
-    function steps() { return document.querySelectorAll('.step'); }
+    function nextBtn(step) { return step ? step.querySelector('[data-nav="next"]') : null; }
 
     function showStep(n) {
         current = n;
-        steps().forEach(function (s) {
+        document.querySelectorAll('.step').forEach(function (s) {
             s.classList.toggle('is-active', parseInt(s.getAttribute('data-step'), 10) === n);
         });
         document.querySelectorAll('#stepper li').forEach(function (li) {
@@ -66,45 +59,47 @@
             li.classList.toggle('is-active', num === n);
             li.classList.toggle('is-done', num < n);
         });
-        var back = document.getElementById('btnBack');
-        var next = document.getElementById('btnNext');
-        var install = document.getElementById('btnInstall');
-        if (back) { back.hidden = (n === 1); }
-        if (next) { next.hidden = (n === total); }
-        if (install) { install.hidden = (n !== total); }
-        if (n === total) { validateForm(); }
-        var card = document.querySelector('.step.is-active');
-        if (card && card.scrollIntoView) { card.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+        if (n === 3) { updateDbGate(); }
+        if (n === 5) { buildSummary(); }
+        var active = stepEl(n);
+        if (active && active.scrollIntoView) {
+            active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
     }
 
-    function gateBlocked(step) {
-        return step.hasAttribute('data-gate-block');
+    function gateBlocked(step) { return step && step.hasAttribute('data-gate-block'); }
+
+    function canProceed() {
+        if (gateBlocked(stepEl(current))) { return false; }
+        if (current === 1) {
+            var agree = document.getElementById('license_agree');
+            if (agree && !agree.checked) { return false; }
+        }
+        if (current === 3 && !dbOk) { return false; }
+        if (current === 4 && !validateSite()) { return false; }
+        return true;
     }
 
     function initStepper() {
-        var next = document.getElementById('btnNext');
-        var back = document.getElementById('btnBack');
-        if (!next) { return; }
-        next.addEventListener('click', function () {
-            var step = document.querySelector('.step[data-step="' + current + '"]');
-            if (gateBlocked(step)) { return; }
-            if (step && step.getAttribute('data-step') === '1') {
-                var agree = document.getElementById('license_agree');
-                if (agree && !agree.checked) { return; }
-            }
-            showStep(Math.min(current + 1, total));
-        });
-        if (back) {
-            back.addEventListener('click', function () {
+        var form = document.getElementById('wizard');
+        if (!form) { return; }
+        form.addEventListener('click', function (e) {
+            var btn = e.target.closest('[data-nav]');
+            if (!btn) { return; }
+            if (btn.getAttribute('data-nav') === 'back') {
                 showStep(Math.max(current - 1, 1));
-            });
-        }
+            } else {
+                if (canProceed()) { showStep(Math.min(current + 1, total)); }
+            }
+        });
         var agree = document.getElementById('license_agree');
         if (agree) {
             agree.addEventListener('change', function () {
-                next.disabled = !agree.checked;
+                var nb = nextBtn(stepEl(1));
+                if (nb) { nb.disabled = !agree.checked; }
             });
-            next.disabled = !agree.checked;
+            var nb = nextBtn(stepEl(1));
+            if (nb) { nb.disabled = !agree.checked; }
         }
     }
 
@@ -124,12 +119,10 @@
         var pass2 = document.getElementById('f-pass2');
         if (!pass) { return; }
 
-        // глазки
         document.querySelectorAll('.input-eye').forEach(function (btn) {
             btn.addEventListener('click', function () {
                 var input = document.getElementById(btn.getAttribute('data-eye'));
-                if (!input) { return; }
-                input.type = input.type === 'password' ? 'text' : 'password';
+                if (input) { input.type = input.type === 'password' ? 'text' : 'password'; }
             });
         });
 
@@ -151,13 +144,9 @@
                 if (pass.value.length >= 10 && st.letter && st.digit) { score++; }
                 if (!pass.value) { score = 0; }
                 meter.setAttribute('data-level', Math.max(score, 0));
-                if (meterText) {
-                    meterText.textContent = score > 0 ? (L.strength[Math.min(score, 3) - 1] || '') : '';
-                }
+                if (meterText) { meterText.textContent = score > 0 ? (L.strength[Math.min(score, 3) - 1] || '') : ''; }
             }
-            if (pass2) {
-                setFieldError(pass2, !st.match && pass2.value.length > 0);
-            }
+            if (pass2) { setFieldError(pass2, !st.match && pass2.value.length > 0); }
         }
 
         pass.addEventListener('input', update);
@@ -165,7 +154,7 @@
         update();
     }
 
-    /* ------------------------------------------------------------- валидация формы */
+    /* ------------------------------------------------------------- валидация */
 
     function setFieldError(input, hasError, message) {
         var field = input.closest('.field');
@@ -173,27 +162,36 @@
         field.classList.toggle('has-error', !!hasError);
         input.classList.toggle('is-invalid', !!hasError);
         var err = field.querySelector('.field__error');
-        if (err && message !== undefined) { err.textContent = hasError ? message : ''; }
-        if (err && hasError && input.getAttribute('data-error')) { err.textContent = input.getAttribute('data-error'); }
+        if (err) {
+            if (hasError && input.getAttribute('data-error')) { err.textContent = input.getAttribute('data-error'); }
+            else if (message) { err.textContent = message; }
+            else if (!hasError) { err.textContent = ''; }
+        }
     }
 
     function validateInput(input) {
         var pattern = input.getAttribute('data-pattern');
         if (!pattern) { return true; }
-        var re = new RegExp(pattern);
-        var ok = re.test(input.value);
+        var ok = new RegExp(pattern).test(input.value);
         setFieldError(input, !ok);
         return ok;
     }
 
-    function validateForm() {
+    function validateSite() {
         var ok = true;
-        var pass = document.getElementById('f-pass');
-        var pass2 = document.getElementById('f-pass2');
-        ['f-login', 'f-dbbase', 'f-prefix'].forEach(function (id) {
+        var sitename = document.getElementById('f-sitename');
+        if (sitename && !sitename.value.trim()) {
+            setFieldError(sitename, true, '—');
+            ok = false;
+        } else if (sitename) {
+            setFieldError(sitename, false);
+        }
+        ['f-login', 'f-prefix'].forEach(function (id) {
             var input = document.getElementById(id);
             if (input && !validateInput(input)) { ok = false; }
         });
+        var pass = document.getElementById('f-pass');
+        var pass2 = document.getElementById('f-pass2');
         if (pass) {
             var st = ruleState(pass.value, pass2 ? pass2.value : '');
             var strong = st.len && st.letter && st.digit;
@@ -205,25 +203,31 @@
     }
 
     function initValidation() {
-        ['f-login', 'f-dbbase', 'f-prefix'].forEach(function (id) {
+        ['f-login', 'f-prefix', 'f-dbbase'].forEach(function (id) {
             var input = document.getElementById(id);
             if (input) {
                 input.addEventListener('blur', function () { validateInput(input); });
                 input.addEventListener('input', function () { setFieldError(input, false); });
             }
         });
+        var sitename = document.getElementById('f-sitename');
+        if (sitename) { sitename.addEventListener('input', function () { setFieldError(sitename, false); }); }
+
         var form = document.getElementById('wizard');
         if (form) {
             form.addEventListener('submit', function (e) {
-                if (!validateForm()) {
+                var ok = validateSite();
+                var dbcheck = document.getElementById('f-dbbase');
+                var okDb = dbcheck ? validateInput(dbcheck) : true;
+                if (!ok || !okDb) {
                     e.preventDefault();
-                    showStep(4);
+                    showStep(!okDb ? 3 : 4);
                     return;
                 }
                 var btn = document.getElementById('btnInstall');
                 if (btn) {
-                    btn.disabled = true;
                     btn.textContent = L.installing || '...';
+                    setTimeout(function () { btn.disabled = true; }, 0);
                 }
             });
         }
@@ -233,7 +237,12 @@
 
     var dbcheckTimer = null;
 
-    function dbCheck(auto) {
+    function updateDbGate() {
+        var nb = nextBtn(stepEl(3));
+        if (nb) { nb.disabled = !dbOk; }
+    }
+
+    function dbCheck() {
         var result = document.getElementById('dbcheck-result');
         var btn = document.getElementById('btn-dbcheck');
         var host = document.getElementById('f-dbserver');
@@ -262,16 +271,16 @@
             headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
             body: data.toString()
         }).then(function (r) { return r.json(); }).then(function (json) {
+            dbOk = json.status === 'ok' || json.status === 'created';
             if (result) {
-                var status = json.status === 'ok' ? 'ok' : json.status;
-                result.className = 'dbcheck__result is-' + status;
+                result.className = 'dbcheck__result is-' + json.status;
                 result.textContent = json.message || '';
             }
+            updateDbGate();
         }).catch(function () {
-            if (result) {
-                result.className = 'dbcheck__result is-error';
-                result.textContent = 'Network error';
-            }
+            dbOk = false;
+            if (result) { result.className = 'dbcheck__result is-error'; result.textContent = 'Network error'; }
+            updateDbGate();
         }).finally(function () {
             if (btn) { btn.disabled = false; }
         });
@@ -283,26 +292,54 @@
         var present = fields.every(function (id) { return document.getElementById(id); });
         if (!btn || !present) { return; }
 
-        btn.addEventListener('click', function () { dbCheck(false); });
+        btn.addEventListener('click', dbCheck);
 
         var create = document.getElementById('f-dbcreate');
         ['f-dbserver', 'f-dbuser', 'f-dbpass', 'f-dbbase'].forEach(function (id) {
             document.getElementById(id).addEventListener('input', function () {
+                dbOk = false;
+                updateDbGate();
                 clearTimeout(dbcheckTimer);
                 dbcheckTimer = setTimeout(function () {
                     var host = document.getElementById('f-dbserver').value.trim();
                     var user = document.getElementById('f-dbuser').value.trim();
                     var base = document.getElementById('f-dbbase').value.trim();
-                    if (host && user && base) { dbCheck(true); }
-                }, 700);
+                    if (host && user && base) { dbCheck(); }
+                }, 800);
             });
         });
         if (create) {
             create.addEventListener('change', function () {
                 var base = document.getElementById('f-dbbase').value.trim();
-                if (base) { dbCheck(true); }
+                if (base) { dbCheck(); }
             });
         }
+    }
+
+    /* ------------------------------------------------------------- сводка */
+
+    function esc(text) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(text || ''));
+        return div.innerHTML;
+    }
+
+    function buildSummary() {
+        var box = document.getElementById('summary');
+        if (!box) { return; }
+        var val = function (id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; };
+        var demo = document.querySelector('input[name="demodata"]:checked');
+        var rows = [
+            [L.summarySite, val('f-sitename')],
+            [L.summaryAdmin, val('f-login')],
+            [L.summaryDb, val('f-dbuser') + '@' + val('f-dbserver') + ' / ' + val('f-dbbase')],
+            [L.summaryPrefix, val('f-prefix')],
+            [L.summaryDemo, demo && demo.value === '1' ? L.summaryDemoYes : L.summaryDemoNo]
+        ];
+        box.innerHTML = rows.map(function (r) {
+            return '<div class="summary__row"><span class="summary__k">' + esc(r[0]) + '</span>' +
+                   '<span class="summary__v">' + esc(r[1]) + '</span></div>';
+        }).join('');
     }
 
     /* ------------------------------------------------------------- init */

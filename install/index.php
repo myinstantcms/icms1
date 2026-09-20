@@ -9,7 +9,7 @@
 //                                                                            //
 //                        LICENSED BY GNU/GPL v2                              //
 //                                                                            //
-//         Installer UI redesign 2026 — style guide: banki.ru                 //
+//              Installer UI 2026: two-column wizard (dark sidebar)           //
 /******************************************************************************/
 
 session_start();
@@ -38,7 +38,6 @@ $inConf = cmsConfig::getInstance();
 // Мультиязычная установка
 $inConf->lang = isset($_SESSION['inst_lang']) ? $_SESSION['inst_lang'] : $inConf->lang;
 $langs        = cmsCore::getDirsList('/languages');
-// запрос на смену языка
 if (cmsCore::inRequest('lang')) {
     $inst_lang = cmsCore::request('lang', 'html', 'ru');
     if (in_array($inst_lang, $langs)) {
@@ -114,7 +113,7 @@ function install_db_check() {
             $created = false;
         }
         if ($created) {
-            try { mysqli_select_db($dbh, $base); } catch (Throwable $e) { /* уже проверим по $selected */ }
+            try { mysqli_select_db($dbh, $base); } catch (Throwable $e) { /* проверим по $created */ }
         }
     }
 
@@ -154,13 +153,12 @@ if (cmsCore::inRequest('install')) {
     $_CFG['db_user']   = trim(cmsCore::request('db_user', 'html', ''));
     $_CFG['db_pass']   = cmsCore::request('db_password', 'html', '');
     $_CFG['db_prefix'] = trim(cmsCore::request('db_prefix', 'html', ''));
-    $_CFG['lang']      = $inConf->lang; // Какой язык выбрали при установке, тот и будет сохранен в конфигурации
+    $_CFG['lang']      = $inConf->lang;
     $sql_file = PATH . '/install/' . (cmsCore::request('demodata', 'int') ? $sqldumpdemo : $sqldumpempty);
 
-    $admin_login    = trim(cmsCore::request('admin_login', 'html', ''));
-    $admin_password = cmsCore::request('admin_password', 'html', '');
+    $admin_login     = trim(cmsCore::request('admin_login', 'html', ''));
+    $admin_password  = cmsCore::request('admin_password', 'html', '');
     $admin_password2 = cmsCore::request('admin_password2', 'html', '');
-    $db_create      = cmsCore::request('db_create', 'int') ? true : false;
 
     if (!$_CFG['db_host']) {
         cmsCore::addSessionMessage($_LANG['INS_DB_HOST_EMPTY'], 'error');
@@ -244,6 +242,15 @@ $includes_ok = true;
 foreach ($permissions as $pname => $p) {
     if ($pname === 'includes' && !$p['valid']) { $includes_ok = false; }
 }
+
+// Данные для бокового степпера
+$steps = array(
+    1 => array($_LANG['INS_STEP1_TITLE'], $_LANG['INS_STEP1_SUB']),
+    2 => array($_LANG['INS_STEP2_TITLE'], $_LANG['INS_STEP2_SUB']),
+    3 => array($_LANG['INS_STEP3_TITLE'], $_LANG['INS_STEP3_SUB']),
+    4 => array($_LANG['INS_STEP4_TITLE'], $_LANG['INS_STEP4_SUB']),
+    5 => array($_LANG['INS_STEP5_TITLE'], $_LANG['INS_STEP5_SUB']),
+);
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $inConf->lang; ?>">
@@ -251,47 +258,95 @@ foreach ($permissions as $pname => $p) {
     <title><?php echo $_LANG['INS_HEADER'] . ' ' . CORE_VERSION; ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type='text/css' href='/install/css/styles.css' rel='stylesheet' media='screen' />
+    <link rel="stylesheet" href="/install/fonts/golos.css">
+    <link type='text/css' href='/install/css/installer.css' rel='stylesheet' media='screen' />
 </head>
 <body>
-    <header class="topbar">
-        <div class="topbar__inner">
-            <div class="brand">
-                <div class="brand__tile" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-                <span class="brand__name">InstantCMS</span>
-                <span class="brand__ver"><?php echo CORE_VERSION; ?></span>
-            </div>
-            <div class="topbar__actions">
-                <?php if (sizeof($langs) > 1) { ?>
-                <div class="langsel" id="langs">
-                    <button type="button" class="langsel__btn" id="langs-btn">
-                        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>
-                        <?php echo mb_strtoupper($inConf->lang); ?>
-                    </button>
-                    <ul class="langsel__list" id="langs-list" hidden>
-                        <?php foreach ($langs as $lng) { ?>
-                        <li data-lang="<?php echo $lng; ?>" class="<?php echo $lng == $inConf->lang ? 'is-current' : ''; ?>"><?php echo mb_strtoupper($lng); ?></li>
-                        <?php } ?>
-                    </ul>
-                </div>
-                <?php } ?>
-                <button type="button" class="iconbtn" id="theme-toggle" title="Theme">
-                    <svg class="ico ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
-                    <svg class="ico ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
-                </button>
-            </div>
+<div class="shell">
+    <aside class="side">
+        <div class="side__brand">
+            <span class="side__logo" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M18.6 2 6 18h7l-2.4 12L25 14h-7.4L18.6 2z"/></svg>
+            </span>
+            <span class="side__title">Instant<em>CMS</em></span>
         </div>
-    </header>
+        <div class="side__sub"><?php echo $_LANG['INS_INSTALL_SUBTITLE']; ?></div>
 
-    <main class="container">
         <?php if (!$installed) { ?>
-        <ol class="stepper" id="stepper">
-            <li class="is-active" data-step="1"><span class="stepper__dot">1</span><span class="stepper__label"><?php echo $_LANG['INS_START']; ?></span></li>
-            <li data-step="2"><span class="stepper__dot">2</span><span class="stepper__label"><?php echo $_LANG['INS_CHECK_PHP_TITLE']; ?></span></li>
-            <li data-step="3"><span class="stepper__dot">3</span><span class="stepper__label"><?php echo $_LANG['INS_CHECK_FOLDER_TITLE']; ?></span></li>
-            <li data-step="4"><span class="stepper__dot">4</span><span class="stepper__label"><?php echo $_LANG['INS_INSTALL']; ?></span></li>
+        <ol class="vsteps" id="stepper">
+            <?php foreach ($steps as $num => $s) { ?>
+            <li data-step="<?php echo $num; ?>" class="<?php echo $num === 1 ? 'is-active' : ''; ?>">
+                <span class="vsteps__dot"><?php echo $num; ?></span>
+                <span class="vsteps__txt">
+                    <b><?php echo $s[0]; ?></b>
+                    <i><?php echo $s[1]; ?></i>
+                </span>
+            </li>
+            <?php } ?>
         </ol>
 
+        <div class="side__art" aria-hidden="true">
+            <svg viewBox="0 0 260 200">
+                <defs>
+                    <linearGradient id="srv" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#4f7cff"/><stop offset="1" stop-color="#2b4bd8"/>
+                    </linearGradient>
+                    <linearGradient id="cld" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#dbe6ff"/><stop offset="1" stop-color="#a8c0f0"/>
+                    </linearGradient>
+                </defs>
+                <ellipse cx="130" cy="180" rx="86" ry="12" fill="#0e1730" opacity=".5"/>
+                <g>
+                    <rect x="66" y="120" width="128" height="30" rx="8" fill="url(#srv)"/>
+                    <rect x="66" y="86" width="128" height="30" rx="8" fill="url(#srv)" opacity=".92"/>
+                    <rect x="66" y="52" width="128" height="30" rx="8" fill="url(#srv)" opacity=".84"/>
+                    <circle cx="82" cy="135" r="4" fill="#7dfba8"/>
+                    <circle cx="82" cy="101" r="4" fill="#7dfba8"/>
+                    <circle cx="82" cy="67" r="4" fill="#ffd166"/>
+                    <rect x="96" y="132" width="70" height="5" rx="2.5" fill="#ffffff" opacity=".35"/>
+                    <rect x="96" y="98" width="52" height="5" rx="2.5" fill="#ffffff" opacity=".3"/>
+                    <rect x="96" y="64" width="62" height="5" rx="2.5" fill="#ffffff" opacity=".25"/>
+                </g>
+                <path d="M96 44a26 26 0 0 1 50-8 18 18 0 0 1 24 17H96a10 10 0 0 1 0-9z" fill="url(#cld)"/>
+                <g transform="translate(206 128)">
+                    <circle r="22" fill="#2f6bff"/>
+                    <path d="M0-10 4-2.8l8-1.8-4.5 6.6L12 8.2 4 6.4 0 14l-4-7.6-8 1.8 4.5-6.2L-12-2.8l8 1.8z" fill="#fff" opacity=".95"/>
+                </g>
+                <circle cx="64" cy="30" r="10" fill="#2f6bff" opacity=".25"/>
+                <circle cx="216" cy="42" r="16" fill="#2f6bff" opacity=".16"/>
+                <circle cx="228" cy="86" r="7" fill="#2f6bff" opacity=".3"/>
+            </svg>
+        </div>
+
+        <div class="side__foot">
+            <b>InstantCMS <?php echo CORE_VERSION; ?></b>
+            <span><?php echo $_LANG['INS_SIDE_FOOT']; ?></span>
+        </div>
+        <?php } ?>
+    </aside>
+
+    <main class="content">
+        <div class="content__top">
+            <?php if (sizeof($langs) > 1) { ?>
+            <div class="langsel" id="langs">
+                <button type="button" class="langsel__btn" id="langs-btn">
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>
+                    <?php echo mb_strtoupper($inConf->lang); ?>
+                </button>
+                <ul class="langsel__list" id="langs-list" hidden>
+                    <?php foreach ($langs as $lng) { ?>
+                    <li data-lang="<?php echo $lng; ?>" class="<?php echo $lng == $inConf->lang ? 'is-current' : ''; ?>"><?php echo mb_strtoupper($lng); ?></li>
+                    <?php } ?>
+                </ul>
+            </div>
+            <?php } ?>
+            <button type="button" class="iconbtn" id="theme-toggle" title="Theme">
+                <svg class="ico ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+                <svg class="ico ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+            </button>
+        </div>
+
+        <?php if (!$installed) { ?>
         <?php $messages = cmsCore::getSessionMessages(); ?>
         <?php if ($messages) { ?>
             <div class="messages">
@@ -301,102 +356,128 @@ foreach ($permissions as $pname => $p) {
 
         <form class="wizard" id="wizard" action="/install/" method="post" novalidate>
             <!-- Шаг 1: приветствие -->
-            <section class="card step is-active" data-step="1">
-                <h2><?php echo $_LANG['INS_WELCOME']; ?></h2>
-                <div class="text"><?php echo $_LANG['INS_WELCOME_NOTES']; ?></div>
-                <label class="checkbox">
+            <section class="step is-active" data-step="1">
+                <div class="hero" aria-hidden="true">
+                    <svg viewBox="0 0 420 240">
+                        <defs>
+                            <linearGradient id="win" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0" stop-color="#2f6bff"/><stop offset="1" stop-color="#5aa2ff"/>
+                            </linearGradient>
+                        </defs>
+                        <ellipse cx="212" cy="204" rx="150" ry="18" fill="#2f6bff" opacity=".08"/>
+                        <circle cx="98" cy="84" r="46" fill="#2f6bff" opacity=".08"/>
+                        <circle cx="320" cy="64" r="30" fill="#2f6bff" opacity=".12"/>
+                        <g>
+                            <rect x="110" y="44" width="220" height="140" rx="16" fill="#fff" stroke="url(#win)" stroke-width="3"/>
+                            <rect x="110" y="44" width="220" height="30" rx="16" fill="url(#win)"/>
+                            <rect x="110" y="60" width="220" height="14" fill="url(#win)"/>
+                            <circle cx="128" cy="59" r="4" fill="#fff" opacity=".9"/>
+                            <circle cx="142" cy="59" r="4" fill="#fff" opacity=".65"/>
+                            <circle cx="156" cy="59" r="4" fill="#fff" opacity=".45"/>
+                            <rect x="132" y="94" width="96" height="9" rx="4.5" fill="#c9d8f5"/>
+                            <rect x="132" y="112" width="140" height="9" rx="4.5" fill="#dde7fa"/>
+                            <rect x="132" y="130" width="118" height="9" rx="4.5" fill="#dde7fa"/>
+                            <rect x="132" y="148" width="70" height="9" rx="4.5" fill="#e8eefc"/>
+                        </g>
+                        <g transform="translate(252 96)">
+                            <rect x="0" y="0" width="64" height="64" rx="18" fill="#eef4ff"/>
+                            <path d="M38 14 22 38h9l-3 14 18-24h-9l1-14z" fill="#2f6bff"/>
+                        </g>
+                        <g transform="translate(336 148)">
+                            <circle r="26" fill="#2f6bff"/>
+                            <path d="M0-12 4.5-3.5 13-6l-5.5 7.5L13 9 4.5 6.5 0 15l-4.5-8.5L-13 9l5.5-7.5L-13-6l8.5 2.5z" fill="#fff" opacity=".95"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <h1><?php echo $_LANG['INS_WELCOME_H1']; ?></h1>
+                <p class="lead"><?php echo $_LANG['INS_WELCOME_LEAD']; ?></p>
+
+                <div class="panel panel--info">
+                    <div class="panel__title">
+                        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+                        <?php echo $_LANG['INS_BEFORE_START']; ?>
+                    </div>
+                    <ul class="ticks">
+                        <li><?php echo $_LANG['INS_TICK_SERVER']; ?></li>
+                        <li><?php echo $_LANG['INS_TICK_DB']; ?></li>
+                        <li><?php echo $_LANG['INS_TICK_FILES']; ?></li>
+                        <li><?php echo $_LANG['INS_TICK_EXT']; ?></li>
+                    </ul>
+                </div>
+
+                <label class="checkbox license">
                     <input type="checkbox" id="license_agree">
                     <span class="checkbox__box" aria-hidden="true"><svg viewBox="0 0 12 10"><path d="M1 5.5 4.2 8.5 11 1.5"/></svg></span>
                     <span><?php echo $_LANG['INS_ACCEPT_LICENSE']; ?></span>
                 </label>
-            </section>
 
-            <!-- Шаг 2: проверка окружения -->
-            <section class="card step" data-step="2" <?php if (!$info['valid']) { ?>data-gate-block="1"<?php } ?>>
-                <h2><?php echo $_LANG['INS_CHECK_PHP']; ?></h2>
-                <p class="text-secondary"><?php echo $_LANG['INS_CHECKPHP_HINT']; ?></p>
-                <?php if (!$info['valid']) { ?><div class="alert alert--error"><?php echo $_LANG['INS_REQ_FAIL']; ?></div><?php } ?>
-                <div class="checklist">
-                    <div class="checklist__row">
-                        <span class="checklist__name"><?php echo $_LANG['INS_PHP_VERSION']; ?></span>
-                        <span class="badge <?php echo $info['php']['valid'] ? 'badge--ok' : 'badge--fail'; ?>"><?php echo $info['php']['version']; ?></span>
-                    </div>
-                    <?php foreach ($info['ext'] as $name => $valid) { ?>
-                    <div class="checklist__row">
-                        <span class="checklist__name"><?php echo $name; ?></span>
-                        <span class="badge <?php echo $valid ? 'badge--ok' : 'badge--fail'; ?>"><?php echo $valid ? $_LANG['INS_INSTALL_OK'] : $_LANG['INS_INSTALL_NOTFOUND']; ?></span>
-                    </div>
-                    <?php } ?>
+                <div class="actions">
+                    <span></span>
+                    <button type="button" class="btn btn--primary" data-nav="next">
+                        <?php echo $_LANG['INS_NEXT']; ?>
+                        <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
                 </div>
             </section>
 
-            <!-- Шаг 3: права на папки -->
-            <section class="card step" data-step="3" <?php if (!$includes_ok) { ?>data-gate-block="1"<?php } ?>>
-                <h2><?php echo $_LANG['INS_CHECK_FOLDER']; ?></h2>
-                <div class="text"><?php echo $_LANG['INS_FOLDERS_NOTES']; ?></div>
-                <?php if (!$includes_ok) { ?><div class="alert alert--error"><?php echo sprintf($_LANG['INS_PERMISSION_NO'], '/includes'); ?></div><?php } ?>
-                <div class="checklist">
-                    <?php foreach ($permissions as $name => $permission) { ?>
-                    <div class="checklist__row">
-                        <span class="checklist__name">/<?php echo $name; ?><?php echo $permission['perm'] ? ' <span class="text-tertiary">· ' . $_LANG['INS_PERMISSION'] . ' ' . $permission['perm'] . '</span>' : ''; ?></span>
-                        <span class="badge <?php echo $permission['valid'] ? 'badge--ok' : 'badge--fail'; ?>"><?php echo $permission['valid'] ? $_LANG['INS_PERMISSION_OK'] : $_LANG['INS_PERMISSION_NO']; ?></span>
+            <!-- Шаг 2: проверка системы -->
+            <section class="step" data-step="2" <?php if (!$info['valid'] || !$includes_ok) { ?>data-gate-block="1"<?php } ?>>
+                <h1><?php echo $_LANG['INS_STEP2_TITLE']; ?></h1>
+                <p class="lead"><?php echo $_LANG['INS_CHECKPHP_HINT']; ?></p>
+                <?php if (!$info['valid'] || !$includes_ok) { ?><div class="alert alert--error"><?php echo $_LANG['INS_REQ_FAIL']; ?></div><?php } ?>
+
+                <div class="panel">
+                    <div class="panel__title">
+                        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+                        <?php echo $_LANG['INS_CHECK_PHP']; ?>
                     </div>
-                    <?php } ?>
+                    <div class="checklist">
+                        <div class="checklist__row">
+                            <span class="checklist__ico <?php echo $info['php']['valid'] ? 'is-ok' : 'is-fail'; ?>"><svg viewBox="0 0 24 24"><?php echo $info['php']['valid'] ? '<path d="M4.5 12.5 10 18 19.5 7"/>' : '<path d="M6 6l12 12M18 6 6 18"/>'; ?></svg></span>
+                            <span class="checklist__name"><?php echo $_LANG['INS_PHP_VERSION']; ?></span>
+                            <span class="badge <?php echo $info['php']['valid'] ? 'badge--ok' : 'badge--fail'; ?>"><?php echo $info['php']['version']; ?></span>
+                        </div>
+                        <?php foreach ($info['ext'] as $name => $valid) { ?>
+                        <div class="checklist__row">
+                            <span class="checklist__ico <?php echo $valid ? 'is-ok' : 'is-fail'; ?>"><svg viewBox="0 0 24 24"><?php echo $valid ? '<path d="M4.5 12.5 10 18 19.5 7"/>' : '<path d="M6 6l12 12M18 6 6 18"/>'; ?></svg></span>
+                            <span class="checklist__name"><?php echo $name; ?></span>
+                            <span class="badge <?php echo $valid ? 'badge--ok' : 'badge--fail'; ?>"><?php echo $valid ? $_LANG['INS_INSTALL_OK'] : $_LANG['INS_INSTALL_NOTFOUND']; ?></span>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel__title">
+                        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                        <?php echo $_LANG['INS_CHECK_FOLDER']; ?>
+                    </div>
+                    <div class="checklist">
+                        <?php foreach ($permissions as $name => $permission) { ?>
+                        <div class="checklist__row">
+                            <span class="checklist__ico <?php echo $permission['valid'] ? 'is-ok' : 'is-fail'; ?>"><svg viewBox="0 0 24 24"><?php echo $permission['valid'] ? '<path d="M4.5 12.5 10 18 19.5 7"/>' : '<path d="M6 6l12 12M18 6 6 18"/>'; ?></svg></span>
+                            <span class="checklist__name">/<?php echo $name; ?><?php echo $permission['perm'] ? ' <span class="text-tertiary">· ' . $_LANG['INS_PERMISSION'] . ' ' . $permission['perm'] . '</span>' : ''; ?></span>
+                            <span class="badge <?php echo $permission['valid'] ? 'badge--ok' : 'badge--fail'; ?>"><?php echo $permission['valid'] ? $_LANG['INS_PERMISSION_OK'] : $_LANG['INS_PERMISSION_NO']; ?></span>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="button" class="btn btn--ghost" data-nav="back"><?php echo $_LANG['INS_BACK']; ?></button>
+                    <button type="button" class="btn btn--primary" data-nav="next">
+                        <?php echo $_LANG['INS_NEXT']; ?>
+                        <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
                 </div>
             </section>
 
-            <!-- Шаг 4: настройка и установка -->
-            <section class="card step" data-step="4">
-                <h2><?php echo $_LANG['INS_INSTALL']; ?></h2>
-                <p class="text-secondary"><?php echo $_LANG['INS_FORM_INSERT']; ?></p>
+            <!-- Шаг 3: база данных -->
+            <section class="step" data-step="3">
+                <h1><?php echo $_LANG['INS_DB_STEP_TITLE']; ?></h1>
+                <p class="lead"><?php echo $_LANG['INS_DB_STEP_HINT']; ?></p>
 
-                <h3 class="group-title"><?php echo $_LANG['INS_FORM_SITE']; ?></h3>
-                <div class="field">
-                    <label class="field__label" for="f-sitename"><?php echo $_LANG['INS_FORM_SITE']; ?></label>
-                    <input class="input" id="f-sitename" name="sitename" type="text" value="<?php echo $_LANG['CFG_SITENAME']; ?>">
-                </div>
-
-                <h3 class="group-title"><?php echo $_LANG['INS_FORM_LOGIN']; ?></h3>
-                <div class="grid-2">
-                    <div class="field">
-                        <label class="field__label" for="f-login"><?php echo $_LANG['INS_FORM_LOGIN']; ?></label>
-                        <input class="input" id="f-login" name="admin_login" type="text" value="admin" autocomplete="username" data-pattern="^[A-Za-z0-9_\-]{3,}$" data-error="<?php echo $_LANG['INS_ADMIN_LOGIN_INVALID']; ?>">
-                        <span class="field__error" aria-live="polite"></span>
-                    </div>
-                </div>
-                <div class="grid-2">
-                    <div class="field">
-                        <label class="field__label" for="f-pass"><?php echo $_LANG['INS_FORM_PASS']; ?></label>
-                        <div class="input-wrap">
-                            <input class="input" id="f-pass" name="admin_password" type="password" autocomplete="new-password">
-                            <button type="button" class="input-eye" data-eye="f-pass" title="<?php echo $_LANG['INS_SHOW_PASS']; ?>">
-                                <svg class="ico" viewBox="0 0 24 24"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>
-                            </button>
-                        </div>
-                        <div class="passmeter" id="passmeter" aria-hidden="true">
-                            <div class="passmeter__bar"><i></i><i></i><i></i></div>
-                            <span class="passmeter__text"></span>
-                        </div>
-                        <ul class="passrules" id="passrules">
-                            <li data-rule="len"><?php echo $_LANG['INS_PASS_RULE_LEN']; ?></li>
-                            <li data-rule="letter"><?php echo $_LANG['INS_PASS_RULE_LETTER']; ?></li>
-                            <li data-rule="digit"><?php echo $_LANG['INS_PASS_RULE_DIGIT']; ?></li>
-                            <li data-rule="match"><?php echo $_LANG['INS_PASS_RULE_MATCH']; ?></li>
-                        </ul>
-                    </div>
-                    <div class="field">
-                        <label class="field__label" for="f-pass2"><?php echo $_LANG['INS_ADMIN_PASS_REPEAT']; ?></label>
-                        <div class="input-wrap">
-                            <input class="input" id="f-pass2" name="admin_password2" type="password" autocomplete="new-password">
-                            <button type="button" class="input-eye" data-eye="f-pass2" title="<?php echo $_LANG['INS_SHOW_PASS']; ?>">
-                                <svg class="ico" viewBox="0 0 24 24"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>
-                            </button>
-                        </div>
-                        <span class="field__error" aria-live="polite"></span>
-                    </div>
-                </div>
-
-                <h3 class="group-title">MySQL</h3>
                 <div class="grid-2">
                     <div class="field">
                         <label class="field__label" for="f-dbserver"><?php echo $_LANG['INS_FORM_MYSQL']; ?></label>
@@ -433,10 +514,35 @@ foreach ($permissions as $pname => $p) {
                     <span class="dbcheck__result" id="dbcheck-result" aria-live="polite"></span>
                 </div>
 
+                <div class="field">
+                    <label class="field__label" for="f-prefix"><?php echo $_LANG['INS_FORM_PREFIX']; ?></label>
+                    <input class="input" id="f-prefix" name="db_prefix" type="text" value="cms" data-pattern="^[A-Za-z][A-Za-z0-9_]*$" data-error="<?php echo $_LANG['INS_PREFIX_INVALID']; ?>">
+                    <span class="field__error" aria-live="polite"></span>
+                </div>
+
+                <div class="actions">
+                    <button type="button" class="btn btn--ghost" data-nav="back"><?php echo $_LANG['INS_BACK']; ?></button>
+                    <button type="button" class="btn btn--primary" data-nav="next" disabled>
+                        <?php echo $_LANG['INS_NEXT']; ?>
+                        <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Шаг 4: настройки сайта -->
+            <section class="step" data-step="4">
+                <h1><?php echo $_LANG['INS_STEP4_TITLE']; ?></h1>
+                <p class="lead"><?php echo $_LANG['INS_SITE_STEP_HINT']; ?></p>
+
+                <div class="field">
+                    <label class="field__label" for="f-sitename"><?php echo $_LANG['INS_FORM_SITE']; ?></label>
+                    <input class="input" id="f-sitename" name="sitename" type="text" value="<?php echo $_LANG['CFG_SITENAME']; ?>">
+                </div>
+
                 <div class="grid-2">
                     <div class="field">
-                        <label class="field__label" for="f-prefix"><?php echo $_LANG['INS_FORM_PREFIX']; ?></label>
-                        <input class="input" id="f-prefix" name="db_prefix" type="text" value="cms" data-pattern="^[A-Za-z][A-Za-z0-9_]*$" data-error="<?php echo $_LANG['INS_PREFIX_INVALID']; ?>">
+                        <label class="field__label" for="f-login"><?php echo $_LANG['INS_FORM_LOGIN']; ?></label>
+                        <input class="input" id="f-login" name="admin_login" type="text" value="admin" autocomplete="username" data-pattern="^[A-Za-z0-9_\-]{3,}$" data-error="<?php echo $_LANG['INS_ADMIN_LOGIN_INVALID']; ?>">
                         <span class="field__error" aria-live="polite"></span>
                     </div>
                     <div class="field">
@@ -447,63 +553,122 @@ foreach ($permissions as $pname => $p) {
                             <label class="segment__opt"><input type="radio" name="demodata" value="0"><span><?php echo $_LANG['NO']; ?></span></label>
                             <?php } else { ?>
                             <label class="segment__opt"><input type="radio" name="demodata" value="1" disabled><span><?php echo $_LANG['YES']; ?></span></label>
-                            <label class="segment__opt is-active"><input type="radio" name="demodata" value="0" checked disabled><span><?php echo $_LANG['NO']; ?></span></label>
+                            <label class="segment__opt"><input type="radio" name="demodata" value="0" checked disabled><span><?php echo $_LANG['NO']; ?></span></label>
                             <?php } ?>
                         </div>
                     </div>
                 </div>
 
-                <div class="alert alert--info"><?php echo $_LANG['INS_FORM_NOTES']; ?></div>
+                <div class="grid-2">
+                    <div class="field">
+                        <label class="field__label" for="f-pass"><?php echo $_LANG['INS_FORM_PASS']; ?></label>
+                        <div class="input-wrap">
+                            <input class="input" id="f-pass" name="admin_password" type="password" autocomplete="new-password">
+                            <button type="button" class="input-eye" data-eye="f-pass" title="<?php echo $_LANG['INS_SHOW_PASS']; ?>">
+                                <svg class="ico" viewBox="0 0 24 24"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>
+                            </button>
+                        </div>
+                        <div class="passmeter" id="passmeter" aria-hidden="true">
+                            <div class="passmeter__bar"><i></i><i></i><i></i></div>
+                            <span class="passmeter__text"></span>
+                        </div>
+                        <ul class="passrules" id="passrules">
+                            <li data-rule="len"><?php echo $_LANG['INS_PASS_RULE_LEN']; ?></li>
+                            <li data-rule="letter"><?php echo $_LANG['INS_PASS_RULE_LETTER']; ?></li>
+                            <li data-rule="digit"><?php echo $_LANG['INS_PASS_RULE_DIGIT']; ?></li>
+                            <li data-rule="match"><?php echo $_LANG['INS_PASS_RULE_MATCH']; ?></li>
+                        </ul>
+                    </div>
+                    <div class="field">
+                        <label class="field__label" for="f-pass2"><?php echo $_LANG['INS_ADMIN_PASS_REPEAT']; ?></label>
+                        <div class="input-wrap">
+                            <input class="input" id="f-pass2" name="admin_password2" type="password" autocomplete="new-password">
+                            <button type="button" class="input-eye" data-eye="f-pass2" title="<?php echo $_LANG['INS_SHOW_PASS']; ?>">
+                                <svg class="ico" viewBox="0 0 24 24"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>
+                            </button>
+                        </div>
+                        <span class="field__error" aria-live="polite"></span>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="button" class="btn btn--ghost" data-nav="back"><?php echo $_LANG['INS_BACK']; ?></button>
+                    <button type="button" class="btn btn--primary" data-nav="next">
+                        <?php echo $_LANG['INS_NEXT']; ?>
+                        <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
+                </div>
             </section>
 
-            <div class="wizard__controls">
-                <button type="button" class="btn btn--ghost" id="btnBack" hidden><?php echo $_LANG['INS_BACK']; ?></button>
-                <button type="button" class="btn btn--primary" id="btnNext"><?php echo $_LANG['INS_NEXT']; ?></button>
-                <button type="submit" class="btn btn--primary" name="install" value="1" id="btnInstall" hidden><?php echo $_LANG['INS_DO_INSTALL']; ?></button>
-            </div>
+            <!-- Шаг 5: завершение -->
+            <section class="step" data-step="5">
+                <h1><?php echo $_LANG['INS_FINISH_TITLE']; ?></h1>
+                <p class="lead"><?php echo $_LANG['INS_FINISH_HINT']; ?></p>
+
+                <div class="panel">
+                    <div class="panel__title">
+                        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3 8-8M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>
+                        <?php echo $_LANG['INS_SUMMARY']; ?>
+                    </div>
+                    <div class="summary" id="summary"></div>
+                </div>
+
+                <div class="alert alert--warning"><?php echo $_LANG['INS_DELETE_TODO']; ?></div>
+
+                <div class="actions">
+                    <button type="button" class="btn btn--ghost" data-nav="back"><?php echo $_LANG['INS_BACK']; ?></button>
+                    <button type="submit" class="btn btn--primary" name="install" value="1" id="btnInstall">
+                        <?php echo $_LANG['INS_DO_INSTALL']; ?>
+                        <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
+                </div>
+            </section>
         </form>
         <?php } else { ?>
-        <section class="card done">
+        <section class="done">
             <div class="done__icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><path d="M4.5 12.5 10 18 19.5 7"/></svg>
             </div>
-            <h2><?php echo $_LANG['INS_FORM_SUCCESS']; ?></h2>
+            <h1><?php echo $_LANG['INS_FORM_SUCCESS']; ?></h1>
             <div class="done__links">
                 <a class="btn btn--primary" href="/"><?php echo $_LANG['INS_GO_SITE']; ?></a>
                 <a class="btn btn--ghost" href="/admin"><?php echo $_LANG['INS_GO_CP']; ?></a>
                 <a class="btn btn--ghost" target="_blank" href="http://www.instantcms.ru/wiki/doku.php"><?php echo $_LANG['INS_GO_HANDBOOK']; ?></a>
                 <a class="btn btn--ghost" target="_blank" href="https://github.com/myinstantcms/icms1">GitHub</a>
             </div>
-        </section>
-        <section class="card">
-            <h2><?php echo $_LANG['INS_CRON_TODO']; ?></h2>
-            <p class="text"><?php echo $_LANG['INS_CRON_NOTES']; ?></p>
-            <pre class="code"><?php echo $php_path ? $php_path : 'php'; ?> -f <?php echo PATH; ?>/cron.php <?php echo $_SERVER['HTTP_HOST']; ?> > /dev/null</pre>
-            <h2><?php echo $_LANG['INS_ATTENTION']; ?></h2>
-            <div class="alert alert--warning"><?php echo $_LANG['INS_DELETE_TODO']; ?></div>
+            <div class="panel" style="margin-top:32px;text-align:left">
+                <div class="panel__title"><?php echo $_LANG['INS_CRON_TODO']; ?></div>
+                <p class="text"><?php echo $_LANG['INS_CRON_NOTES']; ?></p>
+                <pre class="code"><?php echo $php_path ? $php_path : 'php'; ?> -f <?php echo PATH; ?>/cron.php <?php echo $_SERVER['HTTP_HOST']; ?> > /dev/null</pre>
+            </div>
         </section>
         <?php } ?>
     </main>
+</div>
 
-    <footer class="footer">
-        <a href="http://www.instantcms.ru/" target="_blank">InstantCMS</a>, <a href="http://instantsoft.ru/" target="_blank">InstantSoft</a> &copy; 2007-<?php echo date('Y'); ?>
-    </footer>
-
-    <form id="langform" method="post" action="/install/" hidden><input type="hidden" name="lang" id="langform-input"></form>
-    <script src="/install/js/install.js"></script>
-    <script>
-        INSTALL = {
-            langJS: {
-                next: <?php echo json_encode($_LANG['INS_NEXT']); ?>,
-                installing: <?php echo json_encode($_LANG['INS_INSTALLING']); ?>,
-                dbCheck: <?php echo json_encode($_LANG['INS_DB_CHECK']); ?>,
-                dbChecking: <?php echo json_encode($_LANG['INS_DB_CHECKING']); ?>,
-                passWeak: <?php echo json_encode($_LANG['INS_PASS_WEAK']); ?>,
-                strength: [<?php echo json_encode($_LANG['INS_STRENGTH_WEAK']); ?>, <?php echo json_encode($_LANG['INS_STRENGTH_MEDIUM']); ?>, <?php echo json_encode($_LANG['INS_STRENGTH_STRONG']); ?>]
-            },
-            phpOk: <?php echo $info['valid'] ? 'true' : 'false'; ?>
-        };
-        INSTALL.init();
-    </script>
+<form id="langform" method="post" action="/install/" hidden><input type="hidden" name="lang" id="langform-input"></form>
+<script>
+    window.INSTALL = {
+        langJS: {
+            next: <?php echo json_encode($_LANG['INS_NEXT']); ?>,
+            installing: <?php echo json_encode($_LANG['INS_INSTALLING']); ?>,
+            dbChecking: <?php echo json_encode($_LANG['INS_DB_CHECKING']); ?>,
+            passWeak: <?php echo json_encode($_LANG['INS_PASS_WEAK']); ?>,
+            strength: [<?php echo json_encode($_LANG['INS_STRENGTH_WEAK']); ?>, <?php echo json_encode($_LANG['INS_STRENGTH_MEDIUM']); ?>, <?php echo json_encode($_LANG['INS_STRENGTH_STRONG']); ?>],
+            summarySite: <?php echo json_encode($_LANG['INS_SUMMARY_SITE']); ?>,
+            summaryAdmin: <?php echo json_encode($_LANG['INS_SUMMARY_ADMIN']); ?>,
+            summaryDb: <?php echo json_encode($_LANG['INS_SUMMARY_DB']); ?>,
+            summaryPrefix: <?php echo json_encode($_LANG['INS_SUMMARY_PREFIX']); ?>,
+            summaryDemo: <?php echo json_encode($_LANG['INS_SUMMARY_DEMO']); ?>,
+            summaryDemoYes: <?php echo json_encode($_LANG['INS_SUMMARY_DEMO_YES']); ?>,
+            summaryDemoNo: <?php echo json_encode($_LANG['INS_SUMMARY_DEMO_NO']); ?>,
+            dbCreateLabel: <?php echo json_encode($_LANG['INS_DB_CREATE']); ?>
+        },
+        phpOk: <?php echo $info['valid'] ? 'true' : 'false'; ?>,
+        includesOk: <?php echo $includes_ok ? 'true' : 'false'; ?>
+    };
+</script>
+<script src="/install/js/install.js"></script>
+<script>INSTALL.init();</script>
 </body>
 </html>

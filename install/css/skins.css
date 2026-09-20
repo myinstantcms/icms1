@@ -1,0 +1,333 @@
+/* ============================================================================
+   Installer skins — три направления дизайна поверх базовой структуры.
+   Переключение: body[data-skin="a"|"b"|"c"] (+ data-theme для C).
+   ========================================================================== */
+
+/* ------------------------------------------------- общее: переключатель скинов */
+
+.skinline {
+    display: inline-flex;
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+    padding: 3px;
+    gap: 2px;
+}
+
+.skinline button {
+    height: 34px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--text-secondary);
+    font: 500 13px/1 var(--font-text);
+    cursor: pointer;
+    transition: all 0.15s ease-out;
+    letter-spacing: 0.02em;
+}
+
+.skinline button:hover { color: var(--text-primary); }
+
+.skinline button.is-on {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    box-shadow: 0 1px 6px rgba(22, 33, 54, 0.14);
+}
+
+/* тема скрыта там, где она не поддерживается скином */
+body[data-skin="a"] #theme-toggle,
+body[data-skin="b"] #theme-toggle { display: none; }
+
+/* ============================================================================
+   SKIN A — Developer Dark
+   Тёмная OLED-тема, IBM Plex Sans + JetBrains Mono, акцент «run»-зелёный.
+   ========================================================================== */
+
+body[data-skin="a"] {
+    --font-display: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    --font-text: "IBM Plex Sans", Roboto, Arial, sans-serif;
+
+    --bg-canvas: #0f172a;
+    --bg-surface: #1b2336;
+    --bg-surface-hover: #272f42;
+    --bg-tertiary: #272f42;
+
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-tertiary: #7c8aa0;
+    --text-disabled: #475569;
+
+    --accent: #22c55e;
+    --accent-hover: #4ade80;
+    --accent-deep: #16a34a;
+    --accent-subtle: rgba(34, 197, 94, 0.14);
+    --positive: #22c55e;
+    --positive-subtle: rgba(34, 197, 94, 0.14);
+    --negative: #f87171;
+    --negative-subtle: rgba(239, 68, 68, 0.14);
+    --warning: #fbbf24;
+    --warning-subtle: rgba(251, 191, 36, 0.12);
+    --inverse: #e2e8f0;
+
+    --divider: #2b3550;
+    --border-weak: #3b4763;
+
+    --radius-panel: 14px;
+    --radius-input: 10px;
+    --radius-btn: 10px;
+    --shadow-panel: 0 0 0 1px #232d47, 0 18px 48px -20px rgba(0, 0, 0, 0.7);
+    --shadow-btn: 0 4px 16px -4px rgba(34, 197, 94, 0.45);
+}
+
+body[data-skin="a"] {
+    background-image:
+        linear-gradient(rgba(148, 163, 184, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.045) 1px, transparent 1px),
+        radial-gradient(900px 420px at 85% -10%, rgba(34, 197, 94, 0.07), transparent 60%);
+    background-size: 44px 44px, 44px 44px, auto;
+}
+
+body[data-skin="a"] .topbar {
+    background: rgba(15, 23, 42, 0.85);
+    border-bottom: 1px solid var(--divider);
+}
+
+body[data-skin="a"] .brand__name { letter-spacing: -0.03em; }
+body[data-skin="a"] .brand__tile { border-radius: 7px; background: linear-gradient(135deg, #22c55e, #86efac); }
+
+body[data-skin="a"] .card h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+}
+
+body[data-skin="a"] .card h2::before {
+    content: "./ ";
+    color: var(--accent);
+    font-weight: 500;
+}
+
+body[data-skin="a"] .card { box-shadow: var(--shadow-panel); border: 0; }
+
+body[data-skin="a"] .btn--primary { color: #0f172a; font-family: var(--font-display); font-weight: 600; }
+body[data-skin="a"] .btn { border-radius: var(--radius-btn); }
+
+body[data-skin="a"] .badge, body[data-skin="a"] .code {
+    font-family: var(--font-display);
+}
+
+body[data-skin="a"] .group-title { font-family: var(--font-display); letter-spacing: 0.1em; }
+
+body[data-skin="a"] .stepper__dot { font-family: var(--font-display); }
+
+body[data-skin="a"] .checkbox--notice { background: var(--accent-subtle); }
+
+body[data-skin="a"] .req { border: 1px solid var(--divider); }
+
+/* ============================================================================
+   SKIN B — Claymorphism
+   Тёплый крем, терракота + зелёный, Manrope, пухлые тени и «пружина».
+   ========================================================================== */
+
+body[data-skin="b"] {
+    --font-display: "Manrope", Roboto, Arial, sans-serif;
+    --font-text: "Manrope", Roboto, Arial, sans-serif;
+
+    --bg-canvas: #fffbeb;
+    --bg-surface: #ffffff;
+    --bg-surface-hover: #fef7e6;
+    --bg-tertiary: #f6ecdd;
+
+    --text-primary: #431407;
+    --text-secondary: #7c5c4f;
+    --text-tertiary: #a18174;
+    --text-disabled: #d8c7bc;
+
+    --accent: #ea580c;
+    --accent-hover: #dc4a04;
+    --accent-deep: #c2410c;
+    --accent-subtle: #ffedd5;
+    --positive: #059669;
+    --positive-subtle: #d1fae5;
+    --negative: #dc2626;
+    --negative-subtle: #fee2e2;
+    --warning: #d97706;
+    --warning-subtle: #fef3c7;
+    --inverse: #431407;
+
+    --divider: #f2e6d9;
+    --border-weak: #ecdcc9;
+
+    --radius-panel: 26px;
+    --radius-input: 18px;
+    --radius-btn: 16px;
+    --shadow-panel: 0 2px 0 rgba(196, 148, 100, 0.14), 0 18px 40px -18px rgba(154, 82, 34, 0.28);
+    --shadow-btn: 0 4px 0 rgba(154, 52, 18, 0.28), 0 12px 24px -10px rgba(234, 88, 12, 0.55);
+}
+
+body[data-skin="b"] {
+    background-image: radial-gradient(1100px 520px at 50% -12%, rgba(250, 204, 21, 0.16), transparent 60%);
+}
+
+body[data-skin="b"] .card {
+    border: 3px solid #f5e7d4;
+    box-shadow: var(--shadow-panel);
+}
+
+body[data-skin="b"] .card h2 { font-weight: 700; font-size: 27px; letter-spacing: -0.02em; }
+
+body[data-skin="b"] .btn {
+    font-weight: 700;
+    box-shadow: none;
+}
+
+body[data-skin="b"] .btn--primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: var(--shadow-btn);
+}
+
+body[data-skin="b"] .btn--primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
+body[data-skin="b"] .btn--primary:active { transform: translateY(1px); box-shadow: 0 2px 0 rgba(154, 52, 18, 0.28); }
+
+body[data-skin="b"] .btn--ghost {
+    background: var(--bg-surface);
+    border: 2.5px solid var(--border-weak);
+    box-shadow: 0 3px 0 rgba(196, 148, 100, 0.18);
+}
+
+body[data-skin="b"] .input, body[data-skin="b"] .input-wrap .input {
+    border: 2.5px solid var(--border-weak);
+    background: #fffdf8;
+    box-shadow: inset 0 2px 6px rgba(154, 82, 34, 0.06);
+}
+
+body[data-skin="b"] .input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-subtle);
+}
+
+body[data-skin="b"] .brand__tile { border-radius: 12px; background: linear-gradient(135deg, #ea580c, #f59e0b); }
+body[data-skin="b"] .brand__name { font-weight: 800; letter-spacing: -0.02em; }
+
+body[data-skin="b"] .stepper__dot { box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.08); }
+body[data-skin="b"] .stepper li.is-active .stepper__dot { box-shadow: 0 4px 12px -2px rgba(234, 88, 12, 0.5); }
+
+body[data-skin="b"] .req { border: 2.5px solid #f5e7d4; box-shadow: 0 3px 0 rgba(196, 148, 100, 0.14); }
+body[data-skin="b"] .req::before { display: none; }
+
+body[data-skin="b"] .checkbox--notice { background: var(--accent-subtle); }
+
+body[data-skin="b"] .license { border: 2.5px dashed var(--border-weak); }
+
+body[data-skin="b"] .alert--info { background: #fef3c7; color: #92400e; }
+
+/* ============================================================================
+   SKIN C — Premium Minimal
+   Благородный свет: почти чёрный + золото, Playfair Display + Jost, стекло.
+   ========================================================================== */
+
+body[data-skin="c"] {
+    --font-display: "Playfair Display", Georgia, serif;
+    --font-text: "Jost", "Golos Text", Roboto, Arial, sans-serif;
+
+    --bg-canvas: #fafaf9;
+    --bg-surface: rgba(255, 255, 255, 0.78);
+    --bg-surface-hover: #f5f5f4;
+    --bg-tertiary: #efedeb;
+
+    --text-primary: #1c1917;
+    --text-secondary: #57534e;
+    --text-tertiary: #79716b;
+    --text-disabled: #c9c3bd;
+
+    --accent: #a16207;
+    --accent-hover: #854d0e;
+    --accent-deep: #713f12;
+    --accent-subtle: rgba(161, 98, 7, 0.10);
+    --positive: #15803d;
+    --positive-subtle: #f0fdf4;
+    --negative: #b91c1c;
+    --negative-subtle: #fef2f2;
+    --warning: #b45309;
+    --warning-subtle: #fffbeb;
+    --inverse: #1c1917;
+
+    --divider: #e7e5e4;
+    --border-weak: #d6d3d1;
+
+    --radius-panel: 18px;
+    --radius-input: 12px;
+    --radius-btn: 12px;
+    --shadow-panel: 0 1px 2px rgba(28, 25, 23, 0.05), 0 24px 60px -28px rgba(28, 25, 23, 0.22);
+    --shadow-btn: none;
+}
+
+body[data-skin="c"] {
+    background-image:
+        radial-gradient(1000px 500px at 80% -10%, rgba(161, 98, 7, 0.06), transparent 55%),
+        radial-gradient(700px 400px at 5% 100%, rgba(28, 25, 23, 0.05), transparent 60%);
+}
+
+body[data-skin="c"] .topbar {
+    background: rgba(250, 250, 249, 0.72);
+    border-bottom: 1px solid var(--divider);
+}
+
+body[data-skin="c"] .card {
+    background: var(--bg-surface);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(28, 25, 23, 0.08);
+}
+
+body[data-skin="c"] .card h2 {
+    font: 600 30px/120% var(--font-display);
+    letter-spacing: 0;
+}
+
+body[data-skin="c"] .brand__tile { border-radius: 8px; background: linear-gradient(135deg, #1c1917, #57534e); }
+body[data-skin="c"] .brand__name { font: 600 21px/1 var(--font-display); letter-spacing: 0.01em; }
+
+body[data-skin="c"] .btn--primary {
+    background: var(--text-primary);
+    color: #fafaf9;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 13.5px;
+    font-weight: 500;
+}
+
+body[data-skin="c"] .btn--primary:hover { background: #000; }
+
+body[data-skin="c"] .btn--ghost {
+    border: 1px solid var(--border-weak);
+    color: var(--text-secondary);
+    letter-spacing: 0.04em;
+}
+
+body[data-skin="c"] .field__label { letter-spacing: 0.05em; text-transform: uppercase; font-size: 11.5px; color: var(--text-tertiary); }
+
+body[data-skin="c"] .group-title { font-family: var(--font-display); font-size: 17px; text-transform: none; letter-spacing: 0.02em; color: var(--accent); }
+
+body[data-skin="c"] .input, body[data-skin="c"] .input-wrap .input {
+    background: rgba(255, 255, 255, 0.66);
+    border: 1px solid var(--border-weak);
+}
+
+body[data-skin="c"] .req {
+    border: 1px solid var(--divider);
+    background: rgba(255, 255, 255, 0.6);
+}
+
+body[data-skin="c"] .req__value { font-family: var(--font-display); font-size: 18px; }
+
+body[data-skin="c"] .badge { letter-spacing: 0.04em; }
+
+body[data-skin="c"] .segment { background: rgba(28, 25, 23, 0.05); }
+
+body[data-skin="c"] .done__icon { background: var(--accent-subtle); }
+body[data-skin="c"] .done__icon svg { stroke: var(--accent); }
+
+body[data-skin="c"] .footer { letter-spacing: 0.08em; text-transform: uppercase; font-size: 11.5px; }
