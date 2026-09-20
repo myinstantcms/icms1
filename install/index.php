@@ -263,7 +263,8 @@ $steps = array(
     <link type='text/css' href='/install/css/installer.css' rel='stylesheet' media='screen' />
 </head>
 <body>
-<div class="shell">
+<div class="shell<?php echo $installed ? ' shell--done' : ''; ?>">
+    <?php if (!$installed) { ?>
     <aside class="side">
         <div class="side__brand">
             <span class="side__logo" aria-hidden="true">
@@ -273,7 +274,6 @@ $steps = array(
         </div>
         <div class="side__sub"><?php echo $_LANG['INS_INSTALL_SUBTITLE']; ?></div>
 
-        <?php if (!$installed) { ?>
         <ol class="vsteps" id="stepper">
             <?php foreach ($steps as $num => $s) { ?>
             <li data-step="<?php echo $num; ?>" class="<?php echo $num === 1 ? 'is-active' : ''; ?>">
@@ -323,8 +323,8 @@ $steps = array(
             <b>InstantCMS <?php echo CORE_VERSION; ?></b>
             <span><?php echo $_LANG['INS_SIDE_FOOT']; ?></span>
         </div>
-        <?php } ?>
     </aside>
+    <?php } ?>
 
     <main class="content">
         <div class="content__top">
@@ -534,29 +534,34 @@ $steps = array(
                 <h1><?php echo $_LANG['INS_STEP4_TITLE']; ?></h1>
                 <p class="lead"><?php echo $_LANG['INS_SITE_STEP_HINT']; ?></p>
 
+                <div class="group-title"><?php echo $_LANG['INS_GROUP_SITE']; ?></div>
+
                 <div class="field">
                     <label class="field__label" for="f-sitename"><?php echo $_LANG['INS_FORM_SITE']; ?></label>
                     <input class="input" id="f-sitename" name="sitename" type="text" value="<?php echo $_LANG['CFG_SITENAME']; ?>">
+                    <span class="field__error" aria-live="polite"></span>
                 </div>
 
-                <div class="grid-2">
-                    <div class="field">
-                        <label class="field__label" for="f-login"><?php echo $_LANG['INS_FORM_LOGIN']; ?></label>
-                        <input class="input" id="f-login" name="admin_login" type="text" value="admin" autocomplete="username" data-pattern="^[A-Za-z0-9_\-]{3,}$" data-error="<?php echo $_LANG['INS_ADMIN_LOGIN_INVALID']; ?>">
-                        <span class="field__error" aria-live="polite"></span>
+                <div class="field">
+                    <span class="field__label"><?php echo $_LANG['INS_FORM_DEMO']; ?></span>
+                    <div class="segment">
+                        <?php if ($sqldumpdemo != $sqldumpempty) { ?>
+                        <label class="segment__opt"><input type="radio" name="demodata" value="1" checked><span><?php echo $_LANG['YES']; ?></span></label>
+                        <label class="segment__opt"><input type="radio" name="demodata" value="0"><span><?php echo $_LANG['NO']; ?></span></label>
+                        <?php } else { ?>
+                        <label class="segment__opt"><input type="radio" name="demodata" value="1" disabled><span><?php echo $_LANG['YES']; ?></span></label>
+                        <label class="segment__opt"><input type="radio" name="demodata" value="0" checked disabled><span><?php echo $_LANG['NO']; ?></span></label>
+                        <?php } ?>
                     </div>
-                    <div class="field">
-                        <span class="field__label"><?php echo $_LANG['INS_FORM_DEMO']; ?></span>
-                        <div class="segment">
-                            <?php if ($sqldumpdemo != $sqldumpempty) { ?>
-                            <label class="segment__opt"><input type="radio" name="demodata" value="1" checked><span><?php echo $_LANG['YES']; ?></span></label>
-                            <label class="segment__opt"><input type="radio" name="demodata" value="0"><span><?php echo $_LANG['NO']; ?></span></label>
-                            <?php } else { ?>
-                            <label class="segment__opt"><input type="radio" name="demodata" value="1" disabled><span><?php echo $_LANG['YES']; ?></span></label>
-                            <label class="segment__opt"><input type="radio" name="demodata" value="0" checked disabled><span><?php echo $_LANG['NO']; ?></span></label>
-                            <?php } ?>
-                        </div>
-                    </div>
+                    <div class="field__hint"><?php echo $_LANG['INS_DEMO_HINT']; ?></div>
+                </div>
+
+                <div class="group-title"><?php echo $_LANG['INS_GROUP_ADMIN']; ?></div>
+
+                <div class="field field--narrow">
+                    <label class="field__label" for="f-login"><?php echo $_LANG['INS_FORM_LOGIN']; ?></label>
+                    <input class="input" id="f-login" name="admin_login" type="text" value="admin" autocomplete="username" data-pattern="^[A-Za-z0-9_\-]{3,}$" data-error="<?php echo $_LANG['INS_ADMIN_LOGIN_INVALID']; ?>">
+                    <span class="field__error" aria-live="polite"></span>
                 </div>
 
                 <div class="grid-2">
@@ -568,16 +573,7 @@ $steps = array(
                                 <svg class="ico" viewBox="0 0 24 24"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>
                             </button>
                         </div>
-                        <div class="passmeter" id="passmeter" aria-hidden="true">
-                            <div class="passmeter__bar"><i></i><i></i><i></i></div>
-                            <span class="passmeter__text"></span>
-                        </div>
-                        <ul class="passrules" id="passrules">
-                            <li data-rule="len"><?php echo $_LANG['INS_PASS_RULE_LEN']; ?></li>
-                            <li data-rule="letter"><?php echo $_LANG['INS_PASS_RULE_LETTER']; ?></li>
-                            <li data-rule="digit"><?php echo $_LANG['INS_PASS_RULE_DIGIT']; ?></li>
-                            <li data-rule="match"><?php echo $_LANG['INS_PASS_RULE_MATCH']; ?></li>
-                        </ul>
+                        <span class="field__error" aria-live="polite"></span>
                     </div>
                     <div class="field">
                         <label class="field__label" for="f-pass2"><?php echo $_LANG['INS_ADMIN_PASS_REPEAT']; ?></label>
@@ -590,6 +586,17 @@ $steps = array(
                         <span class="field__error" aria-live="polite"></span>
                     </div>
                 </div>
+
+                <div class="passmeter" id="passmeter" aria-hidden="true">
+                    <div class="passmeter__bar"><i></i><i></i><i></i></div>
+                    <span class="passmeter__text"></span>
+                </div>
+                <ul class="passrules" id="passrules">
+                    <li data-rule="len"><?php echo $_LANG['INS_PASS_RULE_LEN']; ?></li>
+                    <li data-rule="letter"><?php echo $_LANG['INS_PASS_RULE_LETTER']; ?></li>
+                    <li data-rule="digit"><?php echo $_LANG['INS_PASS_RULE_DIGIT']; ?></li>
+                    <li data-rule="match"><?php echo $_LANG['INS_PASS_RULE_MATCH']; ?></li>
+                </ul>
 
                 <div class="actions">
                     <button type="button" class="btn btn--ghost" data-nav="back">
@@ -642,7 +649,7 @@ $steps = array(
                 <a class="btn btn--ghost" target="_blank" href="http://www.instantcms.ru/wiki/doku.php"><?php echo $_LANG['INS_GO_HANDBOOK']; ?></a>
                 <a class="btn btn--ghost" target="_blank" href="https://github.com/myinstantcms/icms1">GitHub</a>
             </div>
-            <div class="panel" style="margin-top:32px;text-align:left">
+            <div class="panel panel--cron">
                 <div class="panel__title"><?php echo $_LANG['INS_CRON_TODO']; ?></div>
                 <p class="text"><?php echo $_LANG['INS_CRON_NOTES']; ?></p>
                 <pre class="code"><?php echo $php_path ? $php_path : 'php'; ?> -f <?php echo PATH; ?>/cron.php <?php echo $_SERVER['HTTP_HOST']; ?> > /dev/null</pre>

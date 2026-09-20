@@ -60,7 +60,7 @@ $_LANG['INS_ATTENTION']                  = 'Attention!';
 $_LANG['INS_DELETE_TODO']                = 'Before proceeding you want to remove directories "install" and "migrate" from server with all files inside them!';
 $_LANG['INS_GO_SITE']                    = 'Go to site';
 $_LANG['INS_GO_CP']                      = 'Control Panel';
-$_LANG['INS_GO_HANDBOOK']                = 'Handbook for beginners';
+$_LANG['INS_GO_HANDBOOK']                = 'Handbook';
 $_LANG['INS_GO_ADDONS']                  = 'Addons';
 $_LANG['INS_NEXT']                       = 'Next';
 $_LANG['INS_BACK']                       = 'Back';
@@ -136,3 +136,8 @@ $_LANG['INS_DB_STEP_TITLE']        = 'Database connection';
 $_LANG['INS_DB_STEP_HINT']         = 'Enter the MySQL server parameters — the connection is checked automatically and a missing database will be created.';
 $_LANG['INS_SITE_STEP_HINT']       = 'Basic site parameters and the administrator account.';
 $_LANG['INS_FINISH_HINT']          = 'We will create the tables, import the data and sign you in to the control panel.';
+
+// Step 4 groups
+$_LANG['INS_GROUP_SITE']           = 'Site';
+$_LANG['INS_GROUP_ADMIN']          = 'Administrator';
+$_LANG['INS_DEMO_HINT']            = 'Demo mode fills the site with sample articles, photos and posts so you can see the system in action. A clean install creates only what is required.';

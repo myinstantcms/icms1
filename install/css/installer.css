@@ -272,6 +272,24 @@ body[data-theme="dark"] .ico-moon { display: none; }
 
 .lead { font-size: 15px; line-height: 22px; color: var(--text-2); margin-bottom: 14px; }
 
+.group-title {
+    font: 600 11.5px/1.2 var(--font);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--text-3);
+    margin: 20px 0 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+}
+
+.group-title:first-of-type { margin-top: 4px; padding-top: 0; border-top: 0; }
+
+.field--narrow { max-width: 340px; }
+
+.field__hint { font-size: 12.5px; line-height: 18px; color: var(--text-3); margin-top: 6px; }
+
+.grid-2 + .passmeter { margin-top: 12px; }
+
 .hero { display: flex; justify-content: center; padding: 0 0 6px; }
 .hero svg { width: 100%; max-width: 230px; height: auto; }
 
@@ -608,12 +626,16 @@ body[data-theme="dark"] .ico-moon { display: none; }
 
 /* ------------------------------------------------------------------ готово */
 
-.done { text-align: center; padding-top: 8px; }
+.shell--done { max-width: 880px; min-height: 0; }
+
+.shell--done .content { padding: 40px 48px 36px; }
+
+.done { max-width: 660px; margin: 0 auto; text-align: center; padding-top: 0; }
 
 .done__icon {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 14px;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 12px;
     border-radius: 50%;
     background: var(--green-soft);
     display: flex;
@@ -627,10 +649,18 @@ body[data-theme="dark"] .ico-moon { display: none; }
     to { transform: scale(1); opacity: 1; }
 }
 
-.done__icon svg { width: 32px; height: 32px; fill: none; stroke: var(--green); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.done__icon svg { width: 28px; height: 28px; fill: none; stroke: var(--green); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
 
-.done h1 { font-size: 26px; }
-.done__links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.done h1 { font-size: 23px; line-height: 1.25; margin-bottom: 2px; letter-spacing: -0.01em; }
+.done__links { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+
+.done__links .btn { height: 40px; padding: 0 16px; font-size: 13.5px; border-radius: 10px; gap: 6px; }
+.done__links .btn--primary { box-shadow: none; }
+
+.panel--cron { margin-top: 20px; text-align: left; }
+.panel--cron .panel__title { margin-bottom: 6px; }
+.panel--cron .text { font-size: 13.5px; line-height: 20px; }
+.panel--cron .code { margin-top: 8px; font-size: 12px; padding: 10px 12px; }
 
 .code {
     background: var(--content);
