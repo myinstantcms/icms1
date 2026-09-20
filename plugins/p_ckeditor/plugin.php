@@ -61,13 +61,13 @@ class p_ckeditor extends cmsPlugin {
                     if(typeof CKEDITOR == 'undefined') {
                         script = document.createElement('script');
                         script.type = 'text/javascript';
-                        script.src  = '/plugins/p_ckeditor/editor/ckeditor.js';
+                        script.src  = '/plugins/p_ckeditor/editor/ckeditor.js?v=4.22.1';
                         $('head').append(script);
                     }
 
                     <?php echo ($this->config['is_compatible'] ? 'CKEDITOR.env.isCompatible = true;' : ''); ?>
                     CKEDITOR.replace("<?php echo $item['name']; ?>",{
-                        customConfig : "/plugins/p_ckeditor/editor/config/<?php echo $access; ?>_<?php echo $item['toolbar']; ?>.js",
+                        customConfig : "/plugins/p_ckeditor/editor/config/<?php echo $access; ?>_<?php echo $item['toolbar']; ?>.js?t=<?php echo @filemtime(PATH.'/plugins/p_ckeditor/editor/config/'.$access.'_'.$item['toolbar'].'.js'); ?>",
                         skin: "<?php echo $this->config['skin']; ?>",
                         width: "<?php echo $width; ?>",
                         height: "<?php echo $height; ?>",

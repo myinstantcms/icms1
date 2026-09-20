@@ -17,4 +17,6 @@ CKEDITOR.editorConfig = function( config ) {
     config.allowedContent = true;
     config.removeButtons = 'Cut,Copy,Paste';
     config.removeDialogTabs = 'link:advanced';
+    // дополнительно: авто-вставка медиа по ссылке + карта с точкой (legacy-плагин CMS)
+    config.extraPlugins = 'autoembed,locationmap';
 };
