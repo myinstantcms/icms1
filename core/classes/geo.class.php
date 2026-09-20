@@ -42,7 +42,7 @@ class cmsgeo {
         if(!empty(self::$data[$ip])){
             $data = self::$data[$ip];
         } elseif($cookie_data && $cache){
-            $data = unserialize($cookie_data);
+            $data = json_decode($cookie_data, true);
             if(is_array($data)){
                 $data = cmsCore::cleanVar($data, 'array_str', null);
             } else {
@@ -63,7 +63,7 @@ class cmsgeo {
             self::$data[$ip] = $data;
             // и в куки на сутки
             if($cache){
-                cmsCore::setCookie('geodata', serialize($data), time()+3600*24);
+                cmsCore::setCookie('geodata', json_encode($data), time()+3600*24);
             }
 
         }
