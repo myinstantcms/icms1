@@ -77,12 +77,13 @@ function install_db_check() {
     $user   = trim(cmsCore::request('db_user', 'html', ''));
     $pass   = cmsCore::request('db_password', 'html', '');
     $base   = trim(cmsCore::request('db_base', 'html', ''));
-    $create = cmsCore::request('db_create', 'int') ? true : false;
+    // база создаётся автоматически, если её нет (отдельная галочка больше не нужна)
+    $create = cmsCore::request('db_create', 'int', 1) ? true : false;
 
     if (!$host || !$user || !$base) {
         return array('status' => 'error', 'message' => $_LANG['INS_DB_HOST_EMPTY']);
     }
-    if (!preg_match('/^[A-Za-z0-9_\-]{1,64}$/', $base)) {
+    if (!preg_match('/^[A-Za-z0-9_\-.\$]{1,64}$/', $base)) {
         return array('status' => 'error', 'message' => $_LANG['INS_DB_NAME_INVALID']);
     }
 
@@ -501,19 +502,12 @@ $steps = array(
                     </div>
                     <div class="field">
                         <label class="field__label" for="f-dbbase"><?php echo $_LANG['INS_FORM_BDNAME']; ?></label>
-                        <input class="input" id="f-dbbase" name="db_base" type="text" autocomplete="off" data-pattern="^[A-Za-z0-9_\-]{1,64}$" data-error="<?php echo $_LANG['INS_DB_NAME_INVALID']; ?>">
+                        <input class="input" id="f-dbbase" name="db_base" type="text" autocomplete="off" data-pattern="^[A-Za-z0-9_\-.$]{1,64}$" data-error="<?php echo $_LANG['INS_DB_NAME_INVALID']; ?>">
                         <span class="field__error" aria-live="polite"></span>
                     </div>
                 </div>
 
-                <label class="checkbox checkbox--notice">
-                    <input type="checkbox" id="f-dbcreate" name="db_create" value="1">
-                    <span class="checkbox__box" aria-hidden="true"><svg viewBox="0 0 12 10"><path d="M1 5.5 4.2 8.5 11 1.5"/></svg></span>
-                    <span><?php echo $_LANG['INS_DB_CREATE']; ?></span>
-                </label>
-
                 <div class="dbcheck">
-                    <button type="button" class="btn btn--ghost" id="btn-dbcheck"><?php echo $_LANG['INS_DB_CHECK']; ?></button>
                     <span class="dbcheck__result" id="dbcheck-result" aria-live="polite"></span>
                 </div>
 
@@ -528,7 +522,7 @@ $steps = array(
                         <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
                         <?php echo $_LANG['INS_BACK']; ?>
                     </button>
-                    <button type="button" class="btn btn--primary" data-nav="next" disabled>
+                    <button type="button" class="btn btn--primary" data-nav="next">
                         <?php echo $_LANG['INS_NEXT']; ?>
                         <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                     </button>

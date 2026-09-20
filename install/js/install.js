@@ -59,7 +59,15 @@
             li.classList.toggle('is-active', num === n);
             li.classList.toggle('is-done', num < n);
         });
-        if (n === 3) { updateDbGate(); }
+        if (n === 3) {
+            updateDbGate();
+            var h = document.getElementById('f-dbserver');
+            var u = document.getElementById('f-dbuser');
+            var b = document.getElementById('f-dbbase');
+            if (h && u && b && h.value.trim() && u.value.trim() && b.value.trim() && !dbOk) {
+                dbCheck();
+            }
+        }
         if (n === 5) { buildSummary(); }
         var active = stepEl(n);
         if (active && active.scrollIntoView) {
@@ -75,7 +83,12 @@
             var agree = document.getElementById('license_agree');
             if (agree && !agree.checked) { return false; }
         }
-        if (current === 3 && !dbOk) { return false; }
+        if (current === 3 && !dbOk) {
+            // проверка идёт автоматически; если «Далее» уже нажали — продолжим после успеха
+            pendingAdvance = true;
+            dbCheck();
+            return false;
+        }
         if (current === 4 && !validateSite()) { return false; }
         return true;
     }
@@ -236,20 +249,21 @@
     /* ------------------------------------------------------------- проверка БД */
 
     var dbcheckTimer = null;
+    var pendingAdvance = false;
 
     function updateDbGate() {
-        var nb = nextBtn(stepEl(3));
-        if (nb) { nb.disabled = !dbOk; }
+        if (dbOk && pendingAdvance) {
+            pendingAdvance = false;
+            showStep(4);
+        }
     }
 
     function dbCheck() {
         var result = document.getElementById('dbcheck-result');
-        var btn = document.getElementById('btn-dbcheck');
         var host = document.getElementById('f-dbserver');
         var user = document.getElementById('f-dbuser');
         var dbpass = document.getElementById('f-dbpass');
         var base = document.getElementById('f-dbbase');
-        var create = document.getElementById('f-dbcreate');
         if (!host || !user || !base) { return; }
 
         var data = new URLSearchParams();
@@ -258,13 +272,12 @@
         data.set('db_user', user.value.trim());
         data.set('db_password', dbpass ? dbpass.value : '');
         data.set('db_base', base.value.trim());
-        data.set('db_create', create && create.checked ? '1' : '0');
+        data.set('db_create', '1'); // отсутствующая база создаётся автоматически
 
         if (result) {
             result.className = 'dbcheck__result is-checking';
             result.textContent = L.dbChecking || '...';
         }
-        if (btn) { btn.disabled = true; }
 
         fetch('/install/', {
             method: 'POST',
@@ -281,20 +294,15 @@
             dbOk = false;
             if (result) { result.className = 'dbcheck__result is-error'; result.textContent = 'Network error'; }
             updateDbGate();
-        }).finally(function () {
-            if (btn) { btn.disabled = false; }
         });
     }
 
     function initDbCheck() {
-        var btn = document.getElementById('btn-dbcheck');
-        var fields = ['f-dbserver', 'f-dbuser', 'f-dbpass', 'f-dbbase', 'f-dbcreate'];
+        var fields = ['f-dbserver', 'f-dbuser', 'f-dbpass', 'f-dbbase'];
         var present = fields.every(function (id) { return document.getElementById(id); });
-        if (!btn || !present) { return; }
+        if (!present) { return; }
 
-        btn.addEventListener('click', dbCheck);
-
-        var create = document.getElementById('f-dbcreate');
+        // соединение проверяется автоматически; отсутствующая база создаётся сразу
         ['f-dbserver', 'f-dbuser', 'f-dbpass', 'f-dbbase'].forEach(function (id) {
             document.getElementById(id).addEventListener('input', function () {
                 dbOk = false;
@@ -305,15 +313,9 @@
                     var user = document.getElementById('f-dbuser').value.trim();
                     var base = document.getElementById('f-dbbase').value.trim();
                     if (host && user && base) { dbCheck(); }
-                }, 800);
+                }, 700);
             });
         });
-        if (create) {
-            create.addEventListener('change', function () {
-                var base = document.getElementById('f-dbbase').value.trim();
-                if (base) { dbCheck(); }
-            });
-        }
     }
 
     /* ------------------------------------------------------------- сводка */
