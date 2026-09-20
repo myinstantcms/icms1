@@ -15,6 +15,7 @@
 class p_tinymce extends cmsPlugin {
 
     public $config = array(
+        'skin'                   => 'tinymce-5',
         'iswatermark'            => 0,
         'photo_width'            => 600,
         'photo_height'           => 600,
@@ -77,8 +78,8 @@ class p_tinymce extends cmsPlugin {
                     menubar: false,
                     branding: false,
                     promotion: false,
-                    // компактная панель: классический скин, одна строка кнопок, без статус-строки
-                    skin: 'tinymce-5',
+                    // готовый скин редактора (выбирается в настройках плагина), одна строка панели
+                    skin: <?php echo json_encode($this->config['skin'] ? $this->config['skin'] : 'tinymce-5'); ?>,
                     toolbar_mode: 'sliding',
                     statusbar: false,
                     resize: true,
@@ -136,14 +137,6 @@ class p_tinymce extends cmsPlugin {
                 else { window.__icmsTmceQueue.push(fn); }
             }
 
-            if (!window.__icmsTmceCss) {
-                window.__icmsTmceCss = true;
-                var css = document.createElement('link');
-                css.rel = 'stylesheet';
-                css.href = '/plugins/p_tinymce/tinymce/icms-compact.css';
-                document.head.appendChild(css);
-            }
-
             if (typeof tinymce === 'undefined' && !window.__icmsTmceLoading) {
                 window.__icmsTmceLoading = true;
                 var script = document.createElement('script');
@@ -183,9 +176,10 @@ class p_tinymce extends cmsPlugin {
             return 'undo redo | bold italic underline | bullist numlist | link image | removeformat code';
         }
 
-        return 'undo redo | formatselect | bold italic underline strikethrough | forecolor backcolor | '
-             . 'alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | '
-             . 'link image media table | blockquote hr charmap insertdatetime | removeformat | code fullscreen preview';
+        // набор подобран так, чтобы панель занимала одну строку
+        return 'undo redo | formatselect | bold italic underline strikethrough | '
+             . 'alignleft aligncenter alignright | bullist numlist outdent indent | '
+             . 'link image table | removeformat | code fullscreen';
     }
 
     public function canUpload(){

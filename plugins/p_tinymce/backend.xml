@@ -11,5 +11,11 @@
         <param type="number" name="photo_width" default="600" units="px" />
         <param type="number" name="photo_height" default="600" units="px" />
         <param type="flag" name="iswatermark" default="off" />
+        <param type="list" name="skin">
+            <option value="tinymce-5" />
+            <option value="oxide" />
+            <option value="tinymce-5-dark" />
+            <option value="oxide-dark" />
+        </param>
     </params>
 </backend>
