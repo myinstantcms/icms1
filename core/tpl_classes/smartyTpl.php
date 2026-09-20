@@ -41,7 +41,7 @@ class smartyTpl{
             return self::$i_smarty;
         }
 
-        cmsCore::includeFile('/includes/smarty/libs/Smarty.class.php');
+        cmsCore::includeFile('/includes/smarty/Smarty.class.php');
 
         $smarty = new Smarty();
 
