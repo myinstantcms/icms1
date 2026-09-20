@@ -296,7 +296,7 @@ class cms_model_search{
 			$set .= "{$field} = '{$this->inDB->escape_string($value)}',";
 		}
 
-		$set = rtrim($set, ',');
+		$set = rtrim((string)$set, ',');
 
 		$this->inDB->query("INSERT INTO cms_search SET {$set}");
 
@@ -406,7 +406,7 @@ class cms_model_search{
 		if(!$text) { return ''; }
 
 		// убираем ненужное с текста
-		$text = strip_tags($text);
+		$text = strip_tags((string)$text);
 		$text = preg_replace('/\s+/u', ' ', $text);
 
 		// формируем массив предложений из текста
@@ -548,7 +548,7 @@ class cms_model_search{
 		// любое слово
 		if ($this->look == 'anyword'){
 			foreach($words as $w){
-				$w = trim($w);
+				$w = trim((string)$w);
 				if(mb_strlen($w)>3){
 					if(mb_strlen($w)==4){
 						$this->against .= $w.'* ';
@@ -566,7 +566,7 @@ class cms_model_search{
 			$this->against  = '>\"'.$this->query.'\" ';
 			$this->against .= '<(';
 			foreach($words as $w){
-				$w = trim($w);
+				$w = trim((string)$w);
 				if(mb_strlen($w)>3){
 					if(mb_strlen($w)==4){
 						$this->against .= '+'.$w.'* ';

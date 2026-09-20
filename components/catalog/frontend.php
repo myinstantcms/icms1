@@ -35,7 +35,7 @@ function getAlphaList($cat_id){
         $html .= '<div class="uc_alpha_list">';
         while($a = $inDB->fetch_assoc($result)){
 			if(preg_match('/^([a-zA-Zа-яёіїєґА-ЯЁІЇЄҐ0-9]+)$/ui', $a['first_letter'])){
-            	$html .= '<a class="uc_alpha_link" href="/catalog/'.$cat_id.'/find-first/'.urlencode($a['first_letter']).'" title="'.$_LANG['ARTICLES'].': '.$a['num'].'">'.$a['first_letter'].'</a>';
+            	$html .= '<a class="uc_alpha_link" href="/catalog/'.$cat_id.'/find-first/'.urlencode((string)$a['first_letter']).'" title="'.$_LANG['ARTICLES'].': '.$a['num'].'">'.$a['first_letter'].'</a>';
 			}
         }
         $html .= '</div>';
@@ -143,7 +143,7 @@ function tagsList($cat_id){
     $result = $inDB->query($sql) ;
     if ($inDB->num_rows($result)>0){
         while($tag = $inDB->fetch_assoc($result)){
-            $html .= '<a href="#" onclick="addTag(\''.mb_strtolower($tag['tag']).'\')">'.mb_strtolower($tag['tag']).'</a> ('.$tag['num'].') ';
+            $html .= '<a href="#" onclick="addTag(\''.mb_strtolower((string)$tag['tag']).'\')">'.mb_strtolower((string)$tag['tag']).'</a> ('.$tag['num'].') ';
         }
     }
     return $html;
@@ -157,8 +157,8 @@ function tagLine($tagstr, $cat_id){
     $tags = explode(',', $tagstr);
     $num = 0;
     foreach($tags as $key=>$value){
-        $value = mb_strtolower($value);
-        $html .= '<a href="/catalog/'.$cat_id.'/tag/'.urlencode($value).'">'.$value.'</a>';
+        $value = mb_strtolower((string)$value);
+        $html .= '<a href="/catalog/'.$cat_id.'/tag/'.urlencode((string)$value).'">'.$value.'</a>';
         if ($num < sizeof($tags)-1) { $html .= ', '; $num++; }
     }
     return $html;
@@ -330,7 +330,7 @@ function catalog(){
                     if (mb_strstr($value, '/~m~/')) {
                         $value = str_replace('/~m~/', '', $value);
                     }
-                    $fstruct_ready[stripslashes($key)] = stripslashes($value);
+                    $fstruct_ready[stripslashes((string)$key)] = stripslashes((string)$value);
                 }
 
                 //searchform
@@ -380,7 +380,7 @@ function catalog(){
         $do = 'cat';
         $advsearch = 0;
 
-		$query = stripslashes($query);
+		$query = stripslashes((string)$query);
 
         $pagemode = 'find';
     }
@@ -495,7 +495,7 @@ function catalog(){
             if ($advsearch){
                 $search_details = '<div class="uc_queryform"><strong>'.$_LANG['SEARCH_RESULT'].' - </strong> '.$_LANG['FOUNDED'].': '.$itemscount.' | <a href="/catalog/'.$cat['id'].'">'.$_LANG['CANCEL_SEARCH'].'</a></div>';
             } else {
-                $search_details = '<div class="uc_queryform"><strong>'.$_LANG['SEARCH_BY_TAG'].'</strong> "'.htmlspecialchars(icms_ucfirst(stripslashes($query))).'" ('.$_LANG['MATCHES'].': '.$itemscount.') <a href="/catalog/'.$cat['id'].'">'.$_LANG['CANCEL_SEARCH'].'</a></div>';
+                $search_details = '<div class="uc_queryform"><strong>'.$_LANG['SEARCH_BY_TAG'].'</strong> "'.htmlspecialchars(icms_ucfirst(stripslashes((string)$query))).'" ('.$_LANG['MATCHES'].': '.$itemscount.') <a href="/catalog/'.$cat['id'].'">'.$_LANG['CANCEL_SEARCH'].'</a></div>';
             }
         }
 
@@ -543,7 +543,7 @@ function catalog(){
                             if (isset($query)) { if (mb_stristr($field, $query)) { $field .= '<span class="uc_findsame"> &larr; <i>'.$_LANG['MATCHE'].'</i></span>';} }
                             $fields_show++;
 
-                            $item['fields'][stripslashes($value)] = stripslashes($field);
+                            $item['fields'][stripslashes((string)$value)] = stripslashes((string)$field);
 
                         }
 
@@ -559,11 +559,11 @@ function catalog(){
         } else {
 
             if ($pagemode=='findfirst'){
-                $pagebar = cmsPage::getPagebar($itemscount, $page, $perpage, '/catalog/'.$id.'-%page%/find-first/'.urlencode(urlencode($query)));
+                $pagebar = cmsPage::getPagebar($itemscount, $page, $perpage, '/catalog/'.$id.'-%page%/find-first/'.urlencode(urlencode((string)$query)));
             }
 
             if ($pagemode=='find'){
-                $pagebar = cmsPage::getPagebar($itemscount, $page, $perpage, '/catalog/'.$id.'-%page%/find/'.urlencode(urlencode($query)));
+                $pagebar = cmsPage::getPagebar($itemscount, $page, $perpage, '/catalog/'.$id.'-%page%/find/'.urlencode(urlencode((string)$query)));
             }
 
         }
@@ -574,7 +574,7 @@ function catalog(){
             // meta description
             if($cat['meta_desc']){
                 $meta_desc = $cat['meta_desc'];
-            } elseif(mb_strlen(strip_tags($cat['description']))>=250){
+            } elseif(mb_strlen(strip_tags((string)$cat['description']))>=250){
                 $meta_desc = crop($cat['description']);
             } else {
                 $meta_desc = $cat['title'];
@@ -694,7 +694,7 @@ function catalog(){
                                         }
                                     }
                                 }
-                                $field =  stripslashes($field);
+                                $field =  stripslashes((string)$field);
                             }
                         } else {
                             if ($makelink) {
@@ -703,7 +703,7 @@ function catalog(){
                         }
 
                     }
-                    $fields[stripslashes($value)] = stripslashes($field);
+                    $fields[stripslashes((string)$value)] = stripslashes((string)$field);
                 }
             }
         }
@@ -854,12 +854,12 @@ function catalog(){
             if (mb_strstr($value, '/~m~/')) { $makelink = true; $value=str_replace('/~m~/', '', $value); }
             else { $makelink = false; }
 
-            $next['ftype']    = stripslashes($ftype);
-            $next['title']    = stripslashes($value);
-            $next['makelink'] = stripslashes($makelink);
+            $next['ftype']    = stripslashes((string)$ftype);
+            $next['title']    = stripslashes((string)$value);
+            $next['makelink'] = stripslashes((string)$makelink);
 
             if (!empty($fdata[$f_id])){
-                $next['value']  = stripslashes($fdata[$f_id]);
+                $next['value']  = stripslashes((string)$fdata[$f_id]);
             } else {
                 $next['value']  = '';
             }

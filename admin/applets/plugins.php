@@ -168,7 +168,7 @@ function applet_plugins(){
             echo '<table class="proptable" width="605" cellpadding="8" cellspacing="0" border="0">';
                 foreach ($config as $field=>$value){
                     echo '<tr>';
-                        echo '<td width="150"><strong>'.(isset($_LANG[mb_strtoupper($field)]) ? $_LANG[mb_strtoupper($field)] : $field).':</strong></td>';
+                        echo '<td width="150"><strong>'.(isset($_LANG[mb_strtoupper((string)$field)]) ? $_LANG[mb_strtoupper((string)$field)] : $field).':</strong></td>';
                         echo '<td><input type="text" style="width:90%" name="config['.$field.']" value="'.htmlspecialchars((string)$value).'" /></td>';
                     echo '</tr>';
                 }

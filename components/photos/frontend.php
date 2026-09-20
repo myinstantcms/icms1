@@ -109,7 +109,7 @@ if ($do=='view'){
         // meta description
         if($album['meta_desc']){
             $meta_desc = $album['meta_desc'];
-        } elseif(mb_strlen(strip_tags($album['description']))>=250){
+        } elseif(mb_strlen(strip_tags((string)$album['description']))>=250){
             $meta_desc = crop($album['description']);
         } else {
             $meta_desc = $album['title'];
@@ -294,7 +294,7 @@ if ($do=='editphoto'){
 
 		$inPhoto->updatePhoto($mod, $photo['id']);
 
-		$description = '<a href="/photos/photo'.$photo['id'].'.html" class="act_photo"><img src="/images/photos/small/'.$mod['file'].'" alt="'.htmlspecialchars(stripslashes($mod['title'])).'" /></a>';
+		$description = '<a href="/photos/photo'.$photo['id'].'.html" class="act_photo"><img src="/images/photos/small/'.$mod['file'].'" alt="'.htmlspecialchars(stripslashes((string)$mod['title'])).'" /></a>';
 
 		cmsActions::updateLog('add_photo', array('object' => $mod['title'], 'description' => $description), $photo['id']);
 
@@ -410,7 +410,7 @@ if ($do=='publish_photo'){
 
     cmsCore::callEvent('ADD_PHOTO_DONE', $photo);
 
-	$description = '<a href="/photos/photo'.$photo['id'].'.html" class="act_photo"><img src="/images/photos/small/'.$photo['file'].'" alt="'.htmlspecialchars(stripslashes($photo['title'])).'" /></a>';
+	$description = '<a href="/photos/photo'.$photo['id'].'.html" class="act_photo"><img src="/images/photos/small/'.$photo['file'].'" alt="'.htmlspecialchars(stripslashes((string)$photo['title'])).'" /></a>';
 
 	cmsActions::log('add_photo', array(
 		  'object' => $photo['title'],

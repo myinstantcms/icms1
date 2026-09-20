@@ -14,7 +14,7 @@ if(!defined('VALID_CMS_ADMIN')) { die('ACCESS DENIED'); }
 
 function cpStripComment($text){
 
-	$text = strip_tags($text);
+	$text = strip_tags((string)$text);
 
     if (sizeof($text) < 120) { return $text; }
 

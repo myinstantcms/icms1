@@ -222,7 +222,7 @@ if(!defined('VALID_CMS_ADMIN')) { die('ACCESS DENIED'); }
 
 		$inDB->addNsCategory('cms_photo_albums', $album);
 
-		cmsCore::addSessionMessage($_LANG['AD_ALBUM'].' "'.stripslashes($album['title']).'" '.$_LANG['AD_ALBUM_CREATED'], 'success');
+		cmsCore::addSessionMessage($_LANG['AD_ALBUM'].' "'.stripslashes((string)$album['title']).'" '.$_LANG['AD_ALBUM_CREATED'], 'success');
 
 		cmsCore::redirect('?view=components&do=config&id='.$id.'&opt=list_albums');
 
@@ -238,7 +238,7 @@ if(!defined('VALID_CMS_ADMIN')) { die('ACCESS DENIED'); }
 			$album = $inDB->getNsCategory('cms_photo_albums', cmsCore::request('item_id', 'int', 0));
 			if (!$album) { cmsCore::redirect('?view=components&do=config&id='.$id.'&opt=list_albums'); }
 
-			cmsCore::addSessionMessage($_LANG['AD_ALBUM'].' "'.stripslashes($album['title']).'", '.$_LANG['AD_EMBEDED_PHOTOS_REMOVED'].'.', 'success');
+			cmsCore::addSessionMessage($_LANG['AD_ALBUM'].' "'.stripslashes((string)$album['title']).'", '.$_LANG['AD_EMBEDED_PHOTOS_REMOVED'].'.', 'success');
 
 			cmsPhoto::getInstance()->deleteAlbum($album['id'], $model->initUploadClass($album), '');
 
@@ -293,7 +293,7 @@ if(!defined('VALID_CMS_ADMIN')) { die('ACCESS DENIED'); }
         }
 
         $inDB->update('cms_photo_albums', $album, $item_id);
-        cmsCore::addSessionMessage($_LANG['AD_ALBUM'].' "'.stripslashes($album['title']).'" '.$_LANG['AD_ALBUM_SAVED'].'.', 'success');
+        cmsCore::addSessionMessage($_LANG['AD_ALBUM'].' "'.stripslashes((string)$album['title']).'" '.$_LANG['AD_ALBUM_SAVED'].'.', 'success');
         cmsCore::redirect('?view=components&do=config&id='.$id.'&opt=list_albums');
 
 	}

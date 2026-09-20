@@ -115,7 +115,7 @@ if ($do=='view'){
 		$quests = array();
 		while($con = $inDB->fetch_assoc($result)){
 			$con['pubdate'] = $inCore->dateFormat($con['pubdate'], true, false, false);
-			$con['quest']	= nl2br($con['quest']);
+			$con['quest']	= nl2br((string)$con['quest']);
 			$quests[] = $con;
 		}
 		$is_quests = true;
@@ -158,7 +158,7 @@ if ($do=='read'){
 			$quest['answerdate'] = $inCore->dateFormat($quest['answerdate'], true, false, false);
 			if (mb_strlen($quest['quest'])>40) { $shortquest = mb_substr($quest['quest'], 0, 40).'...'; }
 			else { $shortquest = $quest['quest']; }
-			$quest['quest']		 = nl2br($quest['quest']);
+			$quest['quest']		 = nl2br((string)$quest['quest']);
 
 			$inPage->setTitle($shortquest);
 			$inPage->setDescription($shortquest);
@@ -233,7 +233,7 @@ if ($do=='sendquest'){
                 'target' => $category,
                 'target_url' => '/faq/'.$category_id,
                 'target_id' => $category_id,
-                'description' => strip_tags( mb_strlen(strip_tags($message))>100 ? mb_substr($message, 0, 100) : $message )
+                'description' => strip_tags( mb_strlen(strip_tags((string)$message))>100 ? mb_substr($message, 0, 100) : $message )
             ));
             $inCore->redirect('/faq/quest'.$quest_id.'.html');
 		} else { $inCore->redirect('/faq/quest'.$quest_id.'.html'); }

@@ -208,7 +208,7 @@ class cms_model_clubs{
 
         if($club['clubtype']=='private') { return $wall_id; }
 
-		$message = strip_tags($item['content']);
+		$message = strip_tags((string)$item['content']);
 		$message = mb_strlen($message)>100 ? mb_substr($message, 0, 100) : $message;
 
 		//регистрируем событие

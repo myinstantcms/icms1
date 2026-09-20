@@ -275,8 +275,11 @@ function applet_cats(){
 			 if ($inDB->num_rows($result)){
 				$mod = $inDB->fetch_assoc($result);
 				if(@$mod['photoalbum']){
-					$mod['photoalbum'] = unserialize($mod['photoalbum']);
+					$mod['photoalbum'] = @unserialize($mod['photoalbum']);
 				}
+				// если данные не сериализованы или повреждены — работаем с пустым набором,
+				// иначе обращение к $mod['photoalbum']['...'] падает на строке (PHP 8)
+				if (!is_array($mod['photoalbum'])) { $mod['photoalbum'] = array(); }
 			 }
 
 			 echo '<h3>'.$_LANG['AD_EDIT_SECTION'].$ostatok.'</h3>';

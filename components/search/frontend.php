@@ -84,7 +84,7 @@ function search(){
                 assign('total', $total)->
                 assign('enable_components', $model->getEnableComponentsWithSupportSearch())->
                 assign('from_component', $model->from_component)->
-                assign('external_link', str_replace('%q%', urlencode($model->query), $_LANG['FIND_EXTERNAL_URL']))->
+                assign('external_link', str_replace('%q%', urlencode((string)$model->query), $_LANG['FIND_EXTERNAL_URL']))->
                 assign('host', HOST)->
                 assign('res_count', (($model->page-1)*$model->config['perpage']+1))->
                 assign('pagebar', cmsPage::getPagebar($total, $model->page, $model->config['perpage'], 'javascript:paginator(%page%)'))->
@@ -117,8 +117,8 @@ function search(){
                 assign('results', $results)->
                 assign('total', $total)->
                 assign('autocomplete_js', $inPage->getAutocompleteJS('tagsearch', 'query', false))->
-                assign('external_link', '/index.php?view=search&query='.urlencode($model->query).'&look=allwords')->
-                assign('pagebar', cmsPage::getPagebar($total, $model->page, $model->config['perpage'], '/search/tag/'.urlencode($model->query).'/page%page%.html'))->
+                assign('external_link', '/index.php?view=search&query='.urlencode((string)$model->query).'&look=allwords')->
+                assign('pagebar', cmsPage::getPagebar($total, $model->page, $model->config['perpage'], '/search/tag/'.urlencode((string)$model->query).'/page%page%.html'))->
                 display('com_search_tag.tpl');
 
 	}

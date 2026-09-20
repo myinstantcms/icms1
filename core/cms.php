@@ -732,7 +732,7 @@ class cmsCore {
             return -1;
         }
 
-        $request_uri = ltrim(urldecode(trim($_SERVER['REQUEST_URI'])), '/');
+        $request_uri = ltrim(urldecode(trim((string)$_SERVER['REQUEST_URI'])), '/');
         if (!$request_uri) { return ''; }
 
         // игнорируемые для детекта url
@@ -894,7 +894,7 @@ class cmsCore {
         if(!self::includeFile('components/'.$this->component.'/router.php')){ return false; }
 
         $routes = call_user_func('routes_'.$this->component);
-		$routes = self::callEvent('GET_ROUTE_'.strtoupper($this->component), $routes);
+		$routes = self::callEvent('GET_ROUTE_'.strtoupper((string)$this->component), $routes);
 		// Флаг удачного перебора
 		$is_found = false;
         //перебираем все маршруты
@@ -1000,9 +1000,9 @@ class cmsCore {
 
             }
 
-            if(self::isAjax()){ cmsCore::halt(cmsCore::callEvent('AFTER_COMPONENT_'.strtoupper($this->component), ob_get_clean())); }
+            if(self::isAjax()){ cmsCore::halt(cmsCore::callEvent('AFTER_COMPONENT_'.strtoupper((string)$this->component), ob_get_clean())); }
 
-            cmsPage::getInstance()->page_body = cmsCore::callEvent('AFTER_COMPONENT_'.strtoupper($this->component), ob_get_clean());
+            cmsPage::getInstance()->page_body = cmsCore::callEvent('AFTER_COMPONENT_'.strtoupper((string)$this->component), ob_get_clean());
 
             return true;
 
@@ -1247,7 +1247,7 @@ class cmsCore {
         } elseif(!empty($_SERVER['HTTP_REFERER'])) {
             $refer_host = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
             if($refer_host == $_SERVER['HTTP_HOST']){
-                $back = strip_tags($_SERVER['HTTP_REFERER']);
+                $back = strip_tags((string)$_SERVER['HTTP_REFERER']);
             }
         }
         return $back;
@@ -1713,7 +1713,7 @@ class cmsCore {
             } else {
                 $s = '';
             }
-            $html .= '<option value="'.htmlspecialchars($item[$id_field]).'" '.$s.'>'.$item[$title_field].'</option>';
+            $html .= '<option value="'.htmlspecialchars((string)$item[$id_field]).'" '.$s.'>'.$item[$title_field].'</option>';
         }
         return $html;
     }
@@ -1753,7 +1753,7 @@ class cmsCore {
                     } else {
                         $padding = '';
                     }
-                    $html .= '<option data-nsleft="'.$node['NSLeft'].'" data-nsright="'.$node['NSRight'].'" value="'.htmlspecialchars($node['id']).'" '.$s.'>'.$padding.$node['title'].'</option>';
+                    $html .= '<option data-nsleft="'.$node['NSLeft'].'" data-nsright="'.$node['NSRight'].'" value="'.htmlspecialchars((string)$node['id']).'" '.$s.'>'.$padding.$node['title'].'</option>';
                 }
             }
         }
@@ -2145,10 +2145,10 @@ class cmsCore {
         }
 
         $string = trim((string)$input);
-        $string = stripslashes($string);
-        $string = rtrim($string, ' \\');
+        $string = stripslashes((string)$string);
+        $string = rtrim((string)$string, ' \\');
         if ($strip_tags) {
-            $string = cmsDatabase::getInstance()->escape_string(strip_tags($string));
+            $string = cmsDatabase::getInstance()->escape_string(strip_tags((string)$string));
         }
         return $string;
 
@@ -2311,9 +2311,9 @@ class cmsCore {
         }
 
         // Тело сообщения в html
-        $mailer->MsgHTML(nl2br($message));
+        $mailer->MsgHTML(nl2br((string)$message));
         // Тело собщения в текстовом формате
-        $mailer->AltBody = strip_tags($message);
+        $mailer->AltBody = strip_tags((string)$message);
 
         return $mailer->Send();
 
@@ -2558,7 +2558,7 @@ class cmsCore {
     ////////////////////////////////////////////////////////////////////////////
     public static function strToURL($str, $is_cyr = false){
 
-        $str    = str_replace(' ', '-', mb_strtolower(trim($str)));
+        $str    = str_replace(' ', '-', mb_strtolower(trim((string)$str)));
         $string = rtrim(preg_replace ('/[^a-zA-Zа-яёА-ЯЁ0-9\-]/iu', '-', $str), '-');
 
         while(mb_strstr($string, '--')){ $string = str_replace('--', '-', $string); }
@@ -2617,7 +2617,7 @@ class cmsCore {
 			$seolink .= self::strToURL((@$pcat['url'] ? $pcat['url'] : $pcat['title']), $is_cyr) . '/';
 		}
 
-		$seolink = rtrim($seolink, '/');
+		$seolink = rtrim((string)$seolink, '/');
 
         $is_exists = $inDB->rows_count($table, "seolink='{$seolink}' AND id <> {$category['id']}");
 
@@ -2682,7 +2682,7 @@ function crop($string, $length = 250, $etc = ''){
 
     if ($length == 0) { return ''; }
 
-    $string = str_replace("\n", ' ', strip_tags($string));
+    $string = str_replace("\n", ' ', strip_tags((string)$string));
 
     if (mb_strlen($string) > $length){
 

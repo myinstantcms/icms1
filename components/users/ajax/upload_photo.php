@@ -64,7 +64,7 @@ $uploaddir = PATH . '/images/users/photos/';
 $realfile  = $inDB->escape_string($_FILES['Filedata']['name']);
 
 $path_parts = pathinfo($realfile);
-$ext        = mb_strtolower($path_parts['extension']);
+$ext        = mb_strtolower((string)$path_parts['extension']);
 
 if (!$ext || !in_array($ext, array('jpg', 'jpeg', 'gif', 'png', 'bmp'))) {
     exit(0);

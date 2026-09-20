@@ -220,7 +220,7 @@ if ($fdo=='addfile'){
         $inPage->addHeadJsLang(array('FILE_SELECTED','FILE_DENIED','FILE_DUPLICATE'));
 
 		$post_max_b = trim(@ini_get('upload_max_filesize'));
-		$last = mb_strtolower($post_max_b[mb_strlen($post_max_b)-1]);
+		$last = mb_strtolower((string)$post_max_b[mb_strlen($post_max_b)-1]);
 		switch($last) {
 			case 'g':
 				$post_max_b *= 1024;

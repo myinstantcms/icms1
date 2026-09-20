@@ -62,7 +62,7 @@ class cms_model_registration {
 
     public function getBadNickname($nickname){
 
-		return in_array(mb_strtolower($nickname), explode("\n", $this->config['badnickname']));
+		return in_array(mb_strtolower((string)$nickname), explode("\n", $this->config['badnickname']));
 
     }
 

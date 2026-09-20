@@ -70,7 +70,7 @@ function rss_clubs($item_id, $cfg){
 		foreach($posts as $post){
 
 			$post['link']        = HOST . $post['url'];
-			$post['description'] = mb_substr(strip_tags($post['content_html']), 0, 350). '...';
+			$post['description'] = mb_substr(strip_tags((string)$post['content_html']), 0, 350). '...';
 			$post['comments'] = $post['link'].'#c';
 			$post['category'] = $post['blog_title'];
 			$items[] = $post;

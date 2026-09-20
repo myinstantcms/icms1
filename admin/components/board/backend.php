@@ -71,7 +71,7 @@ if($opt=='saveconfig'){
     $cfg['maxcols_on_home']    = cmsCore::request('maxcols_on_home', 'int', 1);
     $cfg['publish_after_edit'] = cmsCore::request('publish_after_edit', 'int', 0);
 
-    $cfg['vip_day_cost'] = str_replace(',', '.', trim($cfg['vip_day_cost']));
+    $cfg['vip_day_cost'] = str_replace(',', '.', trim((string)$cfg['vip_day_cost']));
 
 	$cfg['root_description'] = cmsCore::request('root_description', 'html', '');
     $cfg['meta_keys']        = cmsCore::request('meta_keys', 'str', '');

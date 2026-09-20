@@ -135,7 +135,7 @@ if ($do=='view'){
         // meta description
         if($cat['meta_desc']){
             $meta_desc = $cat['meta_desc'];
-        } elseif(mb_strlen(strip_tags($cat['description']))>=250){
+        } elseif(mb_strlen(strip_tags((string)$cat['description']))>=250){
             $meta_desc = crop($cat['description']);
         } else {
             $meta_desc = $cat['title'];
@@ -428,7 +428,7 @@ if ($do=='addarticle' || $do=='editarticle'){
         $article['is_end']       = $do=='editarticle' ? $item['is_end'] : 0;
         $article['showtitle']    = $do=='editarticle' ? $item['showtitle'] : 1;
 
-		$article['meta_desc']    = $do=='addarticle' ? mb_strtolower($article['title']) : $inDB->escape_string($item['meta_desc']);
+		$article['meta_desc']    = $do=='addarticle' ? mb_strtolower((string)$article['title']) : $inDB->escape_string($item['meta_desc']);
 		$article['meta_keys']    = $do=='addarticle' ? $inCore->getKeywords($article['content']) : $inDB->escape_string($item['meta_keys']);
 
         $article['showdate']     = $do=='editarticle' ? $item['showdate'] : 1;

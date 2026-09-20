@@ -238,7 +238,7 @@ class cms_model_comments{
 		foreach($targets as $t){
 			$t_list .= "'$t',";
         }
-		$t_list = rtrim($t_list, ',');
+		$t_list = rtrim((string)$t_list, ',');
 		$this->inDB->where("c.target IN ({$t_list})");
     }
 

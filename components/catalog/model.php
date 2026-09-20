@@ -149,7 +149,7 @@ class cms_model_catalog{
 			foreach($item as $field=>$value){
 				$set .= "{$field} = '{$this->inDB->escape_string($value)}',";
 			}
-			$set = rtrim($set, ',');
+			$set = rtrim((string)$set, ',');
 
 			$this->inDB->query("INSERT INTO cms_uc_items SET {$set}");
 
@@ -248,7 +248,7 @@ class cms_model_catalog{
 			foreach($item as $field=>$value){
 				$set .= "{$field} = '{$this->inDB->escape_string($value)}',";
 			}
-			$set = rtrim($set, ',');
+			$set = rtrim((string)$set, ',');
 			$this->inDB->query("UPDATE cms_uc_cats SET {$set} WHERE id = '{$cat_id}' LIMIT 1");
 
         }
@@ -356,7 +356,7 @@ class cms_model_catalog{
 
     public static function getUCSearchLink($cat_id, $text){
 
-        $text = strip_tags(html_entity_decode(trim($text)));
+        $text = strip_tags(html_entity_decode(trim((string)$text)));
         $text = preg_replace('/\s+/u', ' ', $text);
 
         $words = explode(',', $text);
@@ -364,13 +364,13 @@ class cms_model_catalog{
 
         foreach($words as $key=>$value){
 
-            $value = trim($value);
+            $value = trim((string)$value);
 
-            $html .= '<a href="/catalog/'.$cat_id.'/find/'.urlencode($value).'">'.$value.'</a>, ';
+            $html .= '<a href="/catalog/'.$cat_id.'/find/'.urlencode((string)$value).'">'.$value.'</a>, ';
 
         }
 
-        return rtrim($html, ', ');
+        return rtrim((string)$html, ', ');
 
     }
 

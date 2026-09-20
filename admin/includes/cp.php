@@ -23,7 +23,7 @@ function printLangPanel($target, $target_id, $field) {
 
         foreach ($langs as $lang) { ?>
 
-            &nbsp;<a class="ajaxlink editfieldlang" href="#" onclick="return editFieldLang('<?php echo $lang;?>','<?php echo $target;?>','<?php echo $target_id;?>','<?php echo $field; ?>', this);"><strong><?php echo mb_strtoupper($lang);?></strong></a>&nbsp;
+            &nbsp;<a class="ajaxlink editfieldlang" href="#" onclick="return editFieldLang('<?php echo $lang;?>','<?php echo $target;?>','<?php echo $target_id;?>','<?php echo $field; ?>', this);"><strong><?php echo mb_strtoupper((string)$lang);?></strong></a>&nbsp;
 
         <?php }
 
@@ -257,7 +257,7 @@ function cpMenu(){
 
 function cpToolMenu($toolmenu_list){
 
-    $toolmenu_list = cmsCore::callEvent('CPTOOLMENU_'.strtoupper($GLOBALS['applet']).(!empty($GLOBALS['component']) ? '_'.strtoupper($GLOBALS['component']) : ''), $toolmenu_list);
+    $toolmenu_list = cmsCore::callEvent('CPTOOLMENU_'.strtoupper((string)$GLOBALS['applet']).(!empty($GLOBALS['component']) ? '_'.strtoupper((string)$GLOBALS['component']) : ''), $toolmenu_list);
 
 	if ($toolmenu_list){
 		echo '<table width="100%" cellpadding="2" border="0" class="toolmenu" style="margin:0px"><tr><td>';
@@ -383,7 +383,7 @@ function cpAddParam($query, $param, $value){
 
 function cpListTable($table, $_fields, $_actions, $where='', $orderby='title'){
 
-    $event = 'ADMIN_CPLISTTABLE_'.strtoupper($table).'_'.strtoupper($GLOBALS['applet']).(!empty($GLOBALS['component']) ? '_'.strtoupper($GLOBALS['component']) : '');
+    $event = 'ADMIN_CPLISTTABLE_'.strtoupper((string)$table).'_'.strtoupper((string)$GLOBALS['applet']).(!empty($GLOBALS['component']) ? '_'.strtoupper((string)$GLOBALS['component']) : '');
 
     list($table, $_fields, $_actions, $where, $orderby) = cmsCore::callEvent($event, array($table, $_fields, $_actions, $where, $orderby));
 

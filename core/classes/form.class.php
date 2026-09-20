@@ -74,7 +74,7 @@ class cmsForm {
 				$error = $_LANG['FIELD'].' "'.$field['title'].'" '.$_LANG['MUST_BE_FILLED'];
 
 			} else {
-				cmsUser::sessionPut('form_last_'.$formObj->form_id.'_'.$field['id'], htmlspecialchars($field_value));
+				cmsUser::sessionPut('form_last_'.$formObj->form_id.'_'.$field['id'], htmlspecialchars((string)$field_value));
 			}
 
             // Загружаем файл если он есть в форме
@@ -135,8 +135,8 @@ class cmsForm {
             } else {
                 // Заполняем массив значений полей, ключи массива id поля
                 $output['values'][$field['id']] = $field['config']['max'] ?
-                                                    mb_substr(strip_tags($field_value), 0, $field['config']['max']) :
-                                                    strip_tags($field_value);
+                                                    mb_substr(strip_tags((string)$field_value), 0, $field['config']['max']) :
+                                                    strip_tags((string)$field_value);
             }
 
 			// Заполняем массив ошибок
@@ -458,7 +458,7 @@ class cmsForm {
 								  name="field['.$form_field['id'].']"
 								  maxlength="'.(int)$form_field['config']['max'].'"
 								  value="'.$this->getFieldValue($form_field['id']).'"
-								  placeholder="'.htmlspecialchars($form_field['description']).'"
+								  placeholder="'.htmlspecialchars((string)$form_field['description']).'"
 								  style="width: '.(int)$form_field['config']['size'].'px"
 								  class="text-input form_text" />';
 
@@ -476,7 +476,7 @@ class cmsForm {
 						 class="text-input form_textarea"
 						 maxlength="'.(int)$form_field['config']['max'].'"
 						 style="width: '.(int)$form_field['config']['size'].'px"
-                         placeholder="'.htmlspecialchars($form_field['description']).'"
+                         placeholder="'.htmlspecialchars((string)$form_field['description']).'"
 						 rows="'.(int)$form_field['config']['rows'].'">'.$this->getFieldValue($form_field['id']).'</textarea>';
 
 	}
@@ -490,8 +490,8 @@ class cmsForm {
         if(!empty($field_value['url'])){
 
             return '<div class="text-input city_block" style="width:'.(int)$form_field['config']['size'].'px">
-                <input type="hidden" value="'.htmlspecialchars($field_value['url']).'" name="field['.$form_field['id'].'][url]">
-                <input type="hidden" value="'.htmlspecialchars($field_value['name']).'" name="field['.$form_field['id'].'][name]">
+                <input type="hidden" value="'.htmlspecialchars((string)$field_value['url']).'" name="field['.$form_field['id'].'][url]">
+                <input type="hidden" value="'.htmlspecialchars((string)$field_value['name']).'" name="field['.$form_field['id'].'][name]">
                 <input type="file" style="width: 73%" class="city_view" name="field['.$form_field['id'].']">
                 <label>'.$_LANG['DELETE'].' <input type="checkbox" name="field['.$form_field['id'].'][delete]" value="1"></label>
               </div>';
@@ -526,13 +526,13 @@ class cmsForm {
 
 		$field = '';
 
-		$items   = explode('/', trim($form_field['config']['items']));
+		$items   = explode('/', trim((string)$form_field['config']['items']));
 		$default = $this->getFieldValue($form_field['id']);
 
 		if($items){
 			foreach($items as $i){
 
-				$i = trim(htmlspecialchars($i));
+				$i = trim(htmlspecialchars((string)$i));
 
 				$field .= '<label><input type="radio" name="field['.$form_field['id'].']" value="'.$i.'" ';
 				if($i == $default) { $field .= 'checked="checked"'; }
@@ -549,7 +549,7 @@ class cmsForm {
 
         $field = '';
 
-		$items   = explode('/', trim($form_field['config']['items']));
+		$items   = explode('/', trim((string)$form_field['config']['items']));
 		$default = $this->getFieldValue($form_field['id']);
 
 		if($items){
@@ -558,7 +558,7 @@ class cmsForm {
 
 			foreach($items as $i){
 
-				$i = trim(htmlspecialchars($i));
+				$i = trim(htmlspecialchars((string)$i));
 
                 $field .= '<option value="'.$i.'"';
                 if($i == $default) { $field .= 'selected="selected"'; }
@@ -578,7 +578,7 @@ class cmsForm {
 
         $field = '';
 
-		$items   = explode('/', trim($form_field['config']['items']));
+		$items   = explode('/', trim((string)$form_field['config']['items']));
 		$default = $this->getFieldValue($form_field['id']);
 
 		if($items){
@@ -587,7 +587,7 @@ class cmsForm {
 
 			foreach($items as $i){
 
-				$i = trim(htmlspecialchars($i));
+				$i = trim(htmlspecialchars((string)$i));
 
                 $field .= '<option value="'.$i.'"';
                 if($i == $default) { $field .= 'selected="selected"'; }

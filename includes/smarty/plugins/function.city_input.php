@@ -15,10 +15,10 @@
         global $_LANG;
 
         if (!cmsCore::getInstance()->isComponentInstalled('forms')) {
-            return '<input type="text" value="'.htmlspecialchars($params['value']).'" name="'.htmlspecialchars($params['name']).'" class="text-input" style="width:300px"/>';
+            return '<input type="text" value="'.htmlspecialchars((string)$params['value']).'" name="'.htmlspecialchars((string)$params['name']).'" class="text-input" style="width:300px"/>';
         }
 
-        array_walk($params, function(&$value) { $value = htmlspecialchars($value); });
+        array_walk($params, function(&$value) { $value = htmlspecialchars((string)$value); });
 
         if (!isset($params['placeholder'])) {
             $params['placeholder'] = $_LANG['SELECT_CITY'];
@@ -49,7 +49,7 @@
         $display = $params['value'] ? '' : 'style="display:none"';
 
         return '<div class="text-input city_block" id="'.$id.'" style="width:'.$params['width'].'">
-                <input type="hidden" value="'.htmlspecialchars($params['value']).'" name="'.$params['name'].'" class="city_name" />
+                <input type="hidden" value="'.htmlspecialchars((string)$params['value']).'" name="'.$params['name'].'" class="city_name" />
                 <input type="hidden" value="'.$params['city_id'].'" name="city_id" class="city_id" />
                 <input type="hidden" value="'.$params['region_id'].'" name="region_id" class="region_id" />
                 <input type="hidden" value="'.$params['country_id'].'" name="country_id" class="country_id" />

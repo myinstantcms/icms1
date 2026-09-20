@@ -50,8 +50,8 @@ function mod_user_stats($mod, $cfg){
 
         if ($inDB->num_rows($rs)){
             while($row = $inDB->fetch_assoc($rs)){
-                if ($row['city'] != $_LANG['NOT_DECIDE']) { $row['href'] = '/users/city/'.urlencode($row['city']); } else { $row['href'] = ''; }
-                $row['city'] = icms_ucfirst(mb_strtolower($row['city']));
+                if ($row['city'] != $_LANG['NOT_DECIDE']) { $row['href'] = '/users/city/'.urlencode((string)$row['city']); } else { $row['href'] = ''; }
+                $row['city'] = icms_ucfirst(mb_strtolower((string)$row['city']));
                 $city_stats[] = $row;
             }
         }

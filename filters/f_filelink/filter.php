@@ -13,8 +13,8 @@
 
 	function getDownLoadLink($file){
 
-		$file     = preg_replace('/\.+\//', '', trim($file));
-		$file     = htmlspecialchars($file);
+		$file     = preg_replace('/\.+\//', '', trim((string)$file));
+		$file     = htmlspecialchars((string)$file);
 		$filefull = PATH.$file;
 
         global $_LANG;

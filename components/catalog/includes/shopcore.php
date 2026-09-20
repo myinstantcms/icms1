@@ -239,7 +239,7 @@ function shopOrder($cfg){
 
 		echo '<div class="con_heading">'.$_LANG['CART_ORDERING'].'</div>';
 
-		echo '<div class="con_description">'.nl2br($cfg['delivery']).'</div>';
+		echo '<div class="con_description">'.nl2br((string)$cfg['delivery']).'</div>';
 
 		if ($user_id){ $user_sql = "(c.user_id=$user_id OR session_id='$sid')"; } else { $user_sql = "(c.user_id=0 AND c.session_id='$sid')"; }
 

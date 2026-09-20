@@ -117,9 +117,9 @@ class autokeyword {
 	function replace_chars($content)
 	{
 		//convert all characters to lower case
-		$content = mb_strtolower($content);
-		//$content = mb_strtolower($content, "UTF-8");
-		$content = strip_tags($content);
+		$content = mb_strtolower((string)$content);
+		//$content = mb_strtolower((string)$content, "UTF-8");
+		$content = strip_tags((string)$content);
 
 		$punctuations = array(',', ')', '(', '.', "'", '"',
 		'<', '>', '!', '?', '/', '-',
@@ -150,8 +150,8 @@ class autokeyword {
 			//delete single or two letter words and
 			//Add it to the list if the word is not
 			//contained in the common words list.
-			if(mb_strlen(trim($val)) >= $this->wordLengthMin  && !in_array(trim($val), $common)  && !is_numeric(trim($val))) {
-				$k[] = trim($val);
+			if(mb_strlen(trim((string)$val)) >= $this->wordLengthMin  && !in_array(trim((string)$val), $common)  && !is_numeric(trim((string)$val))) {
+				$k[] = trim((string)$val);
 			}
 		}
 		//count the words
@@ -179,9 +179,9 @@ class autokeyword {
 		//$y = array();
 		for ($i=0; $i < count($x)-1; $i++) {
 			//delete phrases lesser than 5 characters
-			if( (mb_strlen(trim($x[$i])) >= $this->word2WordPhraseLengthMin ) && (mb_strlen(trim($x[$i+1])) >= $this->word2WordPhraseLengthMin) )
+			if( (mb_strlen(trim((string)$x[$i])) >= $this->word2WordPhraseLengthMin ) && (mb_strlen(trim((string)$x[$i+1])) >= $this->word2WordPhraseLengthMin) )
 			{
-				$y[] = trim($x[$i])." ".trim($x[$i+1]);
+				$y[] = trim((string)$x[$i])." ".trim((string)$x[$i+1]);
 			}
 		}
 
@@ -209,9 +209,9 @@ class autokeyword {
 
 		for ($i=0; $i < count($a)-2; $i++) {
 			//delete phrases lesser than 5 characters
-			if( (mb_strlen(trim($a[$i])) >= $this->word3WordPhraseLengthMin) && (mb_strlen(trim($a[$i+1])) > $this->word3WordPhraseLengthMin) && (mb_strlen(trim($a[$i+2])) > $this->word3WordPhraseLengthMin) && (mb_strlen(trim($a[$i]).trim($a[$i+1]).trim($a[$i+2])) > $this->phrase3WordLengthMin) )
+			if( (mb_strlen(trim((string)$a[$i])) >= $this->word3WordPhraseLengthMin) && (mb_strlen(trim((string)$a[$i+1])) > $this->word3WordPhraseLengthMin) && (mb_strlen(trim((string)$a[$i+2])) > $this->word3WordPhraseLengthMin) && (mb_strlen(trim((string)$a[$i]).trim((string)$a[$i+1]).trim((string)$a[$i+2])) > $this->phrase3WordLengthMin) )
 			{
-				$b[] = trim($a[$i])." ".trim($a[$i+1])." ".trim($a[$i+2]);
+				$b[] = trim((string)$a[$i])." ".trim((string)$a[$i+1])." ".trim((string)$a[$i+2]);
 			}
 		}
 

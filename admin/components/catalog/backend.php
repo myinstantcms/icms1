@@ -589,7 +589,7 @@ if ($opt == 'add_cat' || $opt == 'edit_cat'){
                             </select>
                         </td>
                         <td style="padding-bottom:4px">
-                            <input name="fstruct[]" class="field" type="text" id="fstruct[]" style="width:99%" <?php if (@$fstruct[$f]) { echo 'value="'.htmlspecialchars(stripslashes($fstruct[$f])).'"'; }?> />
+                            <input name="fstruct[]" class="field" type="text" id="fstruct[]" style="width:99%" <?php if (@$fstruct[$f]) { echo 'value="'.htmlspecialchars(stripslashes((string)$fstruct[$f])).'"'; }?> />
                         </td>
                         <td width="70" align="right" style="padding-bottom:2px">
                             <strong class="flink<?php echo $f;?>"><?php echo $_LANG['AD_AUTOSEARCH'];?>:</strong>
@@ -762,7 +762,7 @@ if ($opt == 'add_cat' || $opt == 'edit_cat'){
                     <span class="hinttext"><?php echo $_LANG['AD_IF_UNKNOWN_PAGETITLE']; ?></span>
                 </div>
                 <div>
-                    <input name="pagetitle" type="text" id="pagetitle" style="width:99%" value="<?php echo htmlspecialchars(@$mod['pagetitle']); ?>" />
+                    <input name="pagetitle" type="text" id="pagetitle" style="width:99%" value="<?php echo htmlspecialchars((string)(@$mod['pagetitle'])); ?>" />
                 </div>
 
                 <div style="margin-top:20px">
@@ -770,7 +770,7 @@ if ($opt == 'add_cat' || $opt == 'edit_cat'){
                     <span class="hinttext"><?php echo $_LANG['AD_FROM_COMMA']; ?></span>
                 </div>
                 <div>
-                     <textarea name="meta_keys" style="width:97%" rows="4" id="meta_keys"><?php echo htmlspecialchars(@$mod['meta_keys']);?></textarea>
+                     <textarea name="meta_keys" style="width:97%" rows="4" id="meta_keys"><?php echo htmlspecialchars((string)(@$mod['meta_keys']));?></textarea>
                 </div>
 
                 <div style="margin-top:20px">
@@ -778,7 +778,7 @@ if ($opt == 'add_cat' || $opt == 'edit_cat'){
                     <span class="hinttext"><?php echo $_LANG['AD_LESS_THAN']; ?></span>
                 </div>
                 <div>
-                     <textarea name="meta_desc" style="width:97%" rows="6" id="meta_desc"><?php echo htmlspecialchars(@$mod['meta_desc']);?></textarea>
+                     <textarea name="meta_desc" style="width:97%" rows="6" id="meta_desc"><?php echo htmlspecialchars((string)(@$mod['meta_desc']));?></textarea>
                 </div>
                 {tab=<?php echo $_LANG['AD_TAB_ACCESS'];?>}
 
@@ -1189,7 +1189,7 @@ if ($opt == 'import_xls'){
             //show field inputs
             ?>
                 <tr id="row_<?php echo $current; ?>">
-                    <td width=""><strong><?php echo stripslashes($value); ?>:</strong></td>
+                    <td width=""><strong><?php echo stripslashes((string)$value); ?>:</strong></td>
                     <td><?php echo $_LANG['AD_COLUMN'];?>:</td>
                     <td><input type="text" class="col" id="<?php echo $current; ?>" name="cells[<?php echo $current; ?>][col]" style="width:40px" /></td>
                     <td><?php echo $_LANG['AD_LINE']; ?>:</td>

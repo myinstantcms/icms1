@@ -29,7 +29,7 @@
                                         <p><strong><?php echo $_LANG['BAN_PERIOD_LOCK']; ?>:</strong> <?php echo $ban['enddate'] ?></p>
                                     <?php } ?>
                                     <?php if ($ban['cause']){ ?>
-                                        <p><strong><?php echo $_LANG['BAN_REASON_LOCK']; ?>:</strong></p><p><?php echo nl2br($ban['cause']); ?></p>
+                                        <p><strong><?php echo $_LANG['BAN_REASON_LOCK']; ?>:</strong></p><p><?php echo nl2br((string)$ban['cause']); ?></p>
                                     <?php } ?>
                                 </div>
                             </td>

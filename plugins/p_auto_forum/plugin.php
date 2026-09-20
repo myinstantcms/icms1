@@ -188,7 +188,7 @@ class p_auto_forum extends cmsPlugin {
 					'target' => $this->inDB->escape_string($forum['title']),
 					'target_url' => '/forum/'.$forum_id,
 					'target_id' => $forum_id,
-					'description' => strip_tags($post_html)
+					'description' => strip_tags((string)$post_html)
 		));
 
         return true;

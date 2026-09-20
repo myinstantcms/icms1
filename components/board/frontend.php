@@ -114,7 +114,7 @@ if ($do=='view'){
         foreach($cats as $c){
             $keys[] = $c['title'];
             foreach (explode("\n", $c['obtypes']) as $obtype) {
-                $keys[] = trim($obtype);
+                $keys[] = trim((string)$obtype);
             }
         }
         $pagekeys = implode(',', $keys);
@@ -234,7 +234,7 @@ if($do=='read'){
 
 	// формируем заголовок и тело сообщения
 	$item['title']   = $item['obtype'].' '.$item['title'];
-	$item['content'] = nl2br($item['content']);
+	$item['content'] = nl2br((string)$item['content']);
 	$item['content'] = $model->config['auto_link'] ? $inCore->parseSmiles($item['content']) : $item['content'];
 
 	$category_path = $inDB->getNsCategoryPath('cms_board_cats', $item['NSLeft'], $item['NSRight']);
@@ -362,9 +362,9 @@ if ($do=='additem'){
 		}
 
         if ($errors){
-			$item['content'] = htmlspecialchars(stripslashes($_REQUEST['content']));
-			$item['city']    = stripslashes($city);
-			$item['title']   = stripslashes($title);
+			$item['content'] = htmlspecialchars(stripslashes((string)$_REQUEST['content']));
+			$item['city']    = stripslashes((string)$city);
+			$item['title']   = stripslashes((string)$title);
 			$item['obtype']  = $obtype;
 			cmsUser::sessionPut('item', $item);
 			cmsCore::redirect('/board/'.$model->category_id.'/add.html');

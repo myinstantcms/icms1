@@ -254,7 +254,7 @@ if ($do == 'create'){
 			cmsCore::jsonOutput(array('error' => true, 'text' => $_LANG['CLUB_REQ_TITLE']));
 		}
 
-		if ($inDB->get_field('cms_clubs', "LOWER(title) = '".mb_strtolower($title)."'", 'id')){
+		if ($inDB->get_field('cms_clubs', "LOWER(title) = '".mb_strtolower((string)$title)."'", 'id')){
 			cmsCore::jsonOutput(array('error' => true, 'text' => $_LANG['CLUB_EXISTS']));
 		}
 

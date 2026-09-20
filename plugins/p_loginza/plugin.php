@@ -282,7 +282,7 @@ class p_loginza extends cmsPlugin {
                 'city'=>(!empty($advanced['city']) ? $advanced['city'] : $inUser->city),
                 'user_id'=>$user_id,
                 'imageurl'=>$filename,
-                'gender'=>(!empty($profile->gender) ? strtolower($profile->gender) : 'm')
+                'gender'=>(!empty($profile->gender) ? strtolower((string)$profile->gender) : 'm')
             ));
 
             cmsCore::callEvent('USER_REGISTER', $user_array);

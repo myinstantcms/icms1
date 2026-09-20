@@ -4,7 +4,7 @@
     <?php if ($type == 'html'){ ?>
         <?php cmsCore::insertEditor('field_data', $value, '500', '99%'); ?>
     <?php } else { ?>
-    <input type="text" style="width: 99%" placeholder="<?php echo $_LANG['AD_HINT_DEFAULT']; ?>" name="field_data" value="<?php echo htmlspecialchars($value); ?>" />
+    <input type="text" style="width: 99%" placeholder="<?php echo $_LANG['AD_HINT_DEFAULT']; ?>" name="field_data" value="<?php echo htmlspecialchars((string)$value); ?>" />
     <?php } ?>
     <div class="lang_submit">
         <input type="submit" name="save" class="button" value="<?php echo $_LANG['SAVE']; ?>" />

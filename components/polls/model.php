@@ -69,7 +69,7 @@ class cms_model_polls{
 
         //Прибавляем голос к переданному нам варианту ответа
         foreach($poll['answers'] as $key=>$value){
-            if ($key == stripslashes($answer)){
+            if ($key == stripslashes((string)$answer)){
                 $poll['answers'][$key] += 1;
             }
         }

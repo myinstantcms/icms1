@@ -31,7 +31,7 @@
 
 		$inDB->update('cms_photo_albums', array('title' => $title), $album['id']);
 
-		cmsCore::jsonOutput(array('error' => false, 'text' => htmlspecialchars(stripslashes($title))));
+		cmsCore::jsonOutput(array('error' => false, 'text' => htmlspecialchars(stripslashes((string)$title))));
 
     }
 

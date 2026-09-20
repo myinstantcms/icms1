@@ -75,9 +75,9 @@ class cmsFormGen {
             // на его основе и строим ключи
             // если таких элеменов в массиве $_LANG нет, предполагаем, что соответствующие элементы
             // title, hint и units заданы в xml и используем их
-            $ulk = $pref.'_'.mb_strtoupper($param['name']).'_UNITS';
-            $tlk = $pref.'_'.mb_strtoupper($param['name']);
-            $hlk = $pref.'_'.mb_strtoupper($param['name']).'_HINT';
+            $ulk = $pref.'_'.mb_strtoupper((string)$param['name']).'_UNITS';
+            $tlk = $pref.'_'.mb_strtoupper((string)$param['name']);
+            $hlk = $pref.'_'.mb_strtoupper((string)$param['name']).'_HINT';
 
             $param['title'] = isset($_LANG[$tlk]) ? $_LANG[$tlk] : $param['title'];
             if(!$param['title']) { $param['title'] = $param['name']; }
@@ -195,7 +195,7 @@ class cmsFormGen {
 
     private function renderString($param) {
 
-        return '<input type="text" id="'.$param['name'].'" name="'.$param['name'].'" value="'.htmlspecialchars($param['value']).'" class="param-string" /> ';
+        return '<input type="text" id="'.$param['name'].'" name="'.$param['name'].'" value="'.htmlspecialchars((string)$param['value']).'" class="param-string" /> ';
 
     }
 
@@ -216,7 +216,7 @@ class cmsFormGen {
 
         foreach($param['tag_option'] as $option){
 
-            $html .= "\t" . '<option value="'.htmlspecialchars($option['value']).'" '.((isset($param['multiple']) ? in_array($option['value'], $values) : $param['value'] == $option['value']) ? 'selected="selected"' : '').'>'.$option['title'].'</option>' . "\n";
+            $html .= "\t" . '<option value="'.htmlspecialchars((string)$option['value']).'" '.((isset($param['multiple']) ? in_array($option['value'], $values) : $param['value'] == $option['value']) ? 'selected="selected"' : '').'>'.$option['title'].'</option>' . "\n";
 
         }
 
@@ -242,14 +242,14 @@ class cmsFormGen {
         if (isset($param['tag_option'])){
             foreach($param['tag_option'] as $option){
 
-                $html .= "\t" . '<option value="'.htmlspecialchars($option['value']).'" '.($param['value'] == $option['value'] ? 'selected="selected"' : '').'>'.$option['title'].'</option>' . "\n";
+                $html .= "\t" . '<option value="'.htmlspecialchars((string)$option['value']).'" '.($param['value'] == $option['value'] ? 'selected="selected"' : '').'>'.$option['title'].'</option>' . "\n";
 
             }
         }
 
         foreach($items as $option){
 
-            $html .= "\t" . '<option value="'.htmlspecialchars($option[$key_value]).'" '.($param['value'] == $option[$key_value] ? 'selected="selected"' : '').'>'.$option[$key_title].'</option>' . "\n";
+            $html .= "\t" . '<option value="'.htmlspecialchars((string)$option[$key_value]).'" '.($param['value'] == $option[$key_value] ? 'selected="selected"' : '').'>'.$option[$key_title].'</option>' . "\n";
 
         }
 
@@ -295,7 +295,7 @@ class cmsFormGen {
             if (isset($param['tag_option'])){
                 foreach($param['tag_option'] as $option){
 
-                    $html .= "\t" . '<option value="'.htmlspecialchars($option['value']).'" '.($param['value'] == $option['value'] ? 'selected="selected"' : '').'>'.$option['title'].'</option>' . "\n";
+                    $html .= "\t" . '<option value="'.htmlspecialchars((string)$option['value']).'" '.($param['value'] == $option['value'] ? 'selected="selected"' : '').'>'.$option['title'].'</option>' . "\n";
 
                 }
             }
@@ -305,7 +305,7 @@ class cmsFormGen {
                     if (isset($option['level']) && $option['level'] >= 1){
                         $option['title'] = str_repeat('--', $option['level']-1) . ' ' . $option['title'];
                     }
-                    $html .= "\t" . '<option value="'.htmlspecialchars($option['value']).'" '.($param['value'] == $option['value'] ? 'selected="selected"' : '').'>'.$option['title'].'</option>' . "\n";
+                    $html .= "\t" . '<option value="'.htmlspecialchars((string)$option['value']).'" '.($param['value'] == $option['value'] ? 'selected="selected"' : '').'>'.$option['title'].'</option>' . "\n";
                 }
             }
 
@@ -325,7 +325,7 @@ class cmsFormGen {
             if ($inDB->num_rows($result)){
                 while($option = $inDB->fetch_assoc($result)){
                     $html .= '<tr>' . "\n" .
-                                "\t" . '<td><input type="checkbox" id="'.$param['name'].'_'.$option['value'].'" name="'.$param['name'].'['.$option['value'].']" value="'.htmlspecialchars($option['value']).'" '.(in_array($option['value'], $values) ? 'checked="checked"' : '').' />' . "\n" .
+                                "\t" . '<td><input type="checkbox" id="'.$param['name'].'_'.$option['value'].'" name="'.$param['name'].'['.$option['value'].']" value="'.htmlspecialchars((string)$option['value']).'" '.(in_array($option['value'], $values) ? 'checked="checked"' : '').' />' . "\n" .
                                 "\t" . '<td><label for="'.$param['name'].'_'.$option['value'].'">'.$option['title'].'</label></td>' . "\n" .
                              '</tr>';
                 }

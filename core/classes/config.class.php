@@ -110,7 +110,7 @@ class cmsConfig {
         $cfg = array_merge($d_cfg, $_CFG);
 
         foreach ($cfg as $key => $value) {
-            $cfg[$key] = stripslashes($value);
+            $cfg[$key] = stripslashes((string)$value);
         }
 
         $cfg['cookie_key'] = md5($cfg['sitename']);

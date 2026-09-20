@@ -272,7 +272,7 @@ if ($do=='config'){
 
 		$blog['seolink'] = $blog['seolink_new'] ? $blog['seolink_new'] : $blog['seolink'];
 
-		if(stripslashes($title) != $blog['title']){
+		if(stripslashes((string)$title) != $blog['title']){
 			// обновляем записи постов
 			cmsActions::updateLog('add_post', array('target' => $title, 'target_url' => $model->getBlogURL($blog['seolink'])), 0, $blog['id']);
 			// обновляем запись добавления блога
@@ -365,7 +365,7 @@ if ($do=='blog'){
 
 	$inPage->addPathway($blog['title'], $model->getBlogURL($blog['seolink']));
 	// rss в адресной строке
-	$inPage->addHead('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(strip_tags($blog['title'])).'" href="'.HOST.'/rss/blogs/'.$blog['id'].'/feed.rss">');
+	$inPage->addHead('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars(strip_tags((string)$blog['title'])).'" href="'.HOST.'/rss/blogs/'.$blog['id'].'/feed.rss">');
 	if($myblog || $inUser->is_admin){
 	    $inPage->addHeadJS('components/blogs/js/blog.js');
 	}

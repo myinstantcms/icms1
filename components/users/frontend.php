@@ -99,19 +99,19 @@ if ($do == 'view'){
 	// Добавляем в выборку имя, если оно есть
 	if($name){
 		$model->whereNameIs($name);
-		$stext[] = $_LANG['NAME']." &mdash; ".htmlspecialchars(stripslashes($name));
+		$stext[] = $_LANG['NAME']." &mdash; ".htmlspecialchars(stripslashes((string)$name));
 	}
 
 	// Добавляем в выборку город, если он есть
 	if($city){
 		$model->whereCityIs($city);
-		$stext[] = $_LANG['CITY']." &mdash; ".htmlspecialchars(stripslashes($city));
+		$stext[] = $_LANG['CITY']." &mdash; ".htmlspecialchars(stripslashes((string)$city));
 	}
 
 	// Добавляем в выборку хобби, если есть
 	if($hobby){
 		$model->whereHobbyIs($hobby);
-		$stext[] = $_LANG['HOBBY']." &mdash; ".htmlspecialchars(stripslashes($hobby));
+		$stext[] = $_LANG['HOBBY']." &mdash; ".htmlspecialchars(stripslashes((string)$hobby));
 	}
 	// Добавляем в выборку пол, если есть
 	if($gender){
@@ -172,9 +172,9 @@ if ($do == 'view'){
             assign('total', $total)->
             assign('only_online', $only_online)->
             assign('gender', $gender)->
-            assign('name', stripslashes($name))->
-            assign('city', stripslashes($city))->
-            assign('hobby', stripslashes($hobby))->
+            assign('name', stripslashes((string)$name))->
+            assign('city', stripslashes((string)$city))->
+            assign('hobby', stripslashes((string)$hobby))->
             assign('age_to', $age_to)->
             assign('age_fr', $age_fr)->
             assign('cfg', $model->config)->
@@ -1081,7 +1081,7 @@ if ($do=='awardslist'){
                 $aw['uhtml'] .= cmsUser::getGenderLink($user['id'], $user['nickname'], $user['gender'], $user['login']).', ';
             }
 
-            $aw['uhtml'] = rtrim($aw['uhtml'], ', ');
+            $aw['uhtml'] = rtrim((string)$aw['uhtml'], ', ');
 
         } else {
             $aw['uhtml'] = $_LANG['NOT_USERS_WITH_THIS_AWARD'];

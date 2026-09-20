@@ -55,7 +55,7 @@ if ($inCore->do == 'view'){
 	$items   = $rssdata['items'];
 
 	if ($model->config['addsite']) { $channel['title'] .= ' :: ' . $inConf->sitename; }
-	$channel['title'] = trim(htmlspecialchars(strip_tags($channel['title'])));
+	$channel['title'] = trim(htmlspecialchars(strip_tags((string)$channel['title'])));
 
 	header('Content-Type: application/rss+xml; charset=utf-8');
 
@@ -65,7 +65,7 @@ if ($inCore->do == 'view'){
 			// Канал
 			$rss .= '<title>'.$channel['title'].'</title>' ."\n";
 			$rss .= '<link>'.$channel['link'].'</link>' ."\n";
-			$rss .= '<description><![CDATA['.trim(htmlspecialchars(strip_tags($channel['description']))).']]></description>' ."\n";
+			$rss .= '<description><![CDATA['.trim(htmlspecialchars(strip_tags((string)$channel['description']))).']]></description>' ."\n";
 
 			if ($model->config['icon_on']){
 				$rss .= '<image>'."\n";
@@ -79,7 +79,7 @@ if ($inCore->do == 'view'){
 			if (is_array($items) && $items){
 				foreach ($items as $item){
 					$rss .= '<item>' ."\n";
-						$rss .= '<title>'.trim(htmlspecialchars(strip_tags($item['title']))).'</title>' ."\n";
+						$rss .= '<title>'.trim(htmlspecialchars(strip_tags((string)$item['title']))).'</title>' ."\n";
 						$rss .= '<pubDate>'.date('r', strtotime($item['pubdate'])+((int)$inConf->timediff*3600)).'</pubDate>' ."\n";
 						$rss .= '<guid>'.$item['link'].'</guid>' ."\n";
 						$rss .= '<link>'.$item['link'].'</link>' ."\n";

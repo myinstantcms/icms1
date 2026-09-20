@@ -208,7 +208,7 @@ if ($do=='register'){
     } else {
         if(!$item['realname1']) { cmsCore::addSessionMessage($_LANG['TYPE_NAME'], 'error'); $errors = true; }
         if(!$item['realname2']) { cmsCore::addSessionMessage($_LANG['TYPE_SONAME'], 'error'); $errors = true; }
-        $item['nickname'] = trim($item['realname1']) . ' ' . trim($item['realname2']);
+        $item['nickname'] = trim((string)$item['realname1']) . ' ' . trim((string)$item['realname2']);
     }
     if (mb_strlen($item['nickname'])<2) { cmsCore::addSessionMessage($_LANG['SHORT_NICKNAME'], 'error'); $errors = true; }
     if($model->getBadNickname($item['nickname'])){
@@ -350,6 +350,7 @@ if ($do=='view'){
 
     $item = cmsUser::sessionGet('item');
     if($item){ cmsUser::sessionDel('item'); }
+    if (!is_array($item)) { $item = array(); }
 
     if(empty($item['birthdate'])){
         $item['birthdate'] = date('Y-m-d');

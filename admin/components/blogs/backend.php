@@ -110,7 +110,7 @@ if ($opt == 'update_blog'){
 
     $blog['seolink'] = $seolink_new ? $seolink_new : $blog['seolink'];
 
-    if(stripslashes($title) != $blog['title']){
+    if(stripslashes((string)$title) != $blog['title']){
         cmsActions::updateLog('add_post', array('target' => $title, 'target_url' => $model->getBlogURL($blog['seolink'])), 0, $blog['id']);
         cmsActions::updateLog('add_blog', array('object' => $title, 'object_url' => $model->getBlogURL($blog['seolink'])), $blog['id']);
     }

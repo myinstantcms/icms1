@@ -65,7 +65,7 @@ function cpMenutypeById($item){
         case 'photoalbum': $html = '<span id="menutype"><a target="_blank" href="'.$item['link'].'">'.$_LANG['AD_TYPE_ALBUM'].'</a></span> - '.$inDB->get_field('cms_photo_albums', 'id='.$item['linkid'], 'title');
 					 	   break;
 	}
-	$clear = strip_tags($html);
+	$clear = strip_tags((string)$html);
 	$r = mb_strlen($html) - mb_strlen($clear);
 	if (mb_strlen($clear)>$maxlen) { $html = mb_substr($html, 0, $maxlen+$r).'...'; }
 	return $html;
@@ -543,7 +543,7 @@ function applet_menu(){
                     <div><strong><?php echo $_LANG['AD_LANG_TITLES']; ?></strong> <span class="hinttext">&mdash; <?php echo $_LANG['AD_LANG_TITLES_HINT']; ?></span></div>
                     <?php foreach ($langs as $lang) { ?>
 
-                    <div><strong><?php echo $lang; ?>:</strong> <input name="titles[<?php echo $lang; ?>]" type="text" style="width:97%" value="<?php echo htmlspecialchars(@$mod['titles'][$lang]);?>" placeholder="<?php echo $_LANG['AD_HINT_DEFAULT']; ?>" /></div>
+                    <div><strong><?php echo $lang; ?>:</strong> <input name="titles[<?php echo $lang; ?>]" type="text" style="width:97%" value="<?php echo htmlspecialchars((string)(@$mod['titles'][$lang]));?>" placeholder="<?php echo $_LANG['AD_HINT_DEFAULT']; ?>" /></div>
                     <?php } ?>
                     <?php } ?>
                     <div><strong><?php echo $_LANG['AD_PARENT_POINT']; ?></strong></div>

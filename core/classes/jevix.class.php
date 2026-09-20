@@ -778,7 +778,7 @@ class Jevix{
 			$this->restoreState();
 			return false;
 		}
-		$name=mb_strtolower($name, 'UTF-8');
+		$name=mb_strtolower((string)$name, 'UTF-8');
 		// Пробуем получить список атрибутов тега
 		if($this->curCh != '>' && $this->curCh != '/') $this->tagParams($params);
 
@@ -884,7 +884,7 @@ class Jevix{
 			$this->restoreState();
 			return false;
 		}
-		$name=mb_strtolower($name, 'UTF-8');
+		$name=mb_strtolower((string)$name, 'UTF-8');
 		$this->skipSpaces();
 		if(!$this->matchCh('>')) {
 			$this->restoreState();
@@ -895,7 +895,7 @@ class Jevix{
 
 	protected function makeTag($tag, $params, $content, $short, $parentTag = null){
 		$this->curParentTag=$parentTag;
-		$tag = mb_strtolower($tag, 'UTF-8');
+		$tag = mb_strtolower((string)$tag, 'UTF-8');
 
 		// Получаем правила фильтрации тега
 		$tagRules = isset($this->tagsRules[$tag]) ? $this->tagsRules[$tag] : null;
@@ -922,8 +922,8 @@ class Jevix{
 
 		$resParams = array();
 		foreach($params as $param=>$value){
-			$param = mb_strtolower($param, 'UTF-8');
-			$value = trim($value);
+			$param = mb_strtolower((string)$param, 'UTF-8');
+			$value = trim((string)$value);
 			if($value == '') continue;
 
 			// Атрибут тега разрешён? Какие возможны значения? Получаем список правил
@@ -974,7 +974,7 @@ class Jevix{
 							$this->eror('Попытка вставить JavaScript в параметр тега');
 							continue(2);
 						}
-						$value = htmlspecialchars($value);
+						$value = htmlspecialchars((string)$value);
 						break;
 
 					case '#link':

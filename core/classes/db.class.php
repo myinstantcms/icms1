@@ -155,7 +155,7 @@ class cmsDatabase {
 
 	protected function replacePrefix($sql, $prefix='cms_'){
         if($prefix == $this->db_prefix){
-            return trim($sql);
+            return trim((string)$sql);
         }
 		return trim(str_replace($prefix, $this->db_prefix, $sql));
 	}
@@ -445,7 +445,7 @@ class cmsDatabase {
 			$set .= "`{$field}` = '{$value}',";
 		}
 		// убираем последнюю запятую
-		$set = rtrim($set, ',');
+		$set = rtrim((string)$set, ',');
 
         $i = $ignore ? 'IGNORE' : '';
 
@@ -485,7 +485,7 @@ class cmsDatabase {
 			$set .= "`{$field}` = '{$value}',";
 		}
 		// убираем последнюю запятую
-		$set = rtrim($set, ',');
+		$set = rtrim((string)$set, ',');
 
 		$this->query("UPDATE {$table} SET {$set} WHERE $where");
 
@@ -709,10 +709,10 @@ class cmsDatabase {
 
         foreach ($lines as $line) {
 
-            if (($line = trim($line)) == '') {
+            if (($line = trim((string)$line)) == '') {
                 continue;
             }
-            if (mb_substr(ltrim($line), 0, 2) == '--') {
+            if (mb_substr(ltrim((string)$line), 0, 2) == '--') {
                 continue;
             }
             // sql в несколько строк

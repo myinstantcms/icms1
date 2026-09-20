@@ -83,7 +83,7 @@ if ($file) {
 
         cmsCore::callEvent('ADD_PHOTO_DONE', $photo);
 
-        $description = '<a href="/photos/photo'.$photo['id'].'.html" class="act_photo"><img src="/images/photos/small/'.$photo['file'].'" alt="'.htmlspecialchars(stripslashes($photo['title'])).'" /></a>';
+        $description = '<a href="/photos/photo'.$photo['id'].'.html" class="act_photo"><img src="/images/photos/small/'.$photo['file'].'" alt="'.htmlspecialchars(stripslashes((string)$photo['title'])).'" /></a>';
 
         cmsActions::log('add_photo', array(
               'object' => $photo['title'],

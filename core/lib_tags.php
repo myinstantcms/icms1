@@ -16,14 +16,14 @@ function cmsInsertTags($tagstr, $target, $item_id){
     $inDB = cmsDatabase::getInstance();
 	$inDB->query("DELETE FROM cms_tags WHERE target='$target' AND item_id = '$item_id'");
 
-    $tagstr = strip_tags(mb_strtolower(preg_replace('/\s+/u', ' ', trim($tagstr))));
+    $tagstr = strip_tags(mb_strtolower(preg_replace('/\s+/u', ' ', trim((string)$tagstr))));
 	if (!$tagstr){ return true; }
 
     // формируем массив слов по запятой
     $tags = explode(',', $tagstr);
 
     foreach ($tags as $tag){
-        $tag = mb_substr(trim($tag), 0, 240);
+        $tag = mb_substr(trim((string)$tag), 0, 240);
         if(mb_strlen($tag)>=3){
             $tag = $inDB->escape_string($tag);
             $inDB->query("INSERT INTO cms_tags (tag, target, item_id) VALUES ('$tag', '$target', $item_id)");
@@ -53,9 +53,9 @@ function cmsTagLine($target, $item_id, $links=true, $selected=''){
 		while ($tag=$inDB->fetch_assoc($rs)){
 			if ($links){
 				if ($selected==$tag['tag']){
-					$html .= '<a href="/search/tag/'.urlencode($tag['tag']).'" style="font-weight:bold;text-decoration:underline">'.$tag['tag'].'</a>';
+					$html .= '<a href="/search/tag/'.urlencode((string)$tag['tag']).'" style="font-weight:bold;text-decoration:underline">'.$tag['tag'].'</a>';
 				} else {
-					$html .= '<a href="/search/tag/'.urlencode($tag['tag']).'">'.$tag['tag'].'</a>';
+					$html .= '<a href="/search/tag/'.urlencode((string)$tag['tag']).'">'.$tag['tag'].'</a>';
 				}
 			} else {
 				$html .= $tag['tag'];
@@ -195,7 +195,7 @@ function cmsTagsList(){
 	if ($inDB->num_rows($result)>0){
 		while($tag = $inDB->fetch_assoc($result)){
 			if ($tag['tag']){
-				$html .= '<a href="/search/tag/'.urlencode($tag['tag']).'">'.$tag['tag'].'</a> ('.$tag['num'].') ';
+				$html .= '<a href="/search/tag/'.urlencode((string)$tag['tag']).'">'.$tag['tag'].'</a> ('.$tag['num'].') ';
 			}
 		}
 	}

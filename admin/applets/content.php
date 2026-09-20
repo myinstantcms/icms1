@@ -192,7 +192,7 @@ function applet_content(){
                         $article['meta_desc'] = $article['title'];
                         break;
 
-                case 2: $article['meta_desc'] = strip_tags($article['description']);
+                case 2: $article['meta_desc'] = strip_tags((string)$article['description']);
                         $article['meta_keys'] = $article['tags'];
                         break;
 
@@ -284,7 +284,7 @@ function applet_content(){
                     $article['meta_desc'] = $article['title'];
                     break;
 
-            case 2: $article['meta_desc'] = strip_tags($article['description']);
+            case 2: $article['meta_desc'] = strip_tags((string)$article['description']);
                     $article['meta_keys'] = $article['tags'];
                     break;
 

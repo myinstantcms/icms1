@@ -174,7 +174,7 @@ class p_related_posts extends cmsPlugin {
                 while($r = $this->inDB->fetch_row($res)){
                     $target_id .= ($r[0]).", ";// Заполняю найдеными идентификаторами переменную
                 }
-                $target_id = rtrim($target_id, ', ');
+                $target_id = rtrim((string)$target_id, ', ');
 
                 // Вытягиваю посты
                 $sql = "SELECT p.id,
@@ -341,7 +341,7 @@ class p_related_posts extends cmsPlugin {
             }
             $found_posts[$key]['url']      = $model->getPostURL($post['blog_link'], $post['post_link']);
             $found_posts[$key]['blog_url'] = $model->getBlogURL($post['bloglink']);
-            $found_posts[$key]['content']  = mb_strimwidth(preg_replace('/\[cut=.*\]/ui', '', strip_tags($post['content'])), 0, $truncate, '...');
+            $found_posts[$key]['content']  = mb_strimwidth(preg_replace('/\[cut=.*\]/ui', '', strip_tags((string)$post['content'])), 0, $truncate, '...');
         }
 
         ob_start();

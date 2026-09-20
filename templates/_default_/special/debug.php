@@ -17,7 +17,7 @@
         <?php foreach($inDB->q_dump as $sql) { ?>
             <div class="query">
                 <div class="src"><?php echo $sql['src']; ?></div>
-                <?php echo nl2br($sql['sql']); ?>
+                <?php echo nl2br((string)$sql['sql']); ?>
                 <div class="query_time"><?php echo $_LANG['DEBUG_QUERY_TIME']; ?> <span class="<?php echo (($sql['time']>=0.1) ? 'red_query' : 'green_query'); ?>"><?php echo number_format($sql['time'], 5).'</span> '.$_LANG['DEBUG_SEC'] ?></div>
             </div>
         <?php } ?>

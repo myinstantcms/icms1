@@ -206,7 +206,7 @@ class cmsActions {
 		foreach($params as $field=>$value){
 			$set .= "{$field} = '{$value}',";
 		}
-		$set = rtrim($set, ',');
+		$set = rtrim((string)$set, ',');
 
 		// если обновляем сам объект
 		if($object_id){

@@ -32,7 +32,7 @@ if(mb_strlen($data)<2 ||
 
 if ($opt=='checklogin'){
 
-    $sql    = "SELECT id, login FROM cms_users WHERE LOWER(login) = '".mb_strtolower($data)."' AND is_deleted = 0 LIMIT 1";
+    $sql    = "SELECT id, login FROM cms_users WHERE LOWER(login) = '".mb_strtolower((string)$data)."' AND is_deleted = 0 LIMIT 1";
     $result = $inDB->query($sql);
 
     if($inDB->num_rows($result)==0){

@@ -15,7 +15,7 @@ function insertForm($form_title){
 
     cmsCore::loadClass('form');
 
-    return cmsForm::displayForm(trim($form_title), array(), false);
+    return cmsForm::displayForm(trim((string)$form_title), array(), false);
 
 }
 
@@ -26,7 +26,7 @@ function PhotoLink($photo_title){
     $photo = cmsDatabase::getInstance()->get_fields('cms_photo_files', "title LIKE '{$photo_title}'", 'id, title');
 
     if($photo){
-        $link = '<a href="/photos/photo'.$photo['id'].'.html" title="'.htmlspecialchars($photo['title']).'">'.$photo['title'].'</a>';
+        $link = '<a href="/photos/photo'.$photo['id'].'.html" title="'.htmlspecialchars((string)$photo['title']).'">'.$photo['title'].'</a>';
     } else { $link = ''; }
 
     return $link;
@@ -39,7 +39,7 @@ function AlbumLink($album_title){
     $album = cmsDatabase::getInstance()->get_fields('cms_photo_albums', "title LIKE '{$album_title}'", 'id, title');
 
     if($album){
-        $link = '<a href="/photos/'.$album['id'].'" title="'.htmlspecialchars($album['title']).'">'.$album['title'].'</a>';
+        $link = '<a href="/photos/'.$album['id'].'" title="'.htmlspecialchars((string)$album['title']).'">'.$album['title'].'</a>';
     } else { $link = ''; }
 
     return $link;
@@ -52,7 +52,7 @@ function ContentLink($content_title){
     $content = cmsDatabase::getInstance()->get_fields('cms_content', "title LIKE '{$content_title}'", 'seolink, title');
 
     if($content){
-        $link = '<a href="/'.$content['seolink'].'.html" title="'.htmlspecialchars($content['title']).'">'.$content['title'].'</a>';
+        $link = '<a href="/'.$content['seolink'].'.html" title="'.htmlspecialchars((string)$content['title']).'">'.$content['title'].'</a>';
     } else { $link = ''; }
 
     return $link;

@@ -263,9 +263,9 @@ function getRegion($id){
 
             $item = $inDB->get_fields($table, "id='$item_id'", '*');
             if(!$item){ cmsCore::error404(); }
-            cpAddPathway($_LANG['EDIT'].' '.mb_strtolower($_LANG['AD_'.mb_strtoupper($sub_opt)]));
+            cpAddPathway($_LANG['EDIT'].' '.mb_strtolower((string)$_LANG['AD_'.mb_strtoupper((string)$sub_opt)]));
         } elseif($sub_opt) {
-            cpAddPathway($_LANG['ADD'].' '.mb_strtolower($_LANG['AD_'.mb_strtoupper($sub_opt)]));
+            cpAddPathway($_LANG['ADD'].' '.mb_strtolower((string)$_LANG['AD_'.mb_strtoupper((string)$sub_opt)]));
         } else {
             cpAddPathway($_LANG['ADD']);
         }
@@ -290,7 +290,7 @@ function getRegion($id){
                 <tr>
                     <td width="150"><strong><?php echo $_LANG['TITLE']; ?></strong></td>
                     <td width="" valign="top">
-                        <input name="name" type="text" value="<?php echo htmlspecialchars(@$item['name']); ?>" style="width: 300px;" />
+                        <input name="name" type="text" value="<?php echo htmlspecialchars((string)(@$item['name'])); ?>" style="width: 300px;" />
                     </td>
                 </tr>
                 <?php if($sub_opt == 'country'){
@@ -301,25 +301,25 @@ function getRegion($id){
                 <tr>
                     <td><strong>alpha2</strong></td>
                     <td width="" valign="top">
-                        <input name="alpha2" type="text" value="<?php echo htmlspecialchars(@$item['alpha2']); ?>" style="width: 300px;" />
+                        <input name="alpha2" type="text" value="<?php echo htmlspecialchars((string)(@$item['alpha2'])); ?>" style="width: 300px;" />
                     </td>
                 </tr>
                 <tr>
                     <td><strong>alpha3</strong></td>
                     <td width="" valign="top">
-                        <input name="alpha3" type="text" value="<?php echo htmlspecialchars(@$item['alpha3']); ?>" style="width: 300px;" />
+                        <input name="alpha3" type="text" value="<?php echo htmlspecialchars((string)(@$item['alpha3'])); ?>" style="width: 300px;" />
                     </td>
                 </tr>
                 <tr>
                     <td><strong>iso</strong></td>
                     <td width="" valign="top">
-                        <input name="iso" type="text" value="<?php echo htmlspecialchars(@$item['iso']); ?>" style="width: 300px;" />
+                        <input name="iso" type="text" value="<?php echo htmlspecialchars((string)(@$item['iso'])); ?>" style="width: 300px;" />
                     </td>
                 </tr>
                 <tr>
                     <td><strong><?php echo $_LANG['AD_ORDER']; ?></strong></td>
                     <td width="" valign="top">
-                        <input name="ordering" type="text" value="<?php echo htmlspecialchars(@$item['ordering']); ?>" style="width: 300px;" />
+                        <input name="ordering" type="text" value="<?php echo htmlspecialchars((string)(@$item['ordering'])); ?>" style="width: 300px;" />
                     </td>
                 </tr>
                 <?php } elseif($sub_opt == 'region'){ ?>

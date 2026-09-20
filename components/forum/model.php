@@ -812,7 +812,7 @@ class cms_model_forum{
             $file = $_FILES['fa']['name'][$key];
 
             $pp  = pathinfo($file);
-            $ext = mb_strtolower($pp['extension']);
+            $ext = mb_strtolower((string)$pp['extension']);
 
             if(in_array($ext, array('php','htm','html','htaccess'))) { $success = false; continue; }
             if (!mb_stristr($this->config['fa_ext'], $ext)){ $success = false; continue; }
@@ -983,7 +983,7 @@ class cms_model_forum{
         $answers = array();
         foreach($poll['answers'] as $answer){
             if ($answer) {
-                $answers[strip_tags($answer)] = 0;
+                $answers[strip_tags((string)$answer)] = 0;
             }
         }
         if (sizeof($answers)<2){ $this->last_addpoll_error = $_LANG['ERR_POLL_VARIANT']; return false; }
@@ -1020,7 +1020,7 @@ class cms_model_forum{
         }
         // Новый массив вопросов
         foreach($poll['answers'] as $new_answer){
-            $new_answers[] = strip_tags($new_answer);
+            $new_answers[] = strip_tags((string)$new_answer);
         }
         // Результирующий массив
         foreach($new_answers as $key=>$answer){
@@ -1151,7 +1151,7 @@ class cms_model_forum{
 
         //Прибавляем голос к переданному нам варианту ответа
         foreach($poll['answers'] as $key=>$value){
-            if ($key == stripslashes($answer)){
+            if ($key == stripslashes((string)$answer)){
                 $poll['answers'][$key] += 1;
             }
         }

@@ -264,7 +264,7 @@ class cmsCron {
         /* ================================================ */
         if ($job['custom_file']){
 
-            cmsCore::includeFile(ltrim($job['custom_file'], '/'));
+            cmsCore::includeFile(ltrim((string)$job['custom_file'], '/'));
 
         }
 

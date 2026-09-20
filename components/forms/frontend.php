@@ -95,7 +95,7 @@ function forms(){
             $emails = explode(',', $form['email']);
             if($emails){
                 foreach ($emails as $email) {
-                    cmsCore::mailText(trim($email), cmsConfig::getConfig('sitename').': '.$form['title'], $mail_message, $attachment);
+                    cmsCore::mailText(trim((string)$email), cmsConfig::getConfig('sitename').': '.$form['title'], $mail_message, $attachment);
                 }
             }
             // удаляем прикрепленные файлы

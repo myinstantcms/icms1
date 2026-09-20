@@ -280,11 +280,11 @@ class cms_model_board{
 			if($is_coments){
 				$item['comments'] = cmsCore::getCommentsCount('boarditem', $item['id']);
 			}
-            $item['content']  = nl2br($item['content']);
+            $item['content']  = nl2br((string)$item['content']);
 			$item['content']  = $this->config['auto_link'] ? $this->inCore->parseSmiles($item['content']) : $item['content'];
 			$item['title']    = $item['obtype'].' '.$item['title'];
 			$item['fpubdate'] = cmsCore::dateFormat($item['pubdate']);
-			$item['enc_city'] = urlencode($item['city']);
+			$item['enc_city'] = urlencode((string)$item['city']);
             if (!$item['file'] || !file_exists(PATH.'/images/board/small/'.$item['file'])){
 				$item['file'] = 'nopic.jpg';
 			}
@@ -363,7 +363,7 @@ class cms_model_board{
 		$record['fpubdate']   = $record['pubdate'];
 		$record['pubdate'] 	  = cmsCore::dateFormat($record['pubdate']);
 		$record['vipdate'] 	  = cmsCore::dateFormat($record['vipdate']);
-		$record['enc_city']   = urlencode($record['city']);
+		$record['enc_city']   = urlencode((string)$record['city']);
 		$record['moderator']  = $this->checkAccess($record['user_id']);
 		if (!$record['file'] || !file_exists(PATH.'/images/board/small/'.$record['file'])){
 			$record['file'] = '';
@@ -565,7 +565,7 @@ class cms_model_board{
 		if(empty($cat['cat_city'])) { $cat['cat_city'] = $this->getCatCity(); }
 		if ($cat['cat_city']){
 			foreach($cat['cat_city'] as $cat_city){
-				if (mb_strtolower($selected)==mb_strtolower($cat_city)){
+				if (mb_strtolower((string)$selected)==mb_strtolower((string)$cat_city)){
 					$s = 'selected="selected"';
 				} else {
 					$s = '';
@@ -586,10 +586,10 @@ class cms_model_board{
 		$html  = '';
 		$types = explode("\n", $types);
 		foreach($types as $id=>$type){
-			$type = trim($type);
+			$type = trim((string)$type);
 			$html .= '<a class="board_cats_a" href="/board/'.$cat_id.'/type/'.urlencode(icms_ucfirst($type)).'">'.icms_ucfirst($type).'</a>, ';
 		}
-		$html = rtrim($html, ', ');
+		$html = rtrim((string)$html, ', ');
 		return $html;
 
 	}
@@ -606,8 +606,8 @@ class cms_model_board{
         }
 
 		foreach($types as $type){
-			$type = icms_ucfirst(htmlspecialchars(trim($type)));
-			if (mb_strtolower($selected) == mb_strtolower($type)){ $sel = 'selected="selected"'; } else { $sel = ''; }
+			$type = icms_ucfirst(htmlspecialchars(trim((string)$type)));
+			if (mb_strtolower((string)$selected) == mb_strtolower((string)$type)){ $sel = 'selected="selected"'; } else { $sel = ''; }
 			$html .= '<option value="'.$type.'" '.$sel.'>'.$type.'</option>';
 		}
 		return $html;

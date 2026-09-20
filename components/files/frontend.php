@@ -28,7 +28,7 @@ function files(){
         $fileurl = cmsCore::request('fileurl', 'html', '');
 
         if(mb_strpos($fileurl, '-') === 0){
-            $fileurl = htmlspecialchars_decode(base64_decode(ltrim($fileurl, '-')));
+            $fileurl = htmlspecialchars_decode(base64_decode(ltrim((string)$fileurl, '-')));
         }
 
         $fileurl = cmsCore::strClear($fileurl);
@@ -63,7 +63,7 @@ function files(){
     	$url = str_replace(array('--q--',' '), array('?','+'), cmsCore::request('url', 'str', ''));
 
         if(mb_strpos($url, '-') === 0){
-            $url = htmlspecialchars_decode(base64_decode(ltrim($url, '-')));
+            $url = htmlspecialchars_decode(base64_decode(ltrim((string)$url, '-')));
         }
 
         $url = cmsCore::strClear($url);

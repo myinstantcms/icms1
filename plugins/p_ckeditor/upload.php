@@ -82,7 +82,7 @@ if($type === 'file'){
     if(empty($plugin->config['allow_file_ext']) || !$plugin->canFileUpload()){ cmsCore::error404(); }
 
     $allow_ext = explode(',', $plugin->config['allow_file_ext']);
-    $allow_ext = array_map(function($val){ return trim($val); }, $allow_ext);
+    $allow_ext = array_map(function($val){ return trim((string)$val); }, $allow_ext);
 
     if (!empty($_FILES['upload']['name'])){
 

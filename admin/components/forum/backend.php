@@ -81,7 +81,7 @@ if ($opt=='saveconfig'){
     while (mb_strpos($cfg['fa_ext'], 'htm') ||
            mb_strpos($cfg['fa_ext'], 'php') ||
            mb_strpos($cfg['fa_ext'], 'ht')) {
-        $cfg['fa_ext']  = str_replace(array('htm','php','ht'), '', mb_strtolower($cfg['fa_ext']));
+        $cfg['fa_ext']  = str_replace(array('htm','php','ht'), '', mb_strtolower((string)$cfg['fa_ext']));
     }
     $cfg['fa_size']       = cmsCore::request('fa_size', 'int');
     $cfg['edit_minutes']  = cmsCore::request('edit_minutes', 'int');

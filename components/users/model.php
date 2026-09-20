@@ -133,7 +133,7 @@ class cms_model_users{
 		// добавляем запись
 		$wall_id = $this->inDB->insert('cms_user_wall', cmsCore::callEvent('ADD_WALL', $item));
 
-		$message = strip_tags($item['content']);
+		$message = strip_tags((string)$item['content']);
 		$message = mb_strlen($message)>100 ? mb_substr($message, 0, 100) : $message;
 
 		if ($item['user_id'] == $item['author_id']){
@@ -347,7 +347,7 @@ class cms_model_users{
 		$user['flogdate']    = cmsUser::getOnlineStatus($user['id'], $user['logdate']);
 		$user['fregdate']    = cmsCore::dateFormat($user['regdate']);
 		$user['fbirthdate']  = cmsCore::dateFormat($user['birthdate']);
-		$user['cityurl']     = urlencode($user['city']);
+		$user['cityurl']     = urlencode((string)$user['city']);
 		$user['profile_link'] = HOST . cmsUser::getProfileURL($user['login']);
 		$user['fdescription'] = cmsPage::getMetaSearchLink('/users/hobby/', $user['description']);
         $user['formsdata']    = cmsCore::yamlToArray($user['formsdata']);

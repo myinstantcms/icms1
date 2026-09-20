@@ -266,7 +266,7 @@ if ($do=='add'){
 
 	if(!$comment['is_hidden'] && $comment['published']){
 		//регистрируем событие
-		$content_short = strip_tags($comment['content']);
+		$content_short = strip_tags((string)$comment['content']);
 		cmsActions::log('add_comment', array(
 			'object' => $_LANG['COMMENT'],
 			'object_url' => $comment['target_link'] . '#c' . $comment_id,
@@ -299,7 +299,7 @@ if ($do=='add'){
 		//рассылаем уведомления о новом комменте
 		cmsUser::sendUpdateNotify($comment['target'], $comment['target_id'],
                                     array('link' => $comment['target_link'] . '#c' . $comment_id,
-                                          'title' => stripslashes($comment['target_title']),
+                                          'title' => stripslashes((string)$comment['target_title']),
                                           'letter_file' => 'newcomment',
                                           'author' => ($inUser->id ? $inUser->nickname : $comment['guestname'])));
 
@@ -313,7 +313,7 @@ if ($do=='add'){
         $mailmsg = str_replace(array('{sitename}','{date}','{from}',
                                      '{subjtitle}','{targetlink}','{content}'),
                                array($inConf->sitename,date('d/m/Y (H:i)'),$from_nick,
-                                     stripslashes($comment['target_title']),$targetlink,strip_tags($comment['content'])),
+                                     stripslashes((string)$comment['target_title']),$targetlink,strip_tags((string)$comment['content'])),
                               cmsCore::getLanguageTextFile('newcomment_admin'));
 
 		$inCore->mailText($model->config['email'], '', $mailmsg);
@@ -328,7 +328,7 @@ if ($do=='add'){
 			$letter = cmsCore::getLanguageTextFile('newpostcomment');
 			$letter = str_replace('{sitename}', $inConf->sitename, $letter);
 			$letter = str_replace('{subj}', $target['subj'], $letter);
-            $letter = str_replace('{subjtitle}', stripslashes($comment['target_title']), $letter);
+            $letter = str_replace('{subjtitle}', stripslashes((string)$comment['target_title']), $letter);
 			$letter = str_replace('{targetlink}', $targetlink, $letter);
 			$letter = str_replace('{date}', date('d/m/Y H:i:s'), $letter);
 			$letter = str_replace('{from}', $from_nick, $letter);
@@ -389,7 +389,7 @@ if ($do=='edit'){
 	$model->updateComment($comment['id'], $com_new);
 
 	// Обновляем в ленте активности
-	$content_short = mb_substr(strip_tags($com_new['content']), 0, 140);
+	$content_short = mb_substr(strip_tags((string)$com_new['content']), 0, 140);
 	cmsActions::updateLog('add_comment', array('description' => $content_short), $comment['id']);
 
     $com_new['content'] =  stripslashes(str_replace(array('\r', '\n'), ' ', $com_new['content']));

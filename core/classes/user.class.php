@@ -151,7 +151,7 @@ class cmsUser {
         // первый раз зашли
         if(!isset($_SESSION['user_net'])) {
             $octets = explode('.', $_SERVER['REMOTE_ADDR']);
-            $_SESSION['user_net'] = rtrim($_SERVER['REMOTE_ADDR'], end($octets));
+            $_SESSION['user_net'] = rtrim((string)$_SERVER['REMOTE_ADDR'], end($octets));
             return true;
         }
 
@@ -1420,7 +1420,7 @@ class cmsUser {
 				'target' => '',
 				'target_url' => '',
 				'target_id' => 0,
-				'description' => '<img src="/images/users/awards/'.$award['imageurl'].'" border="0" alt="'.htmlspecialchars($award['description']).'">'
+				'description' => '<img src="/images/users/awards/'.$award['imageurl'].'" border="0" alt="'.htmlspecialchars((string)$award['description']).'">'
 		));
 		self::sendMessage(USER_UPDATER, $user_id, '<b>'.$_LANG['RECEIVED_AWARD'].':</b> <a href="'.cmsUser::getProfileURL($user['login']).'#upr_awards">'.$award['title'].'</a>');
 
@@ -1643,7 +1643,7 @@ class cmsUser {
             global $_LANG;
             return 'javascript:core.alert(\''.$_LANG['USER_IS_DELETE'].'\',\''.$_LANG['ATTENTION'].'\');';
         }
-        return '/' . self::PROFILE_LINK_PREFIX . urlencode($user_login);
+        return '/' . self::PROFILE_LINK_PREFIX . urlencode((string)$user_login);
     }
 
 // ============================================================================ //
@@ -1654,7 +1654,7 @@ class cmsUser {
             global $_LANG;
             return $_LANG['USER_IS_DELETE'];
         }
-        return '<a href="'.self::getProfileURL($user_login).'" title="'.htmlspecialchars($user_nickname).'">'.$user_nickname.'</a>';
+        return '<a href="'.self::getProfileURL($user_login).'" title="'.htmlspecialchars((string)$user_nickname).'">'.$user_nickname.'</a>';
     }
 
 // ============================================================================ //

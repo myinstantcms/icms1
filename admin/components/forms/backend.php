@@ -172,7 +172,7 @@ if (in_array($opt, array('add_field', 'update_field'))) {
             while (mb_strpos($exts, 'htm') ||
                    mb_strpos($exts, 'php') ||
                    mb_strpos($exts, 'ht')) {
-                $exts  = str_replace(array('htm','php','ht'), '', mb_strtolower($exts));
+                $exts  = str_replace(array('htm','php','ht'), '', mb_strtolower((string)$exts));
             }
             $item['config']['ext']   = str_replace(' ', '', $exts);
             $item['config']['size']  = cmsCore::request('f_file_size', 'int');
@@ -305,7 +305,7 @@ if (in_array($opt, array('add', 'edit'))) {
         <table width="605" border="0" cellspacing="5" class="proptable">
             <tr>
                 <td width="200"><strong><?php echo $_LANG['AD_FORM_NAME']; ?>: </strong></td>
-                <td width=""><input name="title" type="text" id="title" size="30" value="<?php echo htmlspecialchars(@$mod['title']); ?>" style="width:220px;"/></td>
+                <td width=""><input name="title" type="text" id="title" size="30" value="<?php echo htmlspecialchars((string)(@$mod['title'])); ?>" style="width:220px;"/></td>
             </tr>
             <tr>
                 <td><strong><?php echo $_LANG['AD_FORM_DESTINATION']; ?>: </strong></td>
@@ -327,7 +327,7 @@ if (in_array($opt, array('add', 'edit'))) {
             <tr>
                 <td width="200"><strong><?php echo $_LANG['AD_FORM_ACTION']; ?>: </strong></td>
                 <td width="">
-                    <input name="form_action" type="text" size="30" value="<?php echo htmlspecialchars(@$mod['form_action']); ?>" style="width:220px;"/>
+                    <input name="form_action" type="text" size="30" value="<?php echo htmlspecialchars((string)(@$mod['form_action'])); ?>" style="width:220px;"/>
                 </td>
             </tr>
             <tr>
@@ -340,7 +340,7 @@ if (in_array($opt, array('add', 'edit'))) {
             <tr>
                 <td width="200"><strong><?php echo $_LANG['AD_FORM_TPL']; ?>: </strong><br><span class="hinttext"><?php echo $_LANG['AD_FORM_TPL_HINT']; ?></span></td>
                 <td width="">
-                    <input name="tpl" type="text" size="30" value="<?php echo htmlspecialchars(@$mod['tpl']); ?>" style="width:220px;"/>
+                    <input name="tpl" type="text" size="30" value="<?php echo htmlspecialchars((string)(@$mod['tpl'])); ?>" style="width:220px;"/>
                 </td>
             </tr>
         </table>
@@ -438,11 +438,11 @@ if (in_array($opt, array('add', 'edit'))) {
                             </tr>
                             <tr>
                                 <td><?php echo $_LANG['AD_TITLE']; ?>:</td>
-                                <td><input name="f_title" type="text" id="f_title" size="25" value="<?php echo htmlspecialchars(@$field['title']) ?>" /></td>
+                                <td><input name="f_title" type="text" id="f_title" size="25" value="<?php echo htmlspecialchars((string)(@$field['title'])) ?>" /></td>
                             </tr>
                             <tr>
                                 <td><?php echo $_LANG['DESCRIPTION']; ?>:</td>
-                                <td><input name="f_description" type="text" id="f_description" size="25" value="<?php echo htmlspecialchars(@$field['description']) ?>" /></td>
+                                <td><input name="f_description" type="text" id="f_description" size="25" value="<?php echo htmlspecialchars((string)(@$field['description'])) ?>" /></td>
                             </tr>
                             <tr>
                                 <td><?php echo $_LANG['AD_FIELD_ORDER']; ?>:</td>
@@ -524,7 +524,7 @@ if (in_array($opt, array('add', 'edit'))) {
                                 <tr>
                                     <td width="100"><?php echo $_LANG['AD_ELEMENTS']; ?>:<br />
                                         <small><?php echo $_LANG['AD_THROUTH']; ?> "<b>/</b>"</small> </td>
-                                    <td><textarea name="f_rg_list" cols="20" rows="5" id="f_rg_list"><?php echo htmlspecialchars(@$field['config']['items']) ?></textarea></td>
+                                    <td><textarea name="f_rg_list" cols="20" rows="5" id="f_rg_list"><?php echo htmlspecialchars((string)(@$field['config']['items'])) ?></textarea></td>
                                 </tr>
                             </table>
                         </div>
@@ -533,7 +533,7 @@ if (in_array($opt, array('add', 'edit'))) {
                                 <tr>
                                     <td width="100"><?php echo $_LANG['AD_ELEMENTS']; ?>:<br />
                                         <small><?php echo $_LANG['AD_THROUTH']; ?> "<b>/</b>"</small> </td>
-                                    <td><textarea name="f_list_list" cols="20" rows="5" id="f_list_list"><?php echo htmlspecialchars(@$field['config']['items']) ?></textarea></td>
+                                    <td><textarea name="f_list_list" cols="20" rows="5" id="f_list_list"><?php echo htmlspecialchars((string)(@$field['config']['items'])) ?></textarea></td>
                                 </tr>
                                 <tr>
                                     <td><?php echo $_LANG['AD_WIDTH']; ?>:</td>
@@ -546,7 +546,7 @@ if (in_array($opt, array('add', 'edit'))) {
                                 <tr>
                                     <td width="100"><?php echo $_LANG['AD_ELEMENTS']; ?>:<br />
                                         <small><?php echo $_LANG['AD_THROUTH']; ?> "<b>/</b>"</small> </td>
-                                    <td><textarea name="f_menu_list" cols="20" rows="5" id="f_menu_list"><?php echo htmlspecialchars(@$field['config']['items']) ?></textarea></td>
+                                    <td><textarea name="f_menu_list" cols="20" rows="5" id="f_menu_list"><?php echo htmlspecialchars((string)(@$field['config']['items'])) ?></textarea></td>
                                 </tr>
                                 <tr>
                                     <td><?php echo $_LANG['AD_WIDTH']; ?>:</td>

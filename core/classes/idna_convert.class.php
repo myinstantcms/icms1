@@ -191,7 +191,7 @@ class idna_convert
             }
         }
         // Make sure to drop any newline characters around
-        $input = trim($input);
+        $input = trim((string)$input);
 
         // Negotiate input and try to determine, whether it is a plain string,
         // an email address or something like a complete URL
@@ -234,7 +234,7 @@ class idna_convert
                 }
                 $parsed['host'] = join('.', $arr);
                 $return =
-                        (empty($parsed['scheme']) ? '' : $parsed['scheme'].(strtolower($parsed['scheme']) == 'mailto' ? ':' : '://'))
+                        (empty($parsed['scheme']) ? '' : $parsed['scheme'].(strtolower((string)$parsed['scheme']) == 'mailto' ? ':' : '://'))
                         .(empty($parsed['user']) ? '' : $parsed['user'].(empty($parsed['pass']) ? '' : ':'.$parsed['pass']).'@')
                         .$parsed['host']
                         .(empty($parsed['port']) ? '' : ':'.$parsed['port'])
@@ -376,7 +376,7 @@ class idna_convert
         }
         $parsed['host'] = join('.', $arr);
         $return =
-                (empty($parsed['scheme']) ? '' : $parsed['scheme'].(strtolower($parsed['scheme']) == 'mailto' ? ':' : '://'))
+                (empty($parsed['scheme']) ? '' : $parsed['scheme'].(strtolower((string)$parsed['scheme']) == 'mailto' ? ':' : '://'))
                 .(empty($parsed['user']) ? '' : $parsed['user'].(empty($parsed['pass']) ? '' : ':'.$parsed['pass']).'@')
                 .$parsed['host']
                 .(empty($parsed['port']) ? '' : ':'.$parsed['port'])

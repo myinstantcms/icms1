@@ -167,7 +167,7 @@ public function setTitle($title){
         return $this;
     }
 
-    $this->title = strip_tags($title).($this->site_cfg->title_and_sitename ? ' — '.$this->site_cfg->sitename : '');
+    $this->title = strip_tags((string)$title).($this->site_cfg->title_and_sitename ? ' — '.$this->site_cfg->sitename : '');
 
     return $this;
 
@@ -184,7 +184,7 @@ public function setKeywords($keywords){
         return $this;
     }
 
-    $this->page_keys = trim(strip_tags($keywords));
+    $this->page_keys = trim(strip_tags((string)$keywords));
 
     return $this;
 
@@ -201,7 +201,7 @@ public function setDescription($text){
         return $this;
     }
 
-    $this->page_desc = trim(strip_tags($text));
+    $this->page_desc = trim(strip_tags((string)$text));
 
     return $this;
 
@@ -234,14 +234,14 @@ public function printHead(){
 		}
 	}
     // Заголовок страницы
-    echo '<title>', htmlspecialchars($this->title), '</title>',"\n";
+    echo '<title>', htmlspecialchars((string)$this->title), '</title>',"\n";
     // Ключевые слова
-    echo '<meta name="keywords" content="', htmlspecialchars($this->page_keys), '" />',"\n";
+    echo '<meta name="keywords" content="', htmlspecialchars((string)$this->page_keys), '" />',"\n";
     // Описание
-    echo '<meta name="description" content="',htmlspecialchars($this->page_desc),'" />',"\n";
+    echo '<meta name="description" content="',htmlspecialchars((string)$this->page_desc),'" />',"\n";
     // Изображение
     if($this->page_img){
-        echo '<link rel="image_src" href="',htmlspecialchars($this->page_img),'" />',"\n";
+        echo '<link rel="image_src" href="',htmlspecialchars((string)$this->page_img),'" />',"\n";
     }
     //Оставшиеся теги
     foreach($this->page_head as $value) { echo $value,"\n"; }
@@ -309,7 +309,7 @@ public function printPathway($separator='&rarr;'){
  */
 public function addPathway($title, $link=''){
     //Если ссылка не указана, берем текущий URI
-    if (empty($link)) { $link = htmlspecialchars($_SERVER['REQUEST_URI']); }
+    if (empty($link)) { $link = htmlspecialchars((string)$_SERVER['REQUEST_URI']); }
     //Проверяем, есть ли уже в глубиномере такое звено
     $already = false;
     foreach($this->pathway as $pathway){
@@ -655,12 +655,12 @@ public static function getMetaSearchLink($link, $text){
 
 	if(!$text) { return ''; }
 
-    $text = html_entity_decode(trim(trim(strip_tags($text)), '.'));
+    $text = html_entity_decode(trim(trim(strip_tags((string)$text)), '.'));
 
     foreach(explode(',', $text) as $value){
 
         $v = trim(str_replace(array("\r","\n"), '', $value));
-        $worlds[] = '<a href="'.$link.urlencode($v).'">'.$v.'</a>';
+        $worlds[] = '<a href="'.$link.urlencode((string)$v).'">'.$v.'</a>';
 
     }
 
@@ -875,7 +875,7 @@ public static function getLangJS($key){
 
     if(!isset($_LANG[$key])){ return; }
 
-    $value = htmlspecialchars($_LANG[$key]);
+    $value = htmlspecialchars((string)$_LANG[$key]);
 
     return "var LANG_{$key} = '{$value}'; ";
 

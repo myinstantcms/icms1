@@ -153,7 +153,7 @@ if ($pdo=='submitphotos'){
 					  'target_id' => $album_id,
 					  'target_url' => '/users/'.$usr['login'].'/photos/private'.$album_id.'.html',
 					  'description' => '<a href="/users/'.$usr['id'].'/photo'.$photo_id.'.html" class="act_photo">
-											<img alt="'.htmlspecialchars(stripslashes($title)).'" src="/images/users/photos/small/'.$imageurl.'" />
+											<img alt="'.htmlspecialchars(stripslashes((string)$title)).'" src="/images/users/photos/small/'.$imageurl.'" />
 										  </a>',
 					  'is_friends_only' => $is_friends_only,
 					  'is_users_only' => $is_users_only
@@ -162,7 +162,7 @@ if ($pdo=='submitphotos'){
 			} elseif ($descr_next < 4) {
 
 					$photo_descr .= ' <a href="/users/'.$usr['id'].'/photo'.$photo_id.'.html" class="act_photo">
-											<img alt="'.htmlspecialchars(stripslashes($title)).'" src="/images/users/photos/small/'.$imageurl.'" />
+											<img alt="'.htmlspecialchars(stripslashes((string)$title)).'" src="/images/users/photos/small/'.$imageurl.'" />
 									</a> ';
 			}
 			$descr_next++;

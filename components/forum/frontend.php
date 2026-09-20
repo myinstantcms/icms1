@@ -177,7 +177,7 @@ if ($do=='thread'){
     // meta description
 	if(!$thread['description']){
         $first_post = current($posts);
-        $first_post_content = strip_tags($first_post['content_html']);
+        $first_post_content = strip_tags((string)$first_post['content_html']);
         if(mb_strlen($first_post_content)>=100){
             $inPage->setDescription(crop($first_post_content));
         } else {
@@ -189,7 +189,7 @@ if ($do=='thread'){
     // meta keywords
     $all_post_content = '';
     foreach($posts as $p){
-        $all_post_content .= ' '.strip_tags($p['content_html']);
+        $all_post_content .= ' '.strip_tags((string)$p['content_html']);
     }
     $meta_keys = cmsCore::getKeywords($all_post_content);
     $inPage->setKeywords($meta_keys ? $meta_keys : $thread['title']);
@@ -418,7 +418,7 @@ if (in_array($do, array('newthread','newpost','editpost'))){
 
 		if (!$message_html) { cmsCore::addSessionMessage($_LANG['NEED_TEXT_POST'], 'error'); cmsCore::redirectBack(); }
 
-        $message_post = strip_tags($message_html);
+        $message_post = strip_tags((string)$message_html);
         $message_post = mb_strlen($message_post)>200 ? mb_substr($message_post, 0, 200) : $message_post;
 
         $post_pinned = 0;
@@ -496,7 +496,7 @@ if (in_array($do, array('newthread','newpost','editpost'))){
             if ($do=='newpost'){
                 cmsUser::sendUpdateNotify('forum', $thread['id'],
                                        array('link' => '/forum/thread'.$thread['id'].'-'.$total_pages.'.html#'.$post_id,
-                                             'title' => stripslashes($thread['title']),
+                                             'title' => stripslashes((string)$thread['title']),
                                              'letter_file' => 'newforumpost',
                                              'author' => $inUser->nickname));
             }
@@ -755,8 +755,8 @@ if(in_array($do, array('movethread','renamethread','deletethread','close','pin',
             $model->updateForumCache($thread['NSLeft'], $thread['NSRight'], true);
 
             cmsCore::jsonOutput(array('error' => false,
-                                      'title' => stripslashes($new_thread['title']),
-                                      'description' => stripslashes($new_thread['description'])));
+                                      'title' => stripslashes((string)$new_thread['title']),
+                                      'description' => stripslashes((string)$new_thread['description'])));
 
         }
 
