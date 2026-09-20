@@ -523,7 +523,7 @@ if ($opt == 'add_cat' || $opt == 'edit_cat'){
         <table width="620" border="0" cellpadding="0" cellspacing="10" class="proptable">
           <tr>
             <td><strong><?php echo $_LANG['AD_NAME_CATEGORY']; ?>: </strong></td>
-            <td width="220"><input name="title" type="text" id="title" style="width:220px" value="<?php echo htmlspecialchars($mod['title']);?>"/></td>
+            <td width="220"><input name="title" type="text" id="title" style="width:220px" value="<?php echo htmlspecialchars((string)$mod['title']);?>"/></td>
           </tr>
           <tr>
             <td><strong><?php echo $_LANG['AD_PARENT_CATEGORY']; ?>: </strong></td>

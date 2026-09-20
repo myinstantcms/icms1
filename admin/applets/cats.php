@@ -304,7 +304,7 @@ function applet_cats(){
                         </tr>
                         <tr>
                           <td>
-                        <input name="title" type="text" id="title" style="width:100%" value="<?php echo htmlspecialchars($mod['title']);?>" />
+                        <input name="title" type="text" id="title" style="width:100%" value="<?php echo htmlspecialchars((string)$mod['title']);?>" />
                           </td>
                           <td style="padding-left:6px">
                             <input name="tpl" type="text" style="width:98%" value="<?php echo @$mod['tpl'];?>" />
@@ -533,7 +533,7 @@ function applet_cats(){
                             <span class="hinttext"><?php echo $_LANG['AD_IF_UNKNOWN_PAGETITLE']; ?></span>
                         </div>
                         <div>
-                            <input name="pagetitle" type="text" id="pagetitle" style="width:99%" value="<?php if (isset($mod['pagetitle'])) { echo htmlspecialchars($mod['pagetitle']); } ?>" />
+                            <input name="pagetitle" type="text" id="pagetitle" style="width:99%" value="<?php if (isset($mod['pagetitle'])) { echo htmlspecialchars((string)$mod['pagetitle']); } ?>" />
                         </div>
 
                         <div style="margin-top:20px">
@@ -541,7 +541,7 @@ function applet_cats(){
                             <span class="hinttext"><?php echo $_LANG['AD_FROM_COMMA']; ?></span>
                         </div>
                         <div>
-                             <textarea name="meta_keys" style="width:97%" rows="4" id="meta_keys"><?php echo htmlspecialchars($mod['meta_keys']);?></textarea>
+                             <textarea name="meta_keys" style="width:97%" rows="4" id="meta_keys"><?php echo htmlspecialchars((string)$mod['meta_keys']);?></textarea>
                         </div>
 
                         <div style="margin-top:20px">
@@ -549,7 +549,7 @@ function applet_cats(){
                             <span class="hinttext"><?php echo $_LANG['AD_LESS_THAN']; ?></span>
                         </div>
                         <div>
-                             <textarea name="meta_desc" style="width:97%" rows="6" id="meta_desc"><?php echo htmlspecialchars($mod['meta_desc']);?></textarea>
+                             <textarea name="meta_desc" style="width:97%" rows="6" id="meta_desc"><?php echo htmlspecialchars((string)$mod['meta_desc']);?></textarea>
                         </div>
                       {tab=<?php echo $_LANG['AD_TAB_ACCESS']; ?>}
 

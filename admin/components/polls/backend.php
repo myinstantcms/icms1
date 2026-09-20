@@ -127,7 +127,7 @@ if(!defined('VALID_CMS_ADMIN')) { die('ACCESS DENIED'); }
             $item = 1;
             foreach ($mod['answers'] as $answer=>$num){
 
-                $answers_title[$item] = htmlspecialchars($answer);
+                $answers_title[$item] = htmlspecialchars((string)$answer);
                 $answers_num[$item]   = $num;
                 $item++;
 

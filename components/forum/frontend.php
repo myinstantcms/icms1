@@ -81,7 +81,7 @@ if ($do=='forum'){
 		return;
 	}
 
-	$inPage->addHead('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars($forum['title']).'" href="'.HOST.'/rss/forum/'.$forum['id'].'/feed.rss">');
+	$inPage->addHead('<link rel="alternate" type="application/rss+xml" title="'.htmlspecialchars((string)$forum['title']).'" href="'.HOST.'/rss/forum/'.$forum['id'].'/feed.rss">');
 
     $inPage->setTitle(($forum['pagetitle'] ? $forum['pagetitle'] : $forum['title']));
     $inPage->setDescription(($forum['meta_desc'] ? $forum['meta_desc'] : crop($forum['description'] ? $forum['description'] : $forum['title'])));
@@ -398,7 +398,7 @@ if (in_array($do, array('newthread','newpost','editpost'))){
                 assign('forum', isset($forum)? $forum : $pcat)->
                 assign('is_subscribed', cmsUser::isSubscribed($inUser->id, 'forum', @$thread['id']))->
                 assign('thread', $thread)->
-                assign('post_content', htmlspecialchars($last_post['content']))->
+                assign('post_content', htmlspecialchars((string)$last_post['content']))->
                 assign('is_moder', $is_forum_moder)->
                 assign('is_admin', $inUser->is_admin)->
                 assign('is_allow_attach', cmsCore::checkContentAccess($model->config['group_access']) && $is_allow_attach)->
@@ -958,8 +958,8 @@ if(in_array($do, array('download','delfile','reloadfile'))){
 
         ob_clean();
 
-        header('Content-Disposition: attachment; filename='.htmlspecialchars($file['filename']));
-        header('Content-Type: application/x-force-download; name="'.htmlspecialchars($file['filename']).'"');
+        header('Content-Disposition: attachment; filename='.htmlspecialchars((string)$file['filename']));
+        header('Content-Type: application/x-force-download; name="'.htmlspecialchars((string)$file['filename']).'"');
         header('Content-Length: ' . $file['filesize']);
         header('Accept-Ranges: bytes');
 

@@ -147,7 +147,7 @@ function applet_usergroups(){
 		<table width="660" border="0" cellspacing="5" class="proptable">
 			<tr>
 				<td width="198" valign="top"><div><strong><?php echo $_LANG['AD_GROUP_NAME'];?>: </strong></div><span class="hinttext"><?php echo $_LANG['AD_VIEW_SITE'];?></span></td>
-				<td width="475" valign="top"><input name="title" type="text" id="title" size="30" value="<?php echo htmlspecialchars($mod['title']);?>"/></td>
+				<td width="475" valign="top"><input name="title" type="text" id="title" size="30" value="<?php echo htmlspecialchars((string)$mod['title']);?>"/></td>
 			</tr>
 			<tr>
 				<td valign="top"><div><strong><?php echo $_LANG['AD_ALIAS'];?>:</strong></div><?php if($do=='edit'){ ?><span class="hinttext"><?php echo $_LANG['AD_DONT_CHANGE'];?></span><?php } ?></td>

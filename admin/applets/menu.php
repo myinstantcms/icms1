@@ -538,7 +538,7 @@ function applet_menu(){
                 <td valign="top">
 
                     <div><strong><?php echo $_LANG['AD_MENU_POINT_TITLE']; ?></strong> <span class="hinttext">&mdash; <?php echo $_LANG['AD_VIEW_IN_SITE']; ?></span></div>
-                    <div><input name="title" type="text" id="title" style="width:100%" value="<?php echo htmlspecialchars($mod['title']);?>" /></div>
+                    <div><input name="title" type="text" id="title" style="width:100%" value="<?php echo htmlspecialchars((string)$mod['title']);?>" /></div>
                     <?php if(count($langs)>1) { ?>
                     <div><strong><?php echo $_LANG['AD_LANG_TITLES']; ?></strong> <span class="hinttext">&mdash; <?php echo $_LANG['AD_LANG_TITLES_HINT']; ?></span></div>
                     <?php foreach ($langs as $lang) { ?>

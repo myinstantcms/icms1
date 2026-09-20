@@ -519,7 +519,7 @@ if ($opt == 'add_cat' || $opt == 'edit_cat'){
             <!-- главная ячейка -->
             <td valign="top">
                 <div><strong><?php echo $_LANG['AD_CAT_NAME'];?></strong></div>
-                <div><input name="title" type="text" id="title" style="width:99%" value="<?php echo htmlspecialchars($mod['title']);?>" /></div>
+                <div><input name="title" type="text" id="title" style="width:99%" value="<?php echo htmlspecialchars((string)$mod['title']);?>" /></div>
                 <div style="margin-top:10px"><strong><?php echo $_LANG['AD_ITEMS_FEATURES'];?></strong></div>
                 <div><span class="hinttext">
                     <?php echo $_LANG['AD_FIELDS_NAME'];?>
@@ -912,7 +912,7 @@ if ($opt == 'add_discount' || $opt == 'edit_discount'){
         <table width="584" border="0" cellspacing="5" class="proptable">
             <tr>
                 <td width="250"><strong><?php echo $_LANG['TITLE'];?>: </strong></td>
-                <td width="315" valign="top"><input name="title" type="text" id="title" style="width:250px" value="<?php echo htmlspecialchars($mod['title']);?>"/></td>
+                <td width="315" valign="top"><input name="title" type="text" id="title" style="width:250px" value="<?php echo htmlspecialchars((string)$mod['title']);?>"/></td>
             </tr>
             <tr>
                 <td valign="top"><strong><?php echo $_LANG['AD_CAT_BOARD'];?>:</strong></td>

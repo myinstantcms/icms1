@@ -323,9 +323,9 @@ function cpPathway($separator='&raquo;'){
 
 }
 
-function cpAddPathway($title, $link){
+function cpAddPathway($title, $link = ''){
 	$already = false;
-    if (empty($link)) { $link = htmlspecialchars($_SERVER['REQUEST_URI']); }
+    if (empty($link)) { $link = htmlspecialchars((string)$_SERVER['REQUEST_URI']); }
 
 	foreach($GLOBALS['cp_pathway'] as $key => $val){
 	 if ($GLOBALS['cp_pathway'][$key]['title'] == $title || $GLOBALS['cp_pathway'][$key]['link'] == $link){

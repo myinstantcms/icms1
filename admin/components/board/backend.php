@@ -530,7 +530,7 @@ if ($opt == 'add_cat' || $opt == 'edit_cat'){
         <table width="610" border="0" cellpadding="0" cellspacing="10" class="proptable">
           <tr>
             <td><strong><?php echo $_LANG['AD_CAT_NAME'];?> </strong></td>
-            <td width="250"><input name="title" type="text" id="title" style="width:250px" value="<?php echo htmlspecialchars($mod['title']);?>"/></td>
+            <td width="250"><input name="title" type="text" id="title" style="width:250px" value="<?php echo htmlspecialchars((string)$mod['title']);?>"/></td>
           </tr>
           <tr>
             <td valign="top"><strong><?php echo $_LANG['AD_CAT_PARENT'];?></strong></td>

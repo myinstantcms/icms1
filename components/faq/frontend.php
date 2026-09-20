@@ -201,7 +201,7 @@ if ($do=='sendquest'){
 		cmsPage::initTemplate('components', 'com_faq_add')->
                 assign('catslist', $inCore->getListItems('cms_faq_cats', $category_id))->
                 assign('user_id', $inUser->id)->
-                assign('message', htmlspecialchars($inCore->request('message', 'html', '')))->
+                assign('message', htmlspecialchars((string)$inCore->request('message', 'html', '')))->
                 assign('error', $error)->
                 display('com_faq_add.tpl');
 

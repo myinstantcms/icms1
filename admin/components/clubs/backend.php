@@ -246,7 +246,7 @@ if ($opt == 'add' || $opt == 'edit'){
         <tr>
             <td width="298"><strong><?php echo $_LANG['CLUB_NAME']; ?>: </strong></td>
             <td width="">
-                <input name="title" type="text" id="title" style="width:300px" value="<?php echo htmlspecialchars($mod['title']);?>"/>
+                <input name="title" type="text" id="title" style="width:300px" value="<?php echo htmlspecialchars((string)$mod['title']);?>"/>
             </td>
         </tr>
         <tr>

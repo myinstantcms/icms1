@@ -561,7 +561,7 @@ function applet_modules(){
                     <div>
                         <table width="100%" cellpadding="0" cellspacing="0" border="0">
                             <tr>
-                                <td><input name="title" type="text" id="title" style="width:100%" value="<?php echo htmlspecialchars($mod['title']);?>" /></td>
+                                <td><input name="title" type="text" id="title" style="width:100%" value="<?php echo htmlspecialchars((string)$mod['title']);?>" /></td>
                                 <td style="width:15px;padding-left:10px;padding-right:0px;">
                                     <input type="checkbox" title="<?php echo $_LANG['AD_VIEW_TITLE'];?>" name="showtitle" <?php if ($mod['showtitle'] || $do=='add') { echo 'checked="checked"'; } ?> value="1">
                                 </td>
@@ -572,7 +572,7 @@ function applet_modules(){
                     <div><strong><?php echo $_LANG['AD_LANG_TITLES']; ?></strong> <span class="hinttext">&mdash; <?php echo $_LANG['AD_LANG_TITLES_HINT']; ?></span></div>
                     <?php foreach ($langs as $lang) { ?>
 
-                    <div><strong><?php echo $lang; ?>:</strong> <input name="titles[<?php echo $lang; ?>]" type="text" style="width:97%" value="<?php echo htmlspecialchars(@$mod['titles'][$lang]);?>" placeholder="<?php echo $_LANG['AD_HINT_DEFAULT']; ?>" /></div>
+                    <div><strong><?php echo $lang; ?>:</strong> <input name="titles[<?php echo $lang; ?>]" type="text" style="width:97%" value="<?php echo htmlspecialchars((string)@$mod['titles'][$lang]);?>" placeholder="<?php echo $_LANG['AD_HINT_DEFAULT']; ?>" /></div>
                     <?php } ?>
                     <?php } ?>
                     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:10px;">
@@ -583,10 +583,10 @@ function applet_modules(){
                                 </div>
                                 <div>
                                     <?php if (!isset($mod['user']) || @$mod['user']==1) { ?>
-                                        <input name="name" type="text" id="name" style="width:99%" value="<?php echo htmlspecialchars($mod['name']);?>" />
+                                        <input name="name" type="text" id="name" style="width:99%" value="<?php echo htmlspecialchars((string)$mod['name']);?>" />
                                     <?php } else { ?>
                                         <input name="" type="text" id="name" style="width:99%" value="<?php echo @$mod['name'];?>" disabled="disabled" />
-                                        <input name="name" type="hidden" value="<?php echo htmlspecialchars($mod['name']);?>" />
+                                        <input name="name" type="hidden" value="<?php echo htmlspecialchars((string)$mod['name']);?>" />
                                     <?php } ?>
                                 </div>
                             </td>
@@ -788,7 +788,7 @@ function applet_modules(){
                             <?php foreach($menu_items as $it){ ?>
                             <tr class="hide_list">
                                 <td width="20" height="25">
-                                    <input type="checkbox" name="hidden_menu_ids[]" id="hmid<?php echo $it['id']; ?>" value="<?php echo $it['id']; ?>" <?php if (in_array($it['id'], $mod['hidden_menu_ids'])){ ?>checked="checked"<?php } ?> />
+                                    <input type="checkbox" name="hidden_menu_ids[]" id="hmid<?php echo $it['id']; ?>" value="<?php echo $it['id']; ?>" <?php if (in_array($it['id'], (array)$mod['hidden_menu_ids'])){ ?>checked="checked"<?php } ?> />
                                 </td>
                                 <td style="padding-left:<?php echo ($it['NSLevel'])*6-6; ?>px"><label for="hmid<?php echo $it['id']; ?>"><?php echo $it['title']; ?></label></td>
                             </tr>

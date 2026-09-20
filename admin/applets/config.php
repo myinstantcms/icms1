@@ -127,7 +127,7 @@ function applet_config(){
 						<span class="hinttext"><?php echo $_LANG['AD_USE_HEADER']; ?></span>
                     </td>
 					<td width="350" valign="top">
-                        <input name="sitename" type="text" id="sitename" value="<?php echo htmlspecialchars($config['sitename']);?>" style="width:358px" />
+                        <input name="sitename" type="text" id="sitename" value="<?php echo htmlspecialchars((string)$config['sitename']);?>" style="width:358px" />
                     </td>
 				</tr>
 				<tr>
@@ -198,7 +198,7 @@ function applet_config(){
 						<span class="hinttext"><?php echo $_LANG['AD_VIEW_WHY_STOP']; ?></span>
 
                     </td>
-					<td valign="top"><input name="offtext" type="text" id="offtext" value="<?php echo htmlspecialchars($config['offtext']);?>" style="width:358px" /></td>
+					<td valign="top"><input name="offtext" type="text" id="offtext" value="<?php echo htmlspecialchars((string)$config['offtext']);?>" style="width:358px" /></td>
 				</tr>
 				<tr>
 					<td>
@@ -249,7 +249,7 @@ function applet_config(){
                         <span class="hinttext"><?php echo $_LANG['AD_BROWSER_TITLE']; ?></span>
                     </td>
                     <td width="350" valign="top">
-                        <input name="hometitle" type="text" id="hometitle" value="<?php echo htmlspecialchars($config['hometitle']);?>" style="width:358px" />
+                        <input name="hometitle" type="text" id="hometitle" value="<?php echo htmlspecialchars((string)$config['hometitle']);?>" style="width:358px" />
                     </td>
 			    </tr>
 				<tr>
@@ -522,7 +522,7 @@ function applet_config(){
 						<strong><?php echo $_LANG['AD_IP_ADMIN']; ?></strong> <br />
 						<span class="hinttext"><?php echo $_LANG['AD_IP_COMMA']; ?></span></td>
 				<td valign="top">
-					<input name="allow_ip" type="text" id="allow_ip" value="<?php echo htmlspecialchars($config['allow_ip']);?>" style="width:358px" /></td>
+					<input name="allow_ip" type="text" id="allow_ip" value="<?php echo htmlspecialchars((string)$config['allow_ip']);?>" style="width:358px" /></td>
 				</tr>
 			</table>
     <p style="color:#900"><?php echo $_LANG['AD_ATTENTION']; ?></p>

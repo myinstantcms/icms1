@@ -24,7 +24,7 @@ function checkNestedSet($table){
 		if (!$inDB->errno()) { $errors[] = ($inDB->num_rows($res)>0); } else { $errors[] = true; }
 
 	//step 2 and 3
-		$sql = "SELECT COUNT(id) as rows, MIN(NSLeft) as min_left, MAX(NSRight) as max_right FROM $table WHERE NSDiffer = '$differ'";
+		$sql = "SELECT COUNT(id) as `rows`, MIN(NSLeft) as min_left, MAX(NSRight) as max_right FROM $table WHERE NSDiffer = '$differ'";
 		$res = $inDB->query($sql);
 		if (!$inDB->errno()) {
 			$data = $inDB->fetch_assoc($res);

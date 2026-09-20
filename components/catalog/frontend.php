@@ -110,7 +110,7 @@ function ratingForm($ratingdata, $item_id){
 function orderForm($orderby, $orderto, $shop=false){
     global $_LANG;
     $html = '';
-    $html .= '<form action="'.htmlspecialchars($_SERVER['REQUEST_URI']).'" method="POST"><div class="catalog_sortform"><table cellspacing="2" cellpadding="2" >' ."\n";
+    $html .= '<form action="'.htmlspecialchars((string)$_SERVER['REQUEST_URI']).'" method="POST"><div class="catalog_sortform"><table cellspacing="2" cellpadding="2" >' ."\n";
     $html .= '<tr>' ."\n";
     $html .= '<td>'.$_LANG['ORDER_ARTICLES'].': </td>' ."\n";
     $html .= '<td valign="top"><select name="orderby" id="orderby">' ."\n";

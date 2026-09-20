@@ -367,7 +367,7 @@ if(!defined('VALID_CMS_ADMIN')) { die('ACCESS DENIED'); }
         <table width="610" border="0" cellspacing="5" class="proptable">
             <tr>
                 <td width="300"><?php echo $_LANG['AD_ALBUM_TITLE']; ?>:</td>
-                <td><input name="title" type="text" id="title" style="width:280px" value="<?php echo htmlspecialchars($mod['title']); ?>"/></td>
+                <td><input name="title" type="text" id="title" style="width:280px" value="<?php echo htmlspecialchars((string)$mod['title']); ?>"/></td>
             </tr>
             <tr>
                 <td valign="top"><?php echo $_LANG['AD_ALBUM_PARENT']; ?>:</td>

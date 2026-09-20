@@ -331,7 +331,7 @@ if ($opt=='edit_blog'){
     <tr>
         <td width="120"><strong><?php echo $_LANG['AD_BLOG_NAME']; ?>: </strong></td>
         <td>
-            <input name="title" type="text" id="title" value="<?php echo htmlspecialchars($mod['title']);?>" style="width:99%" /><br />
+            <input name="title" type="text" id="title" value="<?php echo htmlspecialchars((string)$mod['title']);?>" style="width:99%" /><br />
             <span class="hinttext"><?php echo $_LANG['AD_CHANGE_URL']; ?></span>
         </td>
     </tr>

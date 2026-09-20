@@ -551,8 +551,8 @@ if ($opt == 'list_ranks') {
                 </tr>
                 <?php for($r = 1; $r <= 10; $r++){ ?>
                 <tr>
-                    <td valign="top"><input type="text" name="rank[<?php echo $r?>][title]" style="width:250px;" value="<?php echo htmlspecialchars($cfg['ranks'][$r]['title']) ?>"></td>
-                    <td valign="top"><input class="uispin" name="rank[<?php echo $r?>][msg]" type="text" id="" value="<?php echo htmlspecialchars($cfg['ranks'][$r]['msg']) ?>" size="10" /></td>
+                    <td valign="top"><input type="text" name="rank[<?php echo $r?>][title]" style="width:250px;" value="<?php echo htmlspecialchars((string)$cfg['ranks'][$r]['title']) ?>"></td>
+                    <td valign="top"><input class="uispin" name="rank[<?php echo $r?>][msg]" type="text" id="" value="<?php echo htmlspecialchars((string)$cfg['ranks'][$r]['msg']) ?>" size="10" /></td>
                 </tr>
                 <?php } ?>
             </table>
@@ -687,7 +687,7 @@ if ($opt == 'add_cat' || $opt == 'edit_cat'){
         <table width="600" border="0" cellspacing="5" class="proptable">
             <tr>
                 <td width="211" valign="top"><strong><?php echo $_LANG['AD_CATEGORY_NAME']; ?></strong> <?php printLangPanel('forum_forum_cats', @$mod['id'], 'title'); ?></td>
-                <td width="195" valign="top"><input name="title" type="text" id="title" size="30" value="<?php echo htmlspecialchars($mod['title']);?>"/></td>
+                <td width="195" valign="top"><input name="title" type="text" id="title" size="30" value="<?php echo htmlspecialchars((string)$mod['title']);?>"/></td>
                 <td width="168" valign="top">&nbsp;</td>
             </tr>
             <tr>
@@ -776,7 +776,7 @@ if ($opt == 'add_forum' || $opt == 'edit_forum'){
         <table width="614" border="0" cellspacing="10" class="proptable">
             <tr>
                 <td width=""><strong><?php echo $_LANG['AD_FORUM_TITLE']; ?>:</strong> <?php printLangPanel('forum_forums', @$mod['id'], 'title'); ?></td>
-                <td width="450"><input name="title" type="text" id="title" size="30" value="<?php echo htmlspecialchars($mod['title']);?>" style="width:254px"/></td>
+                <td width="450"><input name="title" type="text" id="title" size="30" value="<?php echo htmlspecialchars((string)$mod['title']);?>" style="width:254px"/></td>
             </tr>
             <tr>
                 <td valign="top"><strong><?php echo $_LANG['AD_FORUM_DESCR']; ?>:</strong> <?php printLangPanel('forum_forums', @$mod['id'], 'description'); ?></td>

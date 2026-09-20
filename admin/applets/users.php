@@ -318,7 +318,7 @@ function applet_users(){
           </tr>
           <tr>
             <td valign="middle"><strong><?php echo $_LANG['NICKNAME']; ?>:</strong></td>
-            <td valign="middle"><input name="nickname" type="text" id="login" style="width:220px" value="<?php echo htmlspecialchars($mod['nickname']);?>"/></td>
+            <td valign="middle"><input name="nickname" type="text" id="login" style="width:220px" value="<?php echo htmlspecialchars((string)$mod['nickname']);?>"/></td>
             <td>&nbsp;</td>
           </tr>
           <tr>

@@ -134,7 +134,7 @@ function display_link_template($link, $model, $time=10) {
     $inPage->setDescription($_LANG['FILE_EXTERNAL_LINK']);
 
     cmsPage::initTemplate('components', 'com_files_redirect')->
-            assign('url', htmlspecialchars($link))->
+            assign('url', htmlspecialchars((string)$link))->
             assign('time', $time)->
             assign('sitename', cmsConfig::getConfig('sitename'))->
             assign('is_domain_banned', $is_domain_banned)->

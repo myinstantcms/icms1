@@ -54,19 +54,19 @@ if(!defined('VALID_CMS_ADMIN')) { die('ACCESS DENIED'); }
         <tr>
             <td><strong><?php echo $_LANG['AD_FILES_WHITE_LIST']; ?>: </strong><br><span class="hinttext"><?php echo $_LANG['AD_FILES_WHITE_LIST_HINT']; ?></span></td>
             <td valign="top">
-                <input name="white_list" type="text" value="<?php echo htmlspecialchars($cfg['white_list']); ?>" style="width: 99%;"/>
+                <input name="white_list" type="text" value="<?php echo htmlspecialchars((string)$cfg['white_list']); ?>" style="width: 99%;"/>
             </td>
         </tr>
         <tr>
             <td><strong><?php echo $_LANG['AD_FILES_REDIRECT_TIME']; ?>:</strong></td>
             <td valign="top">
-                <input name="redirect_time" size="5" class="uispin" type="text" value="<?php echo htmlspecialchars($cfg['redirect_time']); ?>"/>
+                <input name="redirect_time" size="5" class="uispin" type="text" value="<?php echo htmlspecialchars((string)$cfg['redirect_time']); ?>"/>
             </td>
         </tr>
         <tr>
             <td><strong><?php echo $_LANG['AD_FILES_FILE_TIME']; ?>:</strong></td>
             <td valign="top">
-                <input name="file_time" size="5" class="uispin" type="text" value="<?php echo htmlspecialchars($cfg['file_time']); ?>"/>
+                <input name="file_time" size="5" class="uispin" type="text" value="<?php echo htmlspecialchars((string)$cfg['file_time']); ?>"/>
             </td>
         </tr>
     </table>

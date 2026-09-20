@@ -185,7 +185,7 @@ function applet_cron(){
                     <span class="hinttext"><?php echo $_LANG['AD_ONLY_200_SIMBOLS']; ?></span>
                 </td>
                 <td valign="middle">
-                    <input name="comment" type="text" maxlength="200" style="width:400px" value="<?php echo htmlspecialchars($mod['comment']);?>" />
+                    <input name="comment" type="text" maxlength="200" style="width:400px" value="<?php echo htmlspecialchars((string)$mod['comment']);?>" />
                 </td>
             </tr>
             <tr>
