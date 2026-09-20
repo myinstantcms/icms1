@@ -144,3 +144,7 @@ $_LANG['INS_GROUP_ADMIN']          = 'Administrator';
 $_LANG['INS_DEMO_HINT']            = 'Demo mode fills the site with sample articles, photos and posts so you can see the system in action. A clean install creates only what is required.';
 $_LANG['INS_COPY']                    = 'Copy';
 $_LANG['INS_COPIED']                  = 'Copied';
+// Installer auto-disable
+$_LANG['INS_DIRS_HINT']            = 'After installation the installer folders are renamed to _install and _migrate to protect the site from being reinstalled.';
+$_LANG['INS_DIRS_RENAMED']         = 'For security the installer folders were renamed: %s. For future upgrades rename migrate back.';
+$_LANG['INS_DIRS_RENAME_FAILED']   = 'Could not rename automatically: %s. Rename or delete these folders manually.';

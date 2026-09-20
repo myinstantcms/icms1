@@ -226,6 +226,26 @@ if (cmsCore::inRequest('install')) {
 
     $installed = true;
 
+    // Безопасность: после установки отключаем установщик и мигратор,
+    // переименовывая папки (install -> _install, migrate -> _migrate)
+    $dirs_renamed = array();
+    $dirs_failed  = array();
+
+    foreach (array('install' => '_install', 'migrate' => '_migrate') as $from => $to) {
+        $src_path = PATH . '/' . $from;
+        $dst_path = PATH . '/' . $to;
+        if (!is_dir($src_path)) { continue; }
+        if (is_dir($dst_path)) { $dirs_renamed[$from] = $to; continue; }
+        if (@rename($src_path, $dst_path)) {
+            $dirs_renamed[$from] = $to;
+        } else {
+            $dirs_failed[] = $from;
+        }
+    }
+
+    // папка установщика могла переехать — assets подключаем по новому адресу
+    $asset_base = isset($dirs_renamed['install']) ? '/_install' : '/install';
+
     cmsCore::getInstance();
     $inUser = cmsUser::getInstance();
     $inUser->update();
@@ -233,6 +253,8 @@ if (cmsCore::inRequest('install')) {
 
 }
 // =================================================================================================== //
+
+if (!isset($asset_base)) { $asset_base = '/install'; }
 
 $info        = check_requirements();
 $permissions = check_permissions();
@@ -259,8 +281,8 @@ $steps = array(
     <title><?php echo $_LANG['INS_HEADER'] . ' ' . CORE_VERSION; ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/install/fonts/golos.css">
-    <link type='text/css' href='/install/css/installer.css' rel='stylesheet' media='screen' />
+    <link rel="stylesheet" href="<?php echo $asset_base; ?>/fonts/golos.css">
+    <link type='text/css' href='<?php echo $asset_base; ?>/css/installer.css' rel='stylesheet' media='screen' />
 </head>
 <body>
 <div class="shell<?php echo $installed ? ' shell--done' : ''; ?>">
@@ -623,7 +645,7 @@ $steps = array(
                     <div class="summary" id="summary"></div>
                 </div>
 
-                <div class="alert alert--warning"><?php echo $_LANG['INS_DELETE_TODO']; ?></div>
+                <div class="alert alert--info"><?php echo $_LANG['INS_DIRS_HINT']; ?></div>
 
                 <div class="actions">
                     <button type="button" class="btn btn--ghost" data-nav="back">
@@ -644,6 +666,12 @@ $steps = array(
             </div>
             <h1><?php echo $_LANG['INS_FORM_SUCCESS']; ?></h1>
             <p class="done__sub"><?php echo $_LANG['INS_FORM_SUCCESS_SUB']; ?></p>
+            <?php if ($dirs_renamed) { ?>
+            <div class="alert alert--success"><?php echo sprintf($_LANG['INS_DIRS_RENAMED'], implode(', ', array_map(function($f, $t){ return $f . ' → ' . $t; }, array_keys($dirs_renamed), $dirs_renamed))); ?></div>
+            <?php } ?>
+            <?php if ($dirs_failed) { ?>
+            <div class="alert alert--warning"><?php echo sprintf($_LANG['INS_DIRS_RENAME_FAILED'], implode(', ', $dirs_failed)); ?></div>
+            <?php } ?>
             <div class="done__links">
                 <a class="btn btn--primary" href="/"><?php echo $_LANG['INS_GO_SITE']; ?></a>
                 <a class="btn btn--ghost" href="/admin"><?php echo $_LANG['INS_GO_CP']; ?></a>
@@ -688,7 +716,7 @@ $steps = array(
         includesOk: <?php echo $includes_ok ? 'true' : 'false'; ?>
     };
 </script>
-<script src="/install/js/install.js"></script>
+<script src="<?php echo $asset_base; ?>/js/install.js"></script>
 <script>INSTALL.init();</script>
 </body>
 </html>
