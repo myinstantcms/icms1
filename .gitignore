@@ -2,3 +2,5 @@
 /includes/config.inc.php
 /upload/
 /images/
+# playwright screenshots
+.playwright-mcp/
