@@ -695,8 +695,8 @@ CREATE TABLE `#__forums` (
   KEY `NSLeft` (`NSLeft`,`NSRight`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-INSERT INTO `#__forums` (`id`, `category_id`, `title`, `description`, `access_list`, `ordering`, `published`, `parent_id`, `NSLeft`, `NSRight`, `NSDiffer`, `NSIgnore`, `NSLevel`, `icon`, `topic_cost`) VALUES
-(1000, 0, '-- root forum --', '', '', 1, 0, 0, 1, 2, '', 0, 0, '', 0);
+INSERT INTO `#__forums` (`id`, `category_id`, `title`, `description`, `access_list`, `ordering`, `published`, `parent_id`, `NSLeft`, `NSRight`, `NSDiffer`, `NSIgnore`, `NSLevel`, `icon`, `topic_cost`, `moder_list`, `last_msg`) VALUES
+(1000, 0, '-- root forum --', '', '', 1, 0, 0, 1, 2, '', 0, 0, '', 0, '', '');
 
 DROP TABLE IF EXISTS `#__forum_cats`;
 CREATE TABLE `#__forum_cats` (
@@ -821,19 +821,19 @@ CREATE TABLE `#__menu` (
   KEY `NSLeft` (`NSLeft`,`NSRight`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-INSERT INTO `#__menu` (`id`, `menu`, `title`, `css_class`, `link`, `linktype`, `linkid`, `target`, `component`, `ordering`, `published`, `template`, `access_list`, `iconurl`, `NSLeft`, `NSRight`, `NSLevel`, `NSDiffer`, `NSIgnore`, `parent_id`, `is_lax`) VALUES
-(1, '---\n- root\n', '-- root --', '', '-1', 'link', '-1', '_self', '', 1, 0, '0', '', '', 1, 24, 0, '', 0, 0, 0),
-(2, '---\n- authmenu\n', 'Login', 'login', '/login', 'link', '/login', '_self', '', 1, 1, '', '', '', 2, 3, 1, '', 0, 1, 0),
-(3, '---\n- authmenu\n', 'Register', 'register', '/registration', 'link', '/registration', '_self', '', 2, 1, '', '', '', 4, 5, 1, '', 0, 1, 0),
-(4, '---\n- usermenu\n', '{user.nickname}', 'my_profile', '/users/{user.login}', 'link', '/users/{user.login}', '_self', '', 3, 1, '', '', '', 6, 7, 1, '', 0, 1, 0),
-(5, '---\n- usermenu\n', 'Messages {user.new_msg_count}', 'my_messages', '/users/{user.id}/messages.html', 'link', '/users/{user.id}/messages', '_self', '', 4, 1, '', '', '', 8, 9, 1, '', 0, 1, 0),
-(6, '---\n- usermenu\n', 'My blog', 'my_blog', '/blogs/my_blog.html', 'link', '/blogs/my_blog.html', '_self', '', 5, 1, '', '', '', 10, 11, 1, '', 0, 1, 0),
-(7, '---\n- usermenu\n', 'Photos', 'my_photos', '/users/{user.id}/photoalbum.html', 'link', '/users/{user.id}/photoalb', '_self', '', 6, 1, '', '', '', 12, 15, 1, '', 0, 1, 0),
-(8, '---\n- usermenu\n', 'Add photos', 'add_photos', '/users/addphoto.html', 'link', '/users/addphoto.html', '_self', '', 1, 1, '', '', '', 13, 14, 2, '', 0, 7, 0),
-(9, '---\n- usermenu\n', 'Articles', 'my_content', '/content/my.html', 'link', '/content/my.html', '_self', '', 7, 1, '', '', '', 16, 19, 1, '', 0, 1, 0),
-(10, '---\n- usermenu\n', 'Write', 'add_content', '/content/add.html', 'link', '/content/add.html', '_self', '', 1, 1, '', '', '', 17, 18, 2, '', 0, 9, 0),
-(11, '---\n- usermenu\n', 'Admin panel', 'admin', '/admin/', 'link', '/admin/', '_self', '', 8, 1, '', '---\n- 2\n', '', 20, 21, 1, '', 0, 1, 0),
-(12, '---\n- usermenu\n', 'Logout', 'logout', '/logout', 'link', '/logout', '_self', '', 9, 1, '', '', '', 22, 23, 1, '', 0, 1, 0);
+INSERT INTO `#__menu` (`id`, `menu`, `title`, `css_class`, `link`, `linktype`, `linkid`, `target`, `component`, `ordering`, `published`, `template`, `access_list`, `iconurl`, `NSLeft`, `NSRight`, `NSLevel`, `NSDiffer`, `NSIgnore`, `parent_id`, `is_lax`, `titles`) VALUES
+(1, '---\n- root\n', '-- root --', '', '-1', 'link', '-1', '_self', '', 1, 0, '0', '', '', 1, 24, 0, '', 0, 0, 0, ''),
+(2, '---\n- authmenu\n', 'Login', 'login', '/login', 'link', '/login', '_self', '', 1, 1, '', '', '', 2, 3, 1, '', 0, 1, 0, ''),
+(3, '---\n- authmenu\n', 'Register', 'register', '/registration', 'link', '/registration', '_self', '', 2, 1, '', '', '', 4, 5, 1, '', 0, 1, 0, ''),
+(4, '---\n- usermenu\n', '{user.nickname}', 'my_profile', '/users/{user.login}', 'link', '/users/{user.login}', '_self', '', 3, 1, '', '', '', 6, 7, 1, '', 0, 1, 0, ''),
+(5, '---\n- usermenu\n', 'Messages {user.new_msg_count}', 'my_messages', '/users/{user.id}/messages.html', 'link', '/users/{user.id}/messages', '_self', '', 4, 1, '', '', '', 8, 9, 1, '', 0, 1, 0, ''),
+(6, '---\n- usermenu\n', 'My blog', 'my_blog', '/blogs/my_blog.html', 'link', '/blogs/my_blog.html', '_self', '', 5, 1, '', '', '', 10, 11, 1, '', 0, 1, 0, ''),
+(7, '---\n- usermenu\n', 'Photos', 'my_photos', '/users/{user.id}/photoalbum.html', 'link', '/users/{user.id}/photoalb', '_self', '', 6, 1, '', '', '', 12, 15, 1, '', 0, 1, 0, ''),
+(8, '---\n- usermenu\n', 'Add photos', 'add_photos', '/users/addphoto.html', 'link', '/users/addphoto.html', '_self', '', 1, 1, '', '', '', 13, 14, 2, '', 0, 7, 0, ''),
+(9, '---\n- usermenu\n', 'Articles', 'my_content', '/content/my.html', 'link', '/content/my.html', '_self', '', 7, 1, '', '', '', 16, 19, 1, '', 0, 1, 0, ''),
+(10, '---\n- usermenu\n', 'Write', 'add_content', '/content/add.html', 'link', '/content/add.html', '_self', '', 1, 1, '', '', '', 17, 18, 2, '', 0, 9, 0, ''),
+(11, '---\n- usermenu\n', 'Admin panel', 'admin', '/admin/', 'link', '/admin/', '_self', '', 8, 1, '', '---\n- 2\n', '', 20, 21, 1, '', 0, 1, 0, ''),
+(12, '---\n- usermenu\n', 'Logout', 'logout', '/logout', 'link', '/logout', '_self', '', 9, 1, '', '', '', 22, 23, 1, '', 0, 1, 0, '');
 
 DROP TABLE IF EXISTS `#__modules`;
 CREATE TABLE `#__modules` (
@@ -866,44 +866,44 @@ CREATE TABLE `#__modules` (
   FULLTEXT KEY `content` (`content`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-INSERT INTO `#__modules` (`id`, `position`, `name`, `title`, `is_external`, `content`, `ordering`, `showtitle`, `published`, `user`, `config`, `original`, `css_prefix`, `access_list`, `cache`, `cachetime`, `cacheint`, `template`, `is_strict_bind`, `version`) VALUES
-(1, 'topmenu', 'Menu', 'Menu', 1, 'mod_menu', 6, 0, 1, 0, '---\nmenu: mainmenu\nshow_home: 1\ntpl: mod_menu.tpl\nis_sub_menu: 0\n', 1, '', '', 0, 1, 'HOUR', 'module_simple.tpl', 0, '1.0'),
-(17, 'top', 'Main page', 'Welcome!', 0, '<table cellspacing="0" cellpadding="0" border="0" width="100%">\r\n    <tbody>\r\n        <tr>\r\n            <td width="100" valign="top"><a target="_blank" href="http://www.instantcms.ru"><img border="0" alt="" src="/images/content/community.png" /></a></td>\r\n            <td>\r\n            <p class="moduletitle">Welcome!</p>\r\n            <p>We welcome you to our social network. After registering, you will have access to all features of the site.</p>\r\n            <p>You can start a blog, upload pictures and communicate with friends.</p>\r\n            <div>\r\n            <div>To change this text, please <a href="/admin/index.php?view=modules&amp;do=edit&amp;id=17">edit the module &quot;Main page&quot;</a>.</div>\r\n            </div>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>', 0, 0, 1, 1, '---\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(44, 'sidebar', 'Tags', 'Tags', 1, 'mod_tags', 18, 0, 0, 0, '---\ncat_id: \nsortby: tag\nmenuid: \nminfreq: 0\nminlen: 3\ntargets: \n  content: content\n  photo: photo\n  blogpost: blog\n  catalog: catalog\n  userphoto: userphoto\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(26, 'sidebar', 'Cart', 'Cart', 1, 'mod_cart', 19, 1, 0, 0, '---\nshowtype: list\nshowqty: 1\nmenuid: 23\nsource: catalog\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(25, 'sidebar', 'Polls', 'Polls', 1, 'mod_polls', 2, 1, 1, 0, '---\nshownum: 0\npoll_id: 2\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(27, 'sidebar', 'Search', 'Search', 1, 'mod_search', 1, 0, 0, 0, '---\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(19, 'maintop', 'New articles', 'New articles', 1, 'mod_latest', 2, 1, 1, 0, '---\nnewscount: 4\nshowdesc: 0\nshowdate: 1\nshowcom: 1\nshowrss: 1\ncat_id: 6\nsubs: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(20, 'topmenu', 'Authorization', 'Authorization', 1, 'mod_auth', 0, 1, 1, 0, '---\nautolog: 1\npassrem: 1\n', 1, '', '', 0, 1, 'MINUTE', 'module.tpl', 0, '1.0'),
-(22, 'topmenu', 'New users', 'New users', 1, 'mod_lastreg', 2, 1, 1, 0, '---\nnewscount: 5\nview_type: hr_table\nmaxcool: 2\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(23, 'sidebar', 'Random picture', 'Random picture', 1, 'mod_random_image', 21, 1, 0, 0, '---\nshowtitle: 1\nalbum_id: 0\nmenuid: 20\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(36, 'sidebar', 'Articles categories', 'Articles categories', 1, 'mod_category', 13, 1, 0, 0, '---\nshowdesc: 0\ncategory_id: 6\nicon: /images/markers/folder.png\nmenuid: 21\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(39, 'sidebar', 'Template chooser', 'Template chooser', 1, 'mod_template', 12, 1, 0, 0, '---\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(47, 'mainbottom', 'Catalog entries', 'Catalog entries', 1, 'mod_uc', 23, 1, 0, 0, '---\nnum: 10\ncat_id: 0\nmenuid: 23\nshowf: 2\nshowtype: thumb\nfulllink: 1\nsort: rating\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(49, 'sidebar', 'Who is online', 'Who is online', 1, 'mod_whoonline', 24, 1, 1, 0, '---\nshow_today: 1\nadmin_editor: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(50, 'topmenu', 'Forum news', 'Forum news', 1, 'mod_forum', 31, 1, 1, 0, '---\nshownum: 2\nshowtype: web2\nshowforum: 0\nshowlink: 0\nshowtext: 0\nmenuid: 18\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(51, 'sidebar', 'Random user picture', 'Random user picture', 1, 'mod_user_image', 25, 1, 0, 0, '---\nshowtitle: 1\nmenuid: 15\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(52, 'sidebar', 'External file', 'External file', 0, '<p>{ФАЙЛ=test.php}</p>', 11, 1, 0, 1, '---\n', 0, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(56, 'sidebar', 'Articles archive', 'Articles archive', 1, 'mod_arhive', 27, 1, 0, 0, '---\nsource: both\ncat_id: 6\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(54, 'sidebar', 'Random in catalog', 'Random in catalog', 1, 'mod_uc_random', 26, 1, 0, 0, '---\ncat_id: 1\ncount: 2\nshowtitle: 1\nshowcat: 0\nmenuid: 23\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(60, 'maintop', 'RSS-reader', 'RSS-reader', 1, 'mod_rss', 9, 1, 0, 0, '---\nshowdesc: 0\nshowicon: 1\nitemslimit: 6\nrssurl: http://www.lenta.ru/rss\ncols: 2\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(61, 'sidebar', 'Latest comments', 'Latest comments', 1, 'mod_comments', 4, 1, 1, 0, '---\nshownum: 10\nminrate: 0\nshowdesc: 1\nshowrss: 1\nshowtarg: 0\ntargets: \n  faq: faq\n  catalog: catalog\n  boarditem: boarditem\n  blog: blog\n  article: article\n  palbum: palbum\n  photo: photo\n  userphoto: userphoto\n', 1, '', '', 0, 1, 'MINUTE', 'module.tpl', 0, '1.0'),
-(62, 'maintop', 'Photos', 'Photos', 1, 'mod_photo', 32, 1, 1, 0, '---\nshownum: 6\nmaxcols: 2\nalbum_id: 100\nshowtype: short\nshowmore: 0\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(64, 'maintop', 'Blog posts', 'Blog posts', 1, 'mod_blogs', 2, 1, 1, 0, '---\nnamemode: blog\nshownum: 10\nminrate: 0\nshowrss: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(66, 'header', 'Menu', 'User menu', 1, 'mod_menu', 34, 0, 1, 0, '---\nmenu: usermenu\nshow_home: 0\ntpl: mod_menu.tpl\nis_sub_menu: 0\n', 1, 'user_menu_', '---\n- 1\n- 7\n- 9\n- 2\n', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(67, 'mainbottom', 'Latest questions', 'Latest questions', 1, 'mod_latest_faq', 33, 1, 0, 0, '---\nnewscount: 5\nmaxlen: 140\ncat_id: \n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(69, 'maintop', 'Popular articles', 'Popular articles', 1, 'mod_bestcontent', 3, 1, 0, 0, '---\nshownum: 4\nmenuid: 21\nshowlink: 1\nshowdesc: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(70, 'sidebar', 'Users search', 'Users search', 1, 'mod_usersearch', 4, 1, 0, 0, '---\ncat_id: \nsource: \nmenuid: 15\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(71, 'maintop', 'New ads', 'New ads', 1, 'mod_latestboard', 1, 1, 1, 0, '---\nshownum: 10\nshowcity: 1\ncat_id: -1\nsubs: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(72, 'maintop', 'User rating', 'User rating', 1, 'mod_user_rating', 1, 1, 0, 0, '---\ncount: 20\nmenuid: 15\nview_type: rating\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(73, 'maintop', 'Clubs', 'Clubs', 1, 'mod_clubs', 3, 1, 0, 0, '---\ncount: 2\nmenuid: 38\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(75, 'sidebar', 'Honors board', 'Honors board', 1, 'mod_respect', 1, 1, 1, 0, '---\nview: all\nshow_awards: 1\norder: desc\nlimit: 5\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(76, 'sidebar', 'Users files', 'Users files', 1, 'mod_userfiles', 1, 1, 0, 0, '---\nmenuid: 0\nsw_stats: 1\nsw_latest: 1\nsw_popular: 1\nnum_latest: 5\nnum_popular: 5\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(87, 'maintop', 'Activity feed', 'Activity feed', 1, 'mod_actions', 1, 1, 1, 0, '---\nlimit: 15\nshow_target: 0\naction_types: \n  16: 16\n  15: 15\n  20: 20\n  13: 13\n  29: 29\n  24: 24\n  23: 23\n  2: 2\n  27: 27\n  12: 12\n  10: 10\n  25: 25\n  17: 17\n  8: 8\n  18: 18\n  7: 7\n  26: 26\n  19: 19\n  22: 22\n  11: 11\n  21: 21\n  28: 28\n  9: 9\n  14: 14\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.7'),
-(83, 'sidebar', 'Users statistics', 'Users statistics', 1, 'mod_user_stats', 1, 1, 1, 0, '---\nshow_total: 1\nshow_online: 1\nshow_gender: 1\nshow_city: 1\nshow_bday: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(84, 'sidebar', 'Online friends', 'Online friends', 1, 'mod_user_friend', 5, 1, 0, 0, '---\r\nlimit: 5\r\nview_type: table', 1, '', '', 0, 1, 'HOUR', 'module_simple.tpl', 0, '1.0'),
-(85, 'sidebar', 'Invite a friend', 'Invite a friend', 1, 'mod_invite', 1, 1, 0, 0, '', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(88, 'header', 'Menu', 'Auth menu', 1, 'mod_menu', 35, 0, 1, 0, '---\nmenu: authmenu\nshow_home: 0\ntpl: mod_menu.tpl\nis_sub_menu: 0\n', 1, 'user_menu_', '---\n- 8\n', 0, 1, 'HOUR', 'module.tpl', 0, '1.0');
+INSERT INTO `#__modules` (`id`, `position`, `name`, `title`, `is_external`, `content`, `ordering`, `showtitle`, `published`, `user`, `config`, `original`, `css_prefix`, `access_list`, `cache`, `cachetime`, `cacheint`, `template`, `is_strict_bind`, `version`, `titles`) VALUES
+(1, 'topmenu', 'Menu', 'Menu', 1, 'mod_menu', 6, 0, 1, 0, '---\nmenu: mainmenu\nshow_home: 1\ntpl: mod_menu.tpl\nis_sub_menu: 0\n', 1, '', '', 0, 1, 'HOUR', 'module_simple.tpl', 0, '1.0', ''),
+(17, 'top', 'Main page', 'Welcome!', 0, '<table cellspacing="0" cellpadding="0" border="0" width="100%">\r\n    <tbody>\r\n        <tr>\r\n            <td width="100" valign="top"><a target="_blank" href="http://www.instantcms.ru"><img border="0" alt="" src="/images/content/community.png" /></a></td>\r\n            <td>\r\n            <p class="moduletitle">Welcome!</p>\r\n            <p>We welcome you to our social network. After registering, you will have access to all features of the site.</p>\r\n            <p>You can start a blog, upload pictures and communicate with friends.</p>\r\n            <div>\r\n            <div>To change this text, please <a href="/admin/index.php?view=modules&amp;do=edit&amp;id=17">edit the module &quot;Main page&quot;</a>.</div>\r\n            </div>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>', 0, 0, 1, 1, '---\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(44, 'sidebar', 'Tags', 'Tags', 1, 'mod_tags', 18, 0, 0, 0, '---\ncat_id: \nsortby: tag\nmenuid: \nminfreq: 0\nminlen: 3\ntargets: \n  content: content\n  photo: photo\n  blogpost: blog\n  catalog: catalog\n  userphoto: userphoto\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(26, 'sidebar', 'Cart', 'Cart', 1, 'mod_cart', 19, 1, 0, 0, '---\nshowtype: list\nshowqty: 1\nmenuid: 23\nsource: catalog\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(25, 'sidebar', 'Polls', 'Polls', 1, 'mod_polls', 2, 1, 1, 0, '---\nshownum: 0\npoll_id: 2\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(27, 'sidebar', 'Search', 'Search', 1, 'mod_search', 1, 0, 0, 0, '---\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(19, 'maintop', 'New articles', 'New articles', 1, 'mod_latest', 2, 1, 1, 0, '---\nnewscount: 4\nshowdesc: 0\nshowdate: 1\nshowcom: 1\nshowrss: 1\ncat_id: 6\nsubs: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(20, 'topmenu', 'Authorization', 'Authorization', 1, 'mod_auth', 0, 1, 1, 0, '---\nautolog: 1\npassrem: 1\n', 1, '', '', 0, 1, 'MINUTE', 'module.tpl', 0, '1.0', ''),
+(22, 'topmenu', 'New users', 'New users', 1, 'mod_lastreg', 2, 1, 1, 0, '---\nnewscount: 5\nview_type: hr_table\nmaxcool: 2\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(23, 'sidebar', 'Random picture', 'Random picture', 1, 'mod_random_image', 21, 1, 0, 0, '---\nshowtitle: 1\nalbum_id: 0\nmenuid: 20\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(36, 'sidebar', 'Articles categories', 'Articles categories', 1, 'mod_category', 13, 1, 0, 0, '---\nshowdesc: 0\ncategory_id: 6\nicon: /images/markers/folder.png\nmenuid: 21\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(39, 'sidebar', 'Template chooser', 'Template chooser', 1, 'mod_template', 12, 1, 0, 0, '---\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(47, 'mainbottom', 'Catalog entries', 'Catalog entries', 1, 'mod_uc', 23, 1, 0, 0, '---\nnum: 10\ncat_id: 0\nmenuid: 23\nshowf: 2\nshowtype: thumb\nfulllink: 1\nsort: rating\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(49, 'sidebar', 'Who is online', 'Who is online', 1, 'mod_whoonline', 24, 1, 1, 0, '---\nshow_today: 1\nadmin_editor: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(50, 'topmenu', 'Forum news', 'Forum news', 1, 'mod_forum', 31, 1, 1, 0, '---\nshownum: 2\nshowtype: web2\nshowforum: 0\nshowlink: 0\nshowtext: 0\nmenuid: 18\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(51, 'sidebar', 'Random user picture', 'Random user picture', 1, 'mod_user_image', 25, 1, 0, 0, '---\nshowtitle: 1\nmenuid: 15\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(52, 'sidebar', 'External file', 'External file', 0, '<p>{ФАЙЛ=test.php}</p>', 11, 1, 0, 1, '---\n', 0, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(56, 'sidebar', 'Articles archive', 'Articles archive', 1, 'mod_arhive', 27, 1, 0, 0, '---\nsource: both\ncat_id: 6\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(54, 'sidebar', 'Random in catalog', 'Random in catalog', 1, 'mod_uc_random', 26, 1, 0, 0, '---\ncat_id: 1\ncount: 2\nshowtitle: 1\nshowcat: 0\nmenuid: 23\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(60, 'maintop', 'RSS-reader', 'RSS-reader', 1, 'mod_rss', 9, 1, 0, 0, '---\nshowdesc: 0\nshowicon: 1\nitemslimit: 6\nrssurl: http://www.lenta.ru/rss\ncols: 2\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(61, 'sidebar', 'Latest comments', 'Latest comments', 1, 'mod_comments', 4, 1, 1, 0, '---\nshownum: 10\nminrate: 0\nshowdesc: 1\nshowrss: 1\nshowtarg: 0\ntargets: \n  faq: faq\n  catalog: catalog\n  boarditem: boarditem\n  blog: blog\n  article: article\n  palbum: palbum\n  photo: photo\n  userphoto: userphoto\n', 1, '', '', 0, 1, 'MINUTE', 'module.tpl', 0, '1.0', ''),
+(62, 'maintop', 'Photos', 'Photos', 1, 'mod_photo', 32, 1, 1, 0, '---\nshownum: 6\nmaxcols: 2\nalbum_id: 100\nshowtype: short\nshowmore: 0\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(64, 'maintop', 'Blog posts', 'Blog posts', 1, 'mod_blogs', 2, 1, 1, 0, '---\nnamemode: blog\nshownum: 10\nminrate: 0\nshowrss: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(66, 'header', 'Menu', 'User menu', 1, 'mod_menu', 34, 0, 1, 0, '---\nmenu: usermenu\nshow_home: 0\ntpl: mod_menu.tpl\nis_sub_menu: 0\n', 1, 'user_menu_', '---\n- 1\n- 7\n- 9\n- 2\n', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(67, 'mainbottom', 'Latest questions', 'Latest questions', 1, 'mod_latest_faq', 33, 1, 0, 0, '---\nnewscount: 5\nmaxlen: 140\ncat_id: \n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(69, 'maintop', 'Popular articles', 'Popular articles', 1, 'mod_bestcontent', 3, 1, 0, 0, '---\nshownum: 4\nmenuid: 21\nshowlink: 1\nshowdesc: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(70, 'sidebar', 'Users search', 'Users search', 1, 'mod_usersearch', 4, 1, 0, 0, '---\ncat_id: \nsource: \nmenuid: 15\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(71, 'maintop', 'New ads', 'New ads', 1, 'mod_latestboard', 1, 1, 1, 0, '---\nshownum: 10\nshowcity: 1\ncat_id: -1\nsubs: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(72, 'maintop', 'User rating', 'User rating', 1, 'mod_user_rating', 1, 1, 0, 0, '---\ncount: 20\nmenuid: 15\nview_type: rating\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(73, 'maintop', 'Clubs', 'Clubs', 1, 'mod_clubs', 3, 1, 0, 0, '---\ncount: 2\nmenuid: 38\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(75, 'sidebar', 'Honors board', 'Honors board', 1, 'mod_respect', 1, 1, 1, 0, '---\nview: all\nshow_awards: 1\norder: desc\nlimit: 5\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(76, 'sidebar', 'Users files', 'Users files', 1, 'mod_userfiles', 1, 1, 0, 0, '---\nmenuid: 0\nsw_stats: 1\nsw_latest: 1\nsw_popular: 1\nnum_latest: 5\nnum_popular: 5\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(87, 'maintop', 'Activity feed', 'Activity feed', 1, 'mod_actions', 1, 1, 1, 0, '---\nlimit: 15\nshow_target: 0\naction_types: \n  16: 16\n  15: 15\n  20: 20\n  13: 13\n  29: 29\n  24: 24\n  23: 23\n  2: 2\n  27: 27\n  12: 12\n  10: 10\n  25: 25\n  17: 17\n  8: 8\n  18: 18\n  7: 7\n  26: 26\n  19: 19\n  22: 22\n  11: 11\n  21: 21\n  28: 28\n  9: 9\n  14: 14\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.7', ''),
+(83, 'sidebar', 'Users statistics', 'Users statistics', 1, 'mod_user_stats', 1, 1, 1, 0, '---\nshow_total: 1\nshow_online: 1\nshow_gender: 1\nshow_city: 1\nshow_bday: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(84, 'sidebar', 'Online friends', 'Online friends', 1, 'mod_user_friend', 5, 1, 0, 0, '---\r\nlimit: 5\r\nview_type: table', 1, '', '', 0, 1, 'HOUR', 'module_simple.tpl', 0, '1.0', ''),
+(85, 'sidebar', 'Invite a friend', 'Invite a friend', 1, 'mod_invite', 1, 1, 0, 0, '', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(88, 'header', 'Menu', 'Auth menu', 1, 'mod_menu', 35, 0, 1, 0, '---\nmenu: authmenu\nshow_home: 0\ntpl: mod_menu.tpl\nis_sub_menu: 0\n', 1, 'user_menu_', '---\n- 8\n', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', '');
 
 DROP TABLE IF EXISTS `#__modules_bind`;
 CREATE TABLE `#__modules_bind` (
@@ -1621,7 +1621,7 @@ CREATE TABLE `#__user_profiles` (
   `imageurl` varchar(250) NOT NULL,
   `allow_who` varchar(35) NOT NULL DEFAULT 'all',
   `signature` varchar(240) NOT NULL,
-  `signature_html` varchar(300) NOT NULL,
+  `signature_html` varchar(300) NOT NULL DEFAULT '',
   `gender` varchar(1) NOT NULL DEFAULT '',
   `formsdata` varchar(800) NOT NULL DEFAULT '',
   `email_newmsg` int(11) NOT NULL DEFAULT '1',

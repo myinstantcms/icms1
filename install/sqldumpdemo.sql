@@ -575,7 +575,7 @@ INSERT INTO `#__cron_jobs` (`id`, `job_name`, `job_interval`, `job_run_date`, `c
 (5, 'give_invites', 24, '2016-06-07 12:10:08', 'users', 'giveInvitesCron', '', 1, 1, 'Выдача инвайтов пользователям', '', ''),
 (6, 'clear_invites', 24, '2016-06-07 12:10:08', 'users', 'clearInvites', '', 1, 1, 'Удаление использованных инвайтов', '', ''),
 (7, 'deleteOldResults', 24, '2016-06-07 12:10:08', 'search', 'deleteOldResults', '', 1, 1, 'Удаляет записи в кеше поиска старее 1 дня.', '', ''),
-(8, 'deleteOldNotification', 48, '2016-06-31 23:19:42', 'users', 'deleteOldNotification', '', 1, 1, 'Удаляет сообщения службы обновлений и рассылки старее 1 месяца', '', ''),
+(8, 'deleteOldNotification', 48, '2016-06-30 23:19:42', 'users', 'deleteOldNotification', '', 1, 1, 'Удаляет сообщения службы обновлений и рассылки старее 1 месяца', '', ''),
 (9, 'moveArticlesToArchive', 24, '2016-06-29 18:25:10', 'content', 'moveArticlesToArchive', '', 1, 0, 'Переносит просроченные статьи в архив', '', ''),
 (10, 'clearOnlineUsers', 0, '2016-06-21 17:30:01', '', '', '', 1, 0, 'Удаляет просроченные данные об online пользователях', 'user|cmsUser', 'clearOnlineUsers');
 
@@ -751,11 +751,11 @@ CREATE TABLE `#__forums` (
   KEY `NSLeft` (`NSLeft`,`NSRight`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-INSERT INTO `#__forums` (`id`, `category_id`, `title`, `description`, `access_list`, `ordering`, `published`, `parent_id`, `NSLeft`, `NSRight`, `NSDiffer`, `NSIgnore`, `NSLevel`, `icon`, `topic_cost`, `thread_count`, `post_count`, `last_msg`) VALUES
-(1000, 0, '-- Корневой форум --', '', '', 1, 0, 0, 1, 8, '', 0, 0, '', 0, 0, 0, ''),
-(1, 1, 'Общий форум', '', '', 1, 1, 1000, 2, 7, '', 0, 1, '', 0, 1, 1, '---\npubdate: 2016-06-04 18:54:53\nid: 29\ncontent_html: ''Геосинклиналь <strong>обогащает магматический монтмориллонит</strong>, что в общем свидетельствует о преобладании тектонических опусканий в это время. Углефикация характерна. Порода существенна. Тектогенез, разделенные узкими линейновытянутыми зонами выветрелых пород, переоткладывает морской авгит, образуя на границе с Западно-Карельским поднятием своеобразную систему грабенов. Ведущий экзогенный геологический процесс - субдукция ослабляет лакколит, так как совершенно однозначно указывает на существование и рост в период оформления палеогеновой поверхности выравнивания.''\nauthor_nickname: Администратор\nauthor_login: admin\nthread_title: Пример темы\nthread_id: 12\npost_count: 1\nlastpage: 1\nthread_link: ''<a href="/forum/thread12-1.html#29">Пример темы</a>''\nuser_link: ''<a href="/users/admin" title="Администратор">Администратор</a>''\n'),
-(1002, 1, 'Подфорум1', '', '', 2, 1, 1, 5, 6, '', 0, 2, '', 0, 0, 0, ''),
-(1004, 1, 'Подфорум2', '', '', 1, 1, 1, 3, 4, '', 0, 2, '', 0, 0, 0, '');
+INSERT INTO `#__forums` (`id`, `category_id`, `title`, `description`, `access_list`, `ordering`, `published`, `parent_id`, `NSLeft`, `NSRight`, `NSDiffer`, `NSIgnore`, `NSLevel`, `icon`, `topic_cost`, `thread_count`, `post_count`, `last_msg`, `moder_list`) VALUES
+(1000, 0, '-- Корневой форум --', '', '', 1, 0, 0, 1, 8, '', 0, 0, '', 0, 0, 0, '', ''),
+(1, 1, 'Общий форум', '', '', 1, 1, 1000, 2, 7, '', 0, 1, '', 0, 1, 1, '---\npubdate: 2016-06-04 18:54:53\nid: 29\ncontent_html: ''Геосинклиналь <strong>обогащает магматический монтмориллонит</strong>, что в общем свидетельствует о преобладании тектонических опусканий в это время. Углефикация характерна. Порода существенна. Тектогенез, разделенные узкими линейновытянутыми зонами выветрелых пород, переоткладывает морской авгит, образуя на границе с Западно-Карельским поднятием своеобразную систему грабенов. Ведущий экзогенный геологический процесс - субдукция ослабляет лакколит, так как совершенно однозначно указывает на существование и рост в период оформления палеогеновой поверхности выравнивания.''\nauthor_nickname: Администратор\nauthor_login: admin\nthread_title: Пример темы\nthread_id: 12\npost_count: 1\nlastpage: 1\nthread_link: ''<a href="/forum/thread12-1.html#29">Пример темы</a>''\nuser_link: ''<a href="/users/admin" title="Администратор">Администратор</a>''\n', ''),
+(1002, 1, 'Подфорум1', '', '', 2, 1, 1, 5, 6, '', 0, 2, '', 0, 0, 0, '', ''),
+(1004, 1, 'Подфорум2', '', '', 1, 1, 1, 3, 4, '', 0, 2, '', 0, 0, 0, '', '');
 
 DROP TABLE IF EXISTS `#__forum_cats`;
 CREATE TABLE `#__forum_cats` (
@@ -890,35 +890,35 @@ CREATE TABLE `#__menu` (
   KEY `NSLeft` (`NSLeft`,`NSRight`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-INSERT INTO `#__menu` (`id`, `menu`, `title`, `css_class`, `link`, `linktype`, `linkid`, `target`, `component`, `ordering`, `published`, `template`, `access_list`, `iconurl`, `NSLeft`, `NSRight`, `NSLevel`, `NSDiffer`, `NSIgnore`, `parent_id`, `is_lax`) VALUES
-(1, '---\n- root\n', '-- Корневая страница --', '', '-1', 'link', '-1', '_self', '', 1, 0, '0', '', '', 1, 56, 0, '', 0, 0, 0),
-(10, '---\n- mainmenu\n', 'Новости', '', '/novosti', 'category', '2', '_self', '', 1, 1, '0', '', '', 2, 3, 1, '', 0, 1, 0),
-(13, '---\n- mainmenu\n', 'Q&A', '', '/faq', 'component', 'faq', '_self', '', 6, 1, '0', '', '', 24, 25, 1, '', 0, 1, 0),
-(15, '---\n- mainmenu\n', 'Люди', '', '/users', 'component', 'users', '_self', '', 9, 1, '0', '', '', 30, 31, 1, '', 0, 1, 0),
-(17, '---\n- mainmenu\n', 'Блоги', '', '/blogs', 'component', 'blogs', '_self', '', 4, 1, '0', '', '', 20, 21, 1, '', 0, 1, 0),
-(18, '---\n- mainmenu\n', 'Форум', '', '/forum', 'component', 'forum', '_self', '', 10, 1, '0', '', '', 32, 33, 1, '', 0, 1, 0),
-(20, '---\n- mainmenu\n', 'Фото', '', '/photos', 'component', 'photos', '_self', '', 3, 1, '0', '', '', 14, 19, 1, '', 0, 1, 0),
-(21, '---\n- mainmenu\n', 'Статьи', '', '/stati', 'category', '6', '_self', '', 2, 1, '0', '', '', 4, 13, 1, '', 0, 1, 0),
-(23, '---\n- mainmenu\n', 'Каталог', '', '/catalog', 'component', 'catalog', '_self', '', 7, 1, '0', '', '', 26, 27, 1, '', 0, 1, 0),
-(42, '---\n- mainmenu\n', 'Новые фото', '', '/photos/latest.html', 'link', '/photos/latest.html', '_self', '', 1, 1, '0', '', 'starcons20.gif', 15, 16, 2, '', 0, 20, 0),
-(41, '---\n- mainmenu\n', 'Психология', '', '/stati/psihologija', 'category', '14', '_self', '', 3, 1, '0', '', '07.gif', 9, 10, 2, '', 0, 21, 0),
-(40, '---\n- mainmenu\n', 'Геология', '', '/stati/geologija', 'category', '12', '_self', '', 2, 1, '0', '', 'objects035.gif', 7, 8, 2, '', 0, 21, 0),
-(39, '---\n- mainmenu\n', 'Астрономия', '', '/stati/astronomija', 'category', '11', '_self', '', 1, 1, '0', '', 'objects049.gif', 5, 6, 2, '', 0, 21, 0),
-(38, '---\n- mainmenu\n', 'Клубы', '', '/clubs', 'component', 'clubs', '_self', '', 5, 1, '0', '', '', 22, 23, 1, '', 0, 1, 0),
-(37, '---\n- mainmenu\n', 'Объявления', '', '/board', 'component', 'board', '_self', '', 8, 1, '0', '', '', 28, 29, 1, '', 0, 1, 0),
-(44, '---\n- mainmenu\n', 'Маркетинг', '', '/stati/marketing', 'category', '13', '_self', '', 4, 1, '0', '', 'objects067.gif', 11, 12, 2, '', 0, 21, 0),
-(43, '---\n- mainmenu\n', 'Лучшие фото', '', '/photos/top.html', 'link', '/photos/top.html', '_self', '', 2, 1, '0', '', 'voteyes.gif', 17, 18, 2, '', 0, 20, 0),
-(45, '---\n- authmenu\n', 'Войти', 'login', '/login', 'link', '/login', '_self', '', 11, 1, '', '', '', 34, 35, 1, '', 0, 1, 0),
-(46, '---\n- authmenu\n', 'Регистрация', 'register', '/registration', 'link', '/registration', '_self', '', 12, 1, '', '', '', 36, 37, 1, '', 0, 1, 0),
-(47, '---\n- usermenu\n', '{user.nickname}', 'my_profile', '/users/{user.login}', 'link', '/users/{user.login}', '_self', '', 13, 1, '', '', '', 38, 39, 1, '', 0, 1, 0),
-(48, '---\n- usermenu\n', 'Сообщения {user.new_msg_count}', 'my_messages', '/users/{user.id}/messages.html', 'link', '/users/{user.id}/messages', '_self', '', 14, 1, '', '', '', 40, 41, 1, '', 0, 1, 0),
-(49, '---\n- usermenu\n', 'Мой блог', 'my_blog', '/blogs/my_blog.html', 'link', '/blogs/my_blog.html', '_self', '', 15, 1, '', '', '', 42, 43, 1, '', 0, 1, 0),
-(50, '---\n- usermenu\n', 'Фото', 'my_photos', '/users/{user.id}/photoalbum.html', 'link', '/users/{user.id}/photoalb', '_self', '', 16, 1, '', '', '', 44, 47, 1, '', 0, 1, 0),
-(51, '---\n- usermenu\n', 'Добавить фото', 'add_photos', '/users/addphoto.html', 'link', '/users/addphoto.html', '_self', '', 1, 1, '', '', '', 45, 46, 2, '', 0, 50, 0),
-(52, '---\n- usermenu\n', 'Статьи', 'my_content', '/content/my.html', 'link', '/content/my.html', '_self', '', 17, 1, '', '', '', 48, 51, 1, '', 0, 1, 0),
-(53, '---\n- usermenu\n', 'Написать', 'add_content', '/content/add.html', 'link', '/content/add.html', '_self', '', 1, 1, '', '', '', 49, 50, 2, '', 0, 52, 0),
-(54, '---\n- usermenu\n', 'Админка', 'admin', '/admin/', 'link', '/admin/', '_self', '', 18, 1, '', '---\n- 2\n', '', 52, 53, 1, '', 0, 1, 0),
-(55, '---\n- usermenu\n', 'Выход', 'logout', '/logout', 'link', '/logout', '_self', '', 19, 1, '', '', '', 54, 55, 1, '', 0, 1, 0);
+INSERT INTO `#__menu` (`id`, `menu`, `title`, `css_class`, `link`, `linktype`, `linkid`, `target`, `component`, `ordering`, `published`, `template`, `access_list`, `iconurl`, `NSLeft`, `NSRight`, `NSLevel`, `NSDiffer`, `NSIgnore`, `parent_id`, `is_lax`, `titles`) VALUES
+(1, '---\n- root\n', '-- Корневая страница --', '', '-1', 'link', '-1', '_self', '', 1, 0, '0', '', '', 1, 56, 0, '', 0, 0, 0, ''),
+(10, '---\n- mainmenu\n', 'Новости', '', '/novosti', 'category', '2', '_self', '', 1, 1, '0', '', '', 2, 3, 1, '', 0, 1, 0, ''),
+(13, '---\n- mainmenu\n', 'Q&A', '', '/faq', 'component', 'faq', '_self', '', 6, 1, '0', '', '', 24, 25, 1, '', 0, 1, 0, ''),
+(15, '---\n- mainmenu\n', 'Люди', '', '/users', 'component', 'users', '_self', '', 9, 1, '0', '', '', 30, 31, 1, '', 0, 1, 0, ''),
+(17, '---\n- mainmenu\n', 'Блоги', '', '/blogs', 'component', 'blogs', '_self', '', 4, 1, '0', '', '', 20, 21, 1, '', 0, 1, 0, ''),
+(18, '---\n- mainmenu\n', 'Форум', '', '/forum', 'component', 'forum', '_self', '', 10, 1, '0', '', '', 32, 33, 1, '', 0, 1, 0, ''),
+(20, '---\n- mainmenu\n', 'Фото', '', '/photos', 'component', 'photos', '_self', '', 3, 1, '0', '', '', 14, 19, 1, '', 0, 1, 0, ''),
+(21, '---\n- mainmenu\n', 'Статьи', '', '/stati', 'category', '6', '_self', '', 2, 1, '0', '', '', 4, 13, 1, '', 0, 1, 0, ''),
+(23, '---\n- mainmenu\n', 'Каталог', '', '/catalog', 'component', 'catalog', '_self', '', 7, 1, '0', '', '', 26, 27, 1, '', 0, 1, 0, ''),
+(42, '---\n- mainmenu\n', 'Новые фото', '', '/photos/latest.html', 'link', '/photos/latest.html', '_self', '', 1, 1, '0', '', 'starcons20.gif', 15, 16, 2, '', 0, 20, 0, ''),
+(41, '---\n- mainmenu\n', 'Психология', '', '/stati/psihologija', 'category', '14', '_self', '', 3, 1, '0', '', '07.gif', 9, 10, 2, '', 0, 21, 0, ''),
+(40, '---\n- mainmenu\n', 'Геология', '', '/stati/geologija', 'category', '12', '_self', '', 2, 1, '0', '', 'objects035.gif', 7, 8, 2, '', 0, 21, 0, ''),
+(39, '---\n- mainmenu\n', 'Астрономия', '', '/stati/astronomija', 'category', '11', '_self', '', 1, 1, '0', '', 'objects049.gif', 5, 6, 2, '', 0, 21, 0, ''),
+(38, '---\n- mainmenu\n', 'Клубы', '', '/clubs', 'component', 'clubs', '_self', '', 5, 1, '0', '', '', 22, 23, 1, '', 0, 1, 0, ''),
+(37, '---\n- mainmenu\n', 'Объявления', '', '/board', 'component', 'board', '_self', '', 8, 1, '0', '', '', 28, 29, 1, '', 0, 1, 0, ''),
+(44, '---\n- mainmenu\n', 'Маркетинг', '', '/stati/marketing', 'category', '13', '_self', '', 4, 1, '0', '', 'objects067.gif', 11, 12, 2, '', 0, 21, 0, ''),
+(43, '---\n- mainmenu\n', 'Лучшие фото', '', '/photos/top.html', 'link', '/photos/top.html', '_self', '', 2, 1, '0', '', 'voteyes.gif', 17, 18, 2, '', 0, 20, 0, ''),
+(45, '---\n- authmenu\n', 'Войти', 'login', '/login', 'link', '/login', '_self', '', 11, 1, '', '', '', 34, 35, 1, '', 0, 1, 0, ''),
+(46, '---\n- authmenu\n', 'Регистрация', 'register', '/registration', 'link', '/registration', '_self', '', 12, 1, '', '', '', 36, 37, 1, '', 0, 1, 0, ''),
+(47, '---\n- usermenu\n', '{user.nickname}', 'my_profile', '/users/{user.login}', 'link', '/users/{user.login}', '_self', '', 13, 1, '', '', '', 38, 39, 1, '', 0, 1, 0, ''),
+(48, '---\n- usermenu\n', 'Сообщения {user.new_msg_count}', 'my_messages', '/users/{user.id}/messages.html', 'link', '/users/{user.id}/messages', '_self', '', 14, 1, '', '', '', 40, 41, 1, '', 0, 1, 0, ''),
+(49, '---\n- usermenu\n', 'Мой блог', 'my_blog', '/blogs/my_blog.html', 'link', '/blogs/my_blog.html', '_self', '', 15, 1, '', '', '', 42, 43, 1, '', 0, 1, 0, ''),
+(50, '---\n- usermenu\n', 'Фото', 'my_photos', '/users/{user.id}/photoalbum.html', 'link', '/users/{user.id}/photoalb', '_self', '', 16, 1, '', '', '', 44, 47, 1, '', 0, 1, 0, ''),
+(51, '---\n- usermenu\n', 'Добавить фото', 'add_photos', '/users/addphoto.html', 'link', '/users/addphoto.html', '_self', '', 1, 1, '', '', '', 45, 46, 2, '', 0, 50, 0, ''),
+(52, '---\n- usermenu\n', 'Статьи', 'my_content', '/content/my.html', 'link', '/content/my.html', '_self', '', 17, 1, '', '', '', 48, 51, 1, '', 0, 1, 0, ''),
+(53, '---\n- usermenu\n', 'Написать', 'add_content', '/content/add.html', 'link', '/content/add.html', '_self', '', 1, 1, '', '', '', 49, 50, 2, '', 0, 52, 0, ''),
+(54, '---\n- usermenu\n', 'Админка', 'admin', '/admin/', 'link', '/admin/', '_self', '', 18, 1, '', '---\n- 2\n', '', 52, 53, 1, '', 0, 1, 0, ''),
+(55, '---\n- usermenu\n', 'Выход', 'logout', '/logout', 'link', '/logout', '_self', '', 19, 1, '', '', '', 54, 55, 1, '', 0, 1, 0, '');
 
 DROP TABLE IF EXISTS `#__modules`;
 CREATE TABLE `#__modules` (
@@ -951,45 +951,45 @@ CREATE TABLE `#__modules` (
   FULLTEXT KEY `content` (`content`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-INSERT INTO `#__modules` (`id`, `position`, `name`, `title`, `is_external`, `content`, `ordering`, `showtitle`, `published`, `user`, `config`, `original`, `css_prefix`, `access_list`, `cache`, `cachetime`, `cacheint`, `template`, `is_strict_bind`, `version`) VALUES
-(1, 'topmenu', 'Меню', 'Меню', 1, 'mod_menu', 6, 0, 1, 0, '---\nmenu: mainmenu\nshow_home: 1\ntpl: mod_menu.tpl\nis_sub_menu: 0\n', 1, '', '', 0, 1, 'HOUR', 'module_simple.tpl', 0, '1.0'),
-(17, 'top', 'Главная страница', 'Добро пожаловать!', 0, '<table cellspacing="0" cellpadding="0" border="0" width="100%">\r\n    <tbody>\r\n        <tr>\r\n            <td width="100" valign="top"><a target="_blank" href="http://www.instantcms.ru"><img border="0" alt="" src="/images/content/community.png" /></a></td>\r\n            <td>\r\n            <p class="moduletitle">Добро пожаловать!</p>\r\n            <p>Мы рады приветствовать Вас в нашей социальной сети. После регистрации Вам станут доступны все функции сайта.</p>\r\n            <p>Вы сможете завести блог, загружать фотографии и общаться с друзьями.</p>\r\n            <div>\r\n            <div>Чтобы изменить этот текст, <a href="/admin/index.php?view=modules&amp;do=edit&amp;id=17">отредактируйте модуль &quot;Главная страница&quot;</a>.</div>\r\n            </div>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>', 0, 0, 1, 1, '---\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(44, 'sidebar', 'Облако тегов', 'Облако тегов', 1, 'mod_tags', 18, 0, 0, 0, '---\ncat_id: \nsortby: tag\nmenuid: \nminfreq: 0\nminlen: 3\ntargets: \n  content: content\n  photo: photo\n  blogpost: blog\n  catalog: catalog\n  userphoto: userphoto\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(26, 'sidebar', 'Корзина покупателя', 'Корзина', 1, 'mod_cart', 19, 1, 0, 0, '---\nshowtype: list\nshowqty: 1\nmenuid: 23\nsource: catalog\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(25, 'sidebar', 'Голосования', 'Голосования', 1, 'mod_polls', 2, 1, 1, 0, '---\nshownum: 0\npoll_id: 2\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(27, 'sidebar', 'Поиск', 'Поиск', 1, 'mod_search', 1, 0, 0, 0, '---\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(19, 'maintop', 'Последние материалы', 'Новые статьи', 1, 'mod_latest', 2, 1, 1, 0, '---\nnewscount: 4\nshowdesc: 0\nshowdate: 1\nshowcom: 1\nshowrss: 1\ncat_id: 6\nsubs: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(20, 'topmenu', 'Авторизация', 'Авторизация', 1, 'mod_auth', 0, 1, 1, 0, '---\nautolog: 1\npassrem: 1\n', 1, '', '', 0, 1, 'MINUTE', 'module.tpl', 0, '1.0'),
-(22, 'topmenu', 'Последние регистрации', 'Новые пользователи', 1, 'mod_lastreg', 2, 1, 1, 0, '---\nnewscount: 5\nview_type: hr_table\nmaxcool: 2\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(23, 'sidebar', 'Случайное изображение', 'Случайная картинка', 1, 'mod_random_image', 21, 1, 0, 0, '---\nshowtitle: 1\nalbum_id: 0\nmenuid: 20\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(36, 'sidebar', 'Разделы статей', 'Разделы статей', 1, 'mod_category', 13, 1, 0, 0, '---\nshowdesc: 0\ncategory_id: 6\nicon: /images/markers/folder.png\nmenuid: 21\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(39, 'sidebar', 'Выбор шаблона', 'Выбор шаблона', 1, 'mod_template', 12, 1, 0, 0, '---\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(47, 'mainbottom', 'Записи в каталоге', 'Записи в каталоге', 1, 'mod_uc', 23, 1, 0, 0, '---\nnum: 10\ncat_id: 0\nmenuid: 23\nshowf: 2\nshowtype: thumb\nfulllink: 1\nsort: rating\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(49, 'sidebar', 'Кто онлайн?', 'Кто онлайн?', 1, 'mod_whoonline', 24, 1, 1, 0, '---\nshow_today: 1\nadmin_editor: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(50, 'topmenu', 'Темы на форуме', 'Новости форума', 1, 'mod_forum', 31, 1, 1, 0, '---\nshownum: 2\nshowtype: web2\nshowforum: 0\nshowlink: 0\nshowtext: 0\nmenuid: 18\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(51, 'sidebar', 'Случайное фото', 'Случайное фото', 1, 'mod_user_image', 25, 1, 0, 0, '---\nshowtitle: 1\nmenuid: 15\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(52, 'sidebar', 'Внешний файл', 'Внешний файл', 0, '<p>{ФАЙЛ=test.php}</p>', 11, 1, 0, 1, '---\n', 0, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(56, 'sidebar', 'Архив статей', 'Архив новостей', 1, 'mod_arhive', 27, 1, 0, 0, '---\nsource: both\ncat_id: 6\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(54, 'sidebar', 'Случайное в каталоге', 'Случайное в каталоге', 1, 'mod_uc_random', 26, 1, 0, 0, '---\ncat_id: 1\ncount: 2\nshowtitle: 1\nshowcat: 0\nmenuid: 23\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(60, 'maintop', 'RSS-ридер', 'RSS-ридер', 1, 'mod_rss', 9, 1, 0, 0, '---\nshowdesc: 0\nshowicon: 1\nitemslimit: 6\nrssurl: http://www.lenta.ru/rss\ncols: 2\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(61, 'sidebar', 'Последние комментарии', 'Последние комментарии', 1, 'mod_comments', 4, 1, 1, 0, '---\nshownum: 10\nminrate: 0\nshowdesc: 1\nshowrss: 1\nshowtarg: 0\ntargets: \n  faq: faq\n  catalog: catalog\n  boarditem: boarditem\n  blog: blog\n  article: article\n  palbum: palbum\n  photo: photo\n  userphoto: userphoto\n', 1, '', '', 0, 1, 'MINUTE', 'module.tpl', 0, '1.0'),
-(62, 'maintop', 'Фотографии', 'Фотографии', 1, 'mod_photo', 32, 1, 1, 0, '---\nshownum: 6\nmaxcols: 2\nshowclubs: 1\nalbum_id: 100\nshowtype: short\nshowmore: 0\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(64, 'maintop', 'Записи в блогах', 'Записи в блогах', 1, 'mod_blogs', 2, 1, 1, 0, '---\nshownum: 10\nminrate: 0\nshowrss: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(66, 'header', 'Меню', 'Меню пользователя', 1, 'mod_menu', 34, 0, 1, 0, '---\nmenu: usermenu\nshow_home: 0\ntpl: mod_menu.tpl\nis_sub_menu: 0\n', 1, 'user_menu_', '---\n- 1\n- 7\n- 9\n- 2\n', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(67, 'mainbottom', 'Последние вопросы FAQ', 'Последние вопросы FAQ', 1, 'mod_latest_faq', 33, 1, 0, 0, '---\nnewscount: 5\nmaxlen: 140\ncat_id: \n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(69, 'maintop', 'Популярные статьи', 'Популярные статьи', 1, 'mod_bestcontent', 3, 1, 0, 0, '---\nshownum: 4\nmenuid: 21\nshowlink: 1\nshowdesc: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(70, 'sidebar', 'Поиск пользователей', 'Поиск пользователей', 1, 'mod_usersearch', 4, 1, 0, 0, '---\ncat_id: \nsource: \nmenuid: 15\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(71, 'maintop', 'Новые объявления', 'Новые объявления', 1, 'mod_latestboard', 1, 1, 1, 0, '---\nshownum: 10\nshowcity: 1\ncat_id: -1\nsubs: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(72, 'maintop', 'Рейтинг пользователей', 'Рейтинг пользователей', 1, 'mod_user_rating', 1, 1, 0, 0, '---\ncount: 20\nmenuid: 15\nview_type: rating\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(73, 'maintop', 'Клубы', 'Клубы', 1, 'mod_clubs', 3, 1, 0, 0, '---\ncount: 2\nmenuid: 38\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(75, 'sidebar', 'Доска почета', 'Доска почета', 1, 'mod_respect', 1, 1, 1, 0, '---\nview: all\nshow_awards: 1\norder: desc\nlimit: 5\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(76, 'sidebar', 'Файлы пользователей', 'Файлы пользователей', 1, 'mod_userfiles', 1, 1, 0, 0, '---\nmenuid: 0\nsw_stats: 1\nsw_latest: 1\nsw_popular: 1\nnum_latest: 5\nnum_popular: 5\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0'),
-(87, 'maintop', 'Лента активности', 'Лента активности', 1, 'mod_actions', 1, 1, 1, 0, '---\nlimit: 15\nshow_target: 0\naction_types: \n  16: 16\n  15: 15\n  20: 20\n  13: 13\n  29: 29\n  24: 24\n  23: 23\n  2: 2\n  27: 27\n  12: 12\n  10: 10\n  25: 25\n  17: 17\n  8: 8\n  18: 18\n  7: 7\n  26: 26\n  19: 19\n  22: 22\n  11: 11\n  21: 21\n  28: 28\n  9: 9\n  14: 14\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.7'),
-(82, 'sidebar', 'Приветствие', 'Универсальный каталог', 0, '<p>С помощью компонента &laquo;Универсальный каталог&raquo;, в котором Вы сейчас находитесь, можно организовать хранение любых данных. От карандашей до автомобилей.</p>\r\n<p>Каждая рубрика каталога имеет собственный набор характеристик, который можно изменить в панели управления. Пользователи могут фильтровать записи каталога по характеристикам одним щелчком мыши.&nbsp;</p>\r\n<p>Любой пользователь может добавлять собственные записи в те рубрики каталога, для которых это разрешено в настройках.</p>', 14, 1, 1, 1, '', 1, '', '', 0, 24, 'HOUR', 'module.tpl', 1, '1.0'),
-(83, 'sidebar', 'Статистика пользователей', 'Статистика пользователей', 1, 'mod_user_stats', 1, 1, 1, 0, '---\nshow_total: 1\nshow_online: 1\nshow_gender: 1\nshow_city: 1\nshow_bday: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(84, 'sidebar', 'Друзья онлайн', 'Друзья онлайн', 1, 'mod_user_friend', 5, 1, 0, 0, '---\r\nlimit: 5\r\nview_type: table', 1, '', '', 0, 1, 'HOUR', 'module_simple.tpl', 0, '1.0'),
-(85, 'sidebar', 'Пригласить друга', 'Пригласить друга', 1, 'mod_invite', 1, 1, 0, 0, '', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0'),
-(88, 'header', 'Меню', 'Меню авторизации', 1, 'mod_menu', 35, 0, 1, 0, '---\nmenu: authmenu\nshow_home: 0\ntpl: mod_menu.tpl\nis_sub_menu: 0\n', 1, 'user_menu_', '---\n- 8\n', 0, 1, 'HOUR', 'module.tpl', 0, '1.0');
+INSERT INTO `#__modules` (`id`, `position`, `name`, `title`, `is_external`, `content`, `ordering`, `showtitle`, `published`, `user`, `config`, `original`, `css_prefix`, `access_list`, `cache`, `cachetime`, `cacheint`, `template`, `is_strict_bind`, `version`, `titles`) VALUES
+(1, 'topmenu', 'Меню', 'Меню', 1, 'mod_menu', 6, 0, 1, 0, '---\nmenu: mainmenu\nshow_home: 1\ntpl: mod_menu.tpl\nis_sub_menu: 0\n', 1, '', '', 0, 1, 'HOUR', 'module_simple.tpl', 0, '1.0', ''),
+(17, 'top', 'Главная страница', 'Добро пожаловать!', 0, '<table cellspacing="0" cellpadding="0" border="0" width="100%">\r\n    <tbody>\r\n        <tr>\r\n            <td width="100" valign="top"><a target="_blank" href="http://www.instantcms.ru"><img border="0" alt="" src="/images/content/community.png" /></a></td>\r\n            <td>\r\n            <p class="moduletitle">Добро пожаловать!</p>\r\n            <p>Мы рады приветствовать Вас в нашей социальной сети. После регистрации Вам станут доступны все функции сайта.</p>\r\n            <p>Вы сможете завести блог, загружать фотографии и общаться с друзьями.</p>\r\n            <div>\r\n            <div>Чтобы изменить этот текст, <a href="/admin/index.php?view=modules&amp;do=edit&amp;id=17">отредактируйте модуль &quot;Главная страница&quot;</a>.</div>\r\n            </div>\r\n            </td>\r\n        </tr>\r\n    </tbody>\r\n</table>', 0, 0, 1, 1, '---\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(44, 'sidebar', 'Облако тегов', 'Облако тегов', 1, 'mod_tags', 18, 0, 0, 0, '---\ncat_id: \nsortby: tag\nmenuid: \nminfreq: 0\nminlen: 3\ntargets: \n  content: content\n  photo: photo\n  blogpost: blog\n  catalog: catalog\n  userphoto: userphoto\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(26, 'sidebar', 'Корзина покупателя', 'Корзина', 1, 'mod_cart', 19, 1, 0, 0, '---\nshowtype: list\nshowqty: 1\nmenuid: 23\nsource: catalog\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(25, 'sidebar', 'Голосования', 'Голосования', 1, 'mod_polls', 2, 1, 1, 0, '---\nshownum: 0\npoll_id: 2\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(27, 'sidebar', 'Поиск', 'Поиск', 1, 'mod_search', 1, 0, 0, 0, '---\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(19, 'maintop', 'Последние материалы', 'Новые статьи', 1, 'mod_latest', 2, 1, 1, 0, '---\nnewscount: 4\nshowdesc: 0\nshowdate: 1\nshowcom: 1\nshowrss: 1\ncat_id: 6\nsubs: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(20, 'topmenu', 'Авторизация', 'Авторизация', 1, 'mod_auth', 0, 1, 1, 0, '---\nautolog: 1\npassrem: 1\n', 1, '', '', 0, 1, 'MINUTE', 'module.tpl', 0, '1.0', ''),
+(22, 'topmenu', 'Последние регистрации', 'Новые пользователи', 1, 'mod_lastreg', 2, 1, 1, 0, '---\nnewscount: 5\nview_type: hr_table\nmaxcool: 2\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(23, 'sidebar', 'Случайное изображение', 'Случайная картинка', 1, 'mod_random_image', 21, 1, 0, 0, '---\nshowtitle: 1\nalbum_id: 0\nmenuid: 20\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(36, 'sidebar', 'Разделы статей', 'Разделы статей', 1, 'mod_category', 13, 1, 0, 0, '---\nshowdesc: 0\ncategory_id: 6\nicon: /images/markers/folder.png\nmenuid: 21\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(39, 'sidebar', 'Выбор шаблона', 'Выбор шаблона', 1, 'mod_template', 12, 1, 0, 0, '---\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(47, 'mainbottom', 'Записи в каталоге', 'Записи в каталоге', 1, 'mod_uc', 23, 1, 0, 0, '---\nnum: 10\ncat_id: 0\nmenuid: 23\nshowf: 2\nshowtype: thumb\nfulllink: 1\nsort: rating\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(49, 'sidebar', 'Кто онлайн?', 'Кто онлайн?', 1, 'mod_whoonline', 24, 1, 1, 0, '---\nshow_today: 1\nadmin_editor: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(50, 'topmenu', 'Темы на форуме', 'Новости форума', 1, 'mod_forum', 31, 1, 1, 0, '---\nshownum: 2\nshowtype: web2\nshowforum: 0\nshowlink: 0\nshowtext: 0\nmenuid: 18\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(51, 'sidebar', 'Случайное фото', 'Случайное фото', 1, 'mod_user_image', 25, 1, 0, 0, '---\nshowtitle: 1\nmenuid: 15\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(52, 'sidebar', 'Внешний файл', 'Внешний файл', 0, '<p>{ФАЙЛ=test.php}</p>', 11, 1, 0, 1, '---\n', 0, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(56, 'sidebar', 'Архив статей', 'Архив новостей', 1, 'mod_arhive', 27, 1, 0, 0, '---\nsource: both\ncat_id: 6\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(54, 'sidebar', 'Случайное в каталоге', 'Случайное в каталоге', 1, 'mod_uc_random', 26, 1, 0, 0, '---\ncat_id: 1\ncount: 2\nshowtitle: 1\nshowcat: 0\nmenuid: 23\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(60, 'maintop', 'RSS-ридер', 'RSS-ридер', 1, 'mod_rss', 9, 1, 0, 0, '---\nshowdesc: 0\nshowicon: 1\nitemslimit: 6\nrssurl: http://www.lenta.ru/rss\ncols: 2\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(61, 'sidebar', 'Последние комментарии', 'Последние комментарии', 1, 'mod_comments', 4, 1, 1, 0, '---\nshownum: 10\nminrate: 0\nshowdesc: 1\nshowrss: 1\nshowtarg: 0\ntargets: \n  faq: faq\n  catalog: catalog\n  boarditem: boarditem\n  blog: blog\n  article: article\n  palbum: palbum\n  photo: photo\n  userphoto: userphoto\n', 1, '', '', 0, 1, 'MINUTE', 'module.tpl', 0, '1.0', ''),
+(62, 'maintop', 'Фотографии', 'Фотографии', 1, 'mod_photo', 32, 1, 1, 0, '---\nshownum: 6\nmaxcols: 2\nshowclubs: 1\nalbum_id: 100\nshowtype: short\nshowmore: 0\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(64, 'maintop', 'Записи в блогах', 'Записи в блогах', 1, 'mod_blogs', 2, 1, 1, 0, '---\nshownum: 10\nminrate: 0\nshowrss: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(66, 'header', 'Меню', 'Меню пользователя', 1, 'mod_menu', 34, 0, 1, 0, '---\nmenu: usermenu\nshow_home: 0\ntpl: mod_menu.tpl\nis_sub_menu: 0\n', 1, 'user_menu_', '---\n- 1\n- 7\n- 9\n- 2\n', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(67, 'mainbottom', 'Последние вопросы FAQ', 'Последние вопросы FAQ', 1, 'mod_latest_faq', 33, 1, 0, 0, '---\nnewscount: 5\nmaxlen: 140\ncat_id: \n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(69, 'maintop', 'Популярные статьи', 'Популярные статьи', 1, 'mod_bestcontent', 3, 1, 0, 0, '---\nshownum: 4\nmenuid: 21\nshowlink: 1\nshowdesc: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(70, 'sidebar', 'Поиск пользователей', 'Поиск пользователей', 1, 'mod_usersearch', 4, 1, 0, 0, '---\ncat_id: \nsource: \nmenuid: 15\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(71, 'maintop', 'Новые объявления', 'Новые объявления', 1, 'mod_latestboard', 1, 1, 1, 0, '---\nshownum: 10\nshowcity: 1\ncat_id: -1\nsubs: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(72, 'maintop', 'Рейтинг пользователей', 'Рейтинг пользователей', 1, 'mod_user_rating', 1, 1, 0, 0, '---\ncount: 20\nmenuid: 15\nview_type: rating\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(73, 'maintop', 'Клубы', 'Клубы', 1, 'mod_clubs', 3, 1, 0, 0, '---\ncount: 2\nmenuid: 38\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(75, 'sidebar', 'Доска почета', 'Доска почета', 1, 'mod_respect', 1, 1, 1, 0, '---\nview: all\nshow_awards: 1\norder: desc\nlimit: 5\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(76, 'sidebar', 'Файлы пользователей', 'Файлы пользователей', 1, 'mod_userfiles', 1, 1, 0, 0, '---\nmenuid: 0\nsw_stats: 1\nsw_latest: 1\nsw_popular: 1\nnum_latest: 5\nnum_popular: 5\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', ''),
+(87, 'maintop', 'Лента активности', 'Лента активности', 1, 'mod_actions', 1, 1, 1, 0, '---\nlimit: 15\nshow_target: 0\naction_types: \n  16: 16\n  15: 15\n  20: 20\n  13: 13\n  29: 29\n  24: 24\n  23: 23\n  2: 2\n  27: 27\n  12: 12\n  10: 10\n  25: 25\n  17: 17\n  8: 8\n  18: 18\n  7: 7\n  26: 26\n  19: 19\n  22: 22\n  11: 11\n  21: 21\n  28: 28\n  9: 9\n  14: 14\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.7', ''),
+(82, 'sidebar', 'Приветствие', 'Универсальный каталог', 0, '<p>С помощью компонента &laquo;Универсальный каталог&raquo;, в котором Вы сейчас находитесь, можно организовать хранение любых данных. От карандашей до автомобилей.</p>\r\n<p>Каждая рубрика каталога имеет собственный набор характеристик, который можно изменить в панели управления. Пользователи могут фильтровать записи каталога по характеристикам одним щелчком мыши.&nbsp;</p>\r\n<p>Любой пользователь может добавлять собственные записи в те рубрики каталога, для которых это разрешено в настройках.</p>', 14, 1, 1, 1, '', 1, '', '', 0, 24, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(83, 'sidebar', 'Статистика пользователей', 'Статистика пользователей', 1, 'mod_user_stats', 1, 1, 1, 0, '---\nshow_total: 1\nshow_online: 1\nshow_gender: 1\nshow_city: 1\nshow_bday: 1\n', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(84, 'sidebar', 'Друзья онлайн', 'Друзья онлайн', 1, 'mod_user_friend', 5, 1, 0, 0, '---\r\nlimit: 5\r\nview_type: table', 1, '', '', 0, 1, 'HOUR', 'module_simple.tpl', 0, '1.0', ''),
+(85, 'sidebar', 'Пригласить друга', 'Пригласить друга', 1, 'mod_invite', 1, 1, 0, 0, '', 1, '', '', 0, 1, 'HOUR', 'module.tpl', 1, '1.0', ''),
+(88, 'header', 'Меню', 'Меню авторизации', 1, 'mod_menu', 35, 0, 1, 0, '---\nmenu: authmenu\nshow_home: 0\ntpl: mod_menu.tpl\nis_sub_menu: 0\n', 1, 'user_menu_', '---\n- 8\n', 0, 1, 'HOUR', 'module.tpl', 0, '1.0', '');
 
 DROP TABLE IF EXISTS `#__modules_bind`;
 CREATE TABLE `#__modules_bind` (
@@ -1168,8 +1168,8 @@ CREATE TABLE `#__photo_files` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `#__photo_files` (`id`, `album_id`, `title`, `description`, `pubdate`, `file`, `published`, `hits`, `showdate`, `comments`, `user_id`, `owner`) VALUES
-(10, 1, 'Закат на пляже', '', '2016-06-31 18:26:43', 'd0633d5a84f03a27f1b7d0419947e968.jpg', 1, 25, 1, 1, 1, 'photos'),
-(11, 1, 'Флорида', '', '2016-06-31 18:27:33', '5e7a09ffcaa383df24d25d56c315f0d0.jpg', 1, 28, 1, 1, 1, 'photos'),
+(10, 1, 'Закат на пляже', '', '2016-06-30 18:26:43', 'd0633d5a84f03a27f1b7d0419947e968.jpg', 1, 25, 1, 1, 1, 'photos'),
+(11, 1, 'Флорида', '', '2016-06-30 18:27:33', '5e7a09ffcaa383df24d25d56c315f0d0.jpg', 1, 28, 1, 1, 1, 'photos'),
 (15, 1034, 'Красивый цветок', '', '2016-06-12 13:47:32', '312604de74e4de8aec59626ac024c7d3.jpg', 1, 6, 1, 1, 1, 'photos'),
 (16, 1034, 'Густые джунгли', '', '2016-06-12 13:47:52', 'e223946b3d76cc37417d0304c9cb23a1.jpg', 1, 40, 1, 1, 1, 'photos'),
 (17, 1034, 'Вид на озеро', '<p>Красивый темный пейзаж с видом на озеро</p>', '2016-06-12 17:00:27', '38fde6623d0ad43c79c4d90a88a07009.jpg', 1, 25, 1, 1, 1, 'photos');
@@ -1773,7 +1773,7 @@ CREATE TABLE `#__user_profiles` (
   `imageurl` varchar(250) NOT NULL,
   `allow_who` varchar(35) NOT NULL DEFAULT 'all',
   `signature` varchar(240) NOT NULL,
-  `signature_html` varchar(300) NOT NULL,
+  `signature_html` varchar(300) NOT NULL DEFAULT '',
   `gender` varchar(1) NOT NULL DEFAULT '',
   `formsdata` varchar(800) NOT NULL DEFAULT '',
   `email_newmsg` int(11) NOT NULL DEFAULT '1',
