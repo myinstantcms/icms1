@@ -45,11 +45,28 @@ class smartyTpl{
 
         $smarty = new Smarty();
 
-        // Smarty 4.5+ признаёт вызов незарегистрированных функций в модификаторах
-        // устаревшим: регистрируем те, что используются в поставляемых шаблонах
+        // Функции PHP, используемые в шаблонах как модификаторы: регистрируем явно
         foreach (array('ceil', 'floor', 'round', 'abs', 'str_repeat', 'icms_ucfirst') as $modifier) {
             if (function_exists($modifier)) {
                 $smarty->registerPlugin('modifier', $modifier, $modifier);
+            }
+        }
+
+        // Кастомные плагины CMS из includes/smarty/plugins.
+        // В Smarty 5 каталог plugins больше не сканируется автоматически — регистрируем вручную.
+        foreach (array('function', 'modifier', 'block', 'compiler') as $plugin_type) {
+
+            foreach ((array)glob(PATH.'/includes/smarty/plugins/'.$plugin_type.'.*.php') as $plugin_file) {
+
+                if (!preg_match('/^'.preg_quote($plugin_type, '/').'\.(.+)\.php$/', basename($plugin_file), $matches)) { continue; }
+
+                require_once $plugin_file;
+
+                $plugin_callback = 'smarty_'.$plugin_type.'_'.$matches[1];
+
+                if (function_exists($plugin_callback) || class_exists($plugin_callback)) {
+                    $smarty->registerPlugin($plugin_type, $matches[1], $plugin_callback);
+                }
             }
         }
 
