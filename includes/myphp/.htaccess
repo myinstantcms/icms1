@@ -1,1 +1,11 @@
-deny from all
+# Запрет прямого доступа к служебной директории.
+# Apache 2.4 (mod_authz_core)
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+
+# Apache 2.2 (совместимость)
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

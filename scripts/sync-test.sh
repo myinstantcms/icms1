@@ -13,8 +13,8 @@ DST="${1:-/Users/maxisoft/Sites/icms1.test}"
 rsync -a \
     --exclude=".git" \
     --exclude="includes/config.inc.php" \
-    --exclude="cache/*" \
-    --exclude="upload/*" \
+    --include="cache/.htaccess" --exclude="cache/*" \
+    --include="upload/.htaccess" --exclude="upload/*" \
     "$SRC/" "$DST/"
 
 echo "Синхронизировано: $SRC -> $DST"

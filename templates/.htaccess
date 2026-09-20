@@ -1,4 +1,15 @@
-<Files ~ "\.tpl|php|txt$">
-    Order allow,deny
-    Deny from all
-</Files>
+# Запрет прямого доступа к шаблонам и текстовым файлам.
+# Apache 2.4 (mod_authz_core)
+<IfModule mod_authz_core.c>
+    <FilesMatch "\.(tpl|php|txt)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+
+# Apache 2.2 (совместимость, если нет mod_authz_core)
+<IfModule !mod_authz_core.c>
+    <Files ~ "\.tpl|php|txt$">
+        Order allow,deny
+        Deny from all
+    </Files>
+</IfModule>
