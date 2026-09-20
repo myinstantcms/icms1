@@ -643,6 +643,7 @@ $steps = array(
                 <svg viewBox="0 0 24 24"><path d="M4.5 12.5 10 18 19.5 7"/></svg>
             </div>
             <h1><?php echo $_LANG['INS_FORM_SUCCESS']; ?></h1>
+            <p class="done__sub"><?php echo $_LANG['INS_FORM_SUCCESS_SUB']; ?></p>
             <div class="done__links">
                 <a class="btn btn--primary" href="/"><?php echo $_LANG['INS_GO_SITE']; ?></a>
                 <a class="btn btn--ghost" href="/admin"><?php echo $_LANG['INS_GO_CP']; ?></a>
@@ -652,7 +653,13 @@ $steps = array(
             <div class="panel panel--cron">
                 <div class="panel__title"><?php echo $_LANG['INS_CRON_TODO']; ?></div>
                 <p class="text"><?php echo $_LANG['INS_CRON_NOTES']; ?></p>
-                <pre class="code"><?php echo $php_path ? $php_path : 'php'; ?> -f <?php echo PATH; ?>/cron.php <?php echo $_SERVER['HTTP_HOST']; ?> > /dev/null</pre>
+                <div class="cronbar">
+                    <pre class="code" id="cron-cmd"><?php echo $php_path ? $php_path : 'php'; ?> -f <?php echo PATH; ?>/cron.php <?php echo $_SERVER['HTTP_HOST']; ?> > /dev/null</pre>
+                    <button type="button" class="btn btn--ghost btn--copy" id="btn-copy-cron" data-copied-label="<?php echo $_LANG['INS_COPIED']; ?>">
+                        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5.5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5v1"/></svg>
+                        <span><?php echo $_LANG['INS_COPY']; ?></span>
+                    </button>
+                </div>
             </div>
         </section>
         <?php } ?>

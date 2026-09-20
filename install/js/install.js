@@ -344,6 +344,49 @@
         }).join('');
     }
 
+    /* ------------------------------------------------------------- копирование */
+
+    function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            return navigator.clipboard.writeText(text);
+        }
+        // http-контекст: используем скрытый textarea + execCommand
+        return new Promise(function (resolve, reject) {
+            var area = document.createElement('textarea');
+            area.value = text;
+            area.setAttribute('readonly', '');
+            area.style.position = 'fixed';
+            area.style.opacity = '0';
+            document.body.appendChild(area);
+            area.select();
+            var ok = false;
+            try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+            document.body.removeChild(area);
+            ok ? resolve() : reject(new Error('copy failed'));
+        });
+    }
+
+    function initCopy() {
+        var btn = document.getElementById('btn-copy-cron');
+        var src = document.getElementById('cron-cmd');
+        if (!btn || !src) { return; }
+
+        var label = btn.querySelector('span');
+        var original = label ? label.textContent : '';
+        var copied = btn.getAttribute('data-copied-label') || original;
+
+        btn.addEventListener('click', function () {
+            copyText(src.textContent.trim()).then(function () {
+                btn.classList.add('is-copied');
+                if (label) { label.textContent = copied; }
+                setTimeout(function () {
+                    btn.classList.remove('is-copied');
+                    if (label) { label.textContent = original; }
+                }, 1800);
+            }).catch(function () { /* не смогли — оставляем как есть */ });
+        });
+    }
+
     /* ------------------------------------------------------------- init */
 
     window.INSTALL = window.INSTALL || {};
@@ -355,6 +398,7 @@
         initPasswords();
         initValidation();
         initDbCheck();
+        initCopy();
         showStep(1);
     };
 
