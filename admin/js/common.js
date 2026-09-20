@@ -155,9 +155,7 @@ function insertTag(kind){
         text = '{СТРАНИЦА=' + document.addform.ptitle.value + '}';
     }
 
-    if(CKEDITOR.instances.content.mode == "wysiwyg"){
-        CKEDITOR.instances.content.insertHtml(text);
-    } else {
+    if (!insertIntoContentEditor(text)) {
         adminAlert(LANG_AD_SWITCH_EDITOR);
     }
 
@@ -165,11 +163,36 @@ function insertTag(kind){
 
 function InsertPagebreak() {
 
-    if(CKEDITOR.instances.content.mode == "wysiwyg"){
-        CKEDITOR.instances.content.insertHtml('{pagebreak}');
-    } else {
+    if (!insertIntoContentEditor('{pagebreak}')) {
         adminAlert(LANG_AD_SWITCH_EDITOR);
     }
+
+}
+
+/**
+ * Вставка вставки в редактор контента.
+ * Поддерживаются TinyMCE (основной) и CKEditor (legacy).
+ */
+function insertIntoContentEditor(text) {
+
+    if (typeof tinymce !== 'undefined' && tinymce.get && tinymce.get('content')) {
+        tinymce.get('content').insertContent(text);
+        return true;
+    }
+
+    if (typeof CKEDITOR !== 'undefined' && CKEDITOR.instances && CKEDITOR.instances.content) {
+        if (CKEDITOR.instances.content.mode == 'wysiwyg') {
+            CKEDITOR.instances.content.insertHtml(text);
+            return true;
+        }
+        return false;
+    }
+
+    // редактор без визуального режима — дописываем в текстовое поле
+    var textarea = document.getElementById('content');
+    if (textarea) { textarea.value += text; return true; }
+
+    return false;
 
 }
 function checkGroupList(){

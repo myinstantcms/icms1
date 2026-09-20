@@ -584,7 +584,7 @@ INSERT INTO `#__event_hooks` (`id`, `event`, `plugin_id`) VALUES
 (43, 'PRINT_PAGE_HEAD', '21'),
 (44, 'GET_CAPTCHA', '33'),
 (45, 'CHECK_CAPTCHA', '33'),
-(47, 'GET_POST', '35');
+(47, 'GET_POST', '35'),(48, 'INSERT_WYSIWYG', '37');
 
 DROP TABLE IF EXISTS `#__faq_cats`;
 CREATE TABLE `#__faq_cats` (
@@ -1096,7 +1096,7 @@ CREATE TABLE `#__plugins` (
 
 INSERT INTO `#__plugins` (`id`, `plugin`, `title`, `description`, `author`, `version`, `plugin_type`, `published`, `config`) VALUES
 (6, 'p_usertab', 'Demo Profile Plugin', 'Example plugin - Adds a tab "Articles" in the user profiles', 'InstantCMS Team', '1.10.4', 'plugin', 0, '---\nPU_LIMIT: 10\n'),
-(3, 'p_ckeditor', 'CKEditor', 'WYSIWYG editor', 'InstantCMS Team', '4.4.5', 'wysiwyg', 1, '---\niswatermark: 0\nphoto_width: 600\nphoto_height: 600\nis_compatible: 1\nentermode: CKEDITOR.ENTER_P\nskin: moono\nupload_for_groups:\n  - 2\n'),
+(3, 'p_ckeditor', 'CKEditor', 'WYSIWYG editor', 'InstantCMS Team', '4.4.5', 'wysiwyg', 0, '---\niswatermark: 0\nphoto_width: 600\nphoto_height: 600\nis_compatible: 1\nentermode: CKEDITOR.ENTER_P\nskin: moono\nupload_for_groups:\n  - 2\n'),
 (5, 'p_demo', 'Demo Plugin', 'Example plugin - Adds text to the end of each article on the website', 'InstantCMS Team', '1.0', 'plugin', 0, '---\ntext: Added By Plugin From Parameter\ncolor: blue\ncounter: 1\n'),
 (8, 'p_ping', 'Web search engine ping', 'Pings Yandex and Google when adding articles, announcements and blog posts', 'InstantCMS Team', '1.10', 'plugin', 1, '---\nYandex HOST: ping.blogs.yandex.ru\nYandex PATH: /RPC2\nGoogle HOST: blogsearch.google.com\nGoogle PATH: /ping/RPC2\n'),
 (15, 'p_morecontent', 'Related articles', 'Appends each article a list of related articles.', 'Maximov & InstantCMS Team', '1.10.4', 'plugin', 0, '---\nP_LIMIT: 5\nP_UNSORT: 1\n'),
@@ -1105,7 +1105,7 @@ INSERT INTO `#__plugins` (`id`, `plugin`, `title`, `description`, `author`, `ver
 (17, 'p_auto_forum', 'Autoforum', 'Creates a thread in the forum for the discussion of article', 'InstantCMS Team', '1.10.4', '', 1, '---\nAF_DELETE_THREAD: 1\nAF_LINK_TREAD: 1\nAF_ADDTREADFORUM_ID: 1\nAF_NOCREATETREAD: 0\n'),
 (21, 'p_new_msg', 'New message animation', 'New message animation', 'InstantCMS Team', '1.0', '', 1, '---\n'),
 (33, 'p_kcaptcha', 'kCaptcha', 'Display captcha in the form', 'InstantCMS Team', '1.0', '', 1, '---\n'),
-(35, 'p_related_posts', 'Related blog posts', 'Adds to the end of each post list of similar blog entries', 'Pasha && InstantCMS Team', '1.0', '', 1, '---\ntags_mode: 1\nadd_mode: 1\nsearch_mode: 1\nlimit: 4\ntruncate: 200\ncash_time: 1\nblank_photo: no_image.png\n');
+(35, 'p_related_posts', 'Related blog posts', 'Adds to the end of each post list of similar blog entries', 'Pasha && InstantCMS Team', '1.0', '', 1, '---\ntags_mode: 1\nadd_mode: 1\nsearch_mode: 1\nlimit: 4\ntruncate: 200\ncash_time: 1\nblank_photo: no_image.png\n'),(37, 'p_tinymce', 'TinyMCE', 'TinyMCE visual editor', 'InstantCMS Team', '8.9.1', 'wysiwyg', 1, '---\niswatermark: 0\nphoto_width: 600\nphoto_height: 600\nupload_file_for_groups:\n  - 2\nupload_for_groups:\n  - 2\n');
 
 DROP TABLE IF EXISTS `#__polls`;
 CREATE TABLE `#__polls` (

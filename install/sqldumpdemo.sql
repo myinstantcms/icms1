@@ -620,7 +620,7 @@ INSERT INTO `#__event_hooks` (`id`, `event`, `plugin_id`) VALUES
 (43, 'PRINT_PAGE_HEAD', '21'),
 (44, 'GET_CAPTCHA', '33'),
 (45, 'CHECK_CAPTCHA', '33'),
-(47, 'GET_POST', '35');
+(47, 'GET_POST', '35'),(48, 'INSERT_WYSIWYG', '37');
 
 DROP TABLE IF EXISTS `#__faq_cats`;
 CREATE TABLE `#__faq_cats` (
@@ -1190,7 +1190,7 @@ CREATE TABLE `#__plugins` (
 
 INSERT INTO `#__plugins` (`id`, `plugin`, `title`, `description`, `author`, `version`, `plugin_type`, `published`, `config`) VALUES
 (6, 'p_usertab', 'Demo Profile Plugin', 'Пример плагина - Добавляет вкладку "Статьи" в профили всех пользователей', 'InstantCMS Team', '1.10.3', 'plugin', 0, '---\nPU_LIMIT: 10\n'),
-(3, 'p_ckeditor', 'CKEditor', 'Визуальный редактор', 'InstantCMS Team', '4.4.5', 'wysiwyg', 1, '---\niswatermark: 0\nphoto_width: 600\nphoto_height: 600\nis_compatible: 1\nentermode: CKEDITOR.ENTER_P\nskin: moono\nupload_for_groups:\n  - 2\n'),
+(3, 'p_ckeditor', 'CKEditor', 'Визуальный редактор', 'InstantCMS Team', '4.4.5', 'wysiwyg', 0, '---\niswatermark: 0\nphoto_width: 600\nphoto_height: 600\nis_compatible: 1\nentermode: CKEDITOR.ENTER_P\nskin: moono\nupload_for_groups:\n  - 2\n'),
 (5, 'p_demo', 'Demo Plugin', 'Пример плагина - Добавляет текст в конец каждой статьи на сайте', 'InstantCMS Team', '1.0', 'plugin', 0, '---\ntext: Added By Plugin From Parameter\ncolor: blue\ncounter: 1\n'),
 (8, 'p_ping', 'Пинг поисковых систем', 'Пингует Яндекс и Гугл при добавлении статей, объявлений и постов в блоги', 'InstantCMS Team', '1.10', 'plugin', 1, '---\nYandex HOST: ping.blogs.yandex.ru\nYandex PATH: /RPC2\nGoogle HOST: blogsearch.google.com\nGoogle PATH: /ping/RPC2\n'),
 (15, 'p_morecontent', 'Похожие статьи', 'Добавляет в конец каждой статьи список похожих статей.', 'Maximov & InstantCMS Team', '1.10.4', 'plugin', 0, '---\nP_LIMIT: 5\nP_UNSORT: 1\n'),
@@ -1200,7 +1200,7 @@ INSERT INTO `#__plugins` (`id`, `plugin`, `title`, `description`, `author`, `ver
 (21, 'p_new_msg', 'Анимация при новом сообщении', 'Анимация при новом сообщении', 'InstantCMS Team', '1.0', '', 1, '---\n'),
 (33, 'p_kcaptcha', 'Капча kCaptcha', 'Выводит капчу в форме', 'InstantCMS Team', '1.0', '', 1, '---\n'),
 (35, 'p_related_posts', 'Похожие записи в блогах', 'Добавляет в конец каждого поста список похожих записей', 'Pasha && InstantCMS Team', '1.0', '', 1, '---\ntags_mode: 1\nadd_mode: 1\nsearch_mode: 1\nlimit: 4\ntruncate: 200\ncash_time: 1\nblank_photo: no_image.png\n'),
-(36, 'p_recaptcha', 'Капча Recaptcha', 'Современная защита от спама. <a href="https://www.google.com/recaptcha/admin" target="_blank">Получить ключ</a>', 'InstantCMS Team', '1.0', 'captcha', 0, '---\npublic_key: 0\nprivate_key:\ntheme: light\nsize: normal\nlang: ru\n');
+(36, 'p_recaptcha', 'Капча Recaptcha', 'Современная защита от спама. <a href="https://www.google.com/recaptcha/admin" target="_blank">Получить ключ</a>', 'InstantCMS Team', '1.0', 'captcha', 0, '---\npublic_key: 0\nprivate_key:\ntheme: light\nsize: normal\nlang: ru\n'),(37, 'p_tinymce', 'TinyMCE', 'Визуальный редактор TinyMCE', 'InstantCMS Team', '8.9.1', 'wysiwyg', 1, '---\niswatermark: 0\nphoto_width: 600\nphoto_height: 600\nupload_file_for_groups:\n  - 2\nupload_for_groups:\n  - 2\n');
 
 DROP TABLE IF EXISTS `#__polls`;
 CREATE TABLE `#__polls` (
