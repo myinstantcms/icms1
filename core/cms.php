@@ -660,7 +660,7 @@ class cmsCore {
      */
     public static function setCookie($name, $value, $time){
         $key_name = cmsConfig::getConfig('cookie_key');
-        setcookie($key_name.'['.$name.']', $value, $time, '/', null, false, true);
+        setcookie($key_name.'['.$name.']', $value, $time, '/', '', false, true);
     }
 
     /**
