@@ -246,6 +246,95 @@ class cmsUser {
 // ============================================================================ //
 // ============================================================================ //
     /**
+     * Хеширует пароль для хранения в БД (bcrypt, 60 символов, помещается в varchar(100)).
+     * @param string $passw
+     * @return string
+     */
+    public static function hashPassword($passw){
+        return password_hash($passw, PASSWORD_BCRYPT);
+    }
+
+    /**
+     * Проверяет пароль против сохраненного хеша.
+     * Поддерживает современные bcrypt-хеши и legacy md5 (до первого входа пользователя).
+     * @param string $passw
+     * @param string $stored_hash
+     * @return bool
+     */
+    public static function verifyPassword($passw, $stored_hash){
+        if (self::isLegacyHash($stored_hash)) {
+            return md5($passw) === $stored_hash;
+        }
+        return (bool)password_verify($passw, $stored_hash);
+    }
+
+    /**
+     * Требуется ли перехеширование: legacy md5 либо устаревшие параметры bcrypt.
+     * @param string $stored_hash
+     * @return bool
+     */
+    public static function needsRehash($stored_hash){
+        if (self::isLegacyHash($stored_hash)) { return true; }
+        return (bool)password_needs_rehash($stored_hash, PASSWORD_BCRYPT);
+    }
+
+    /**
+     * Является ли сохраненный хеш legacy md5 (32 hex-символа).
+     * @param string $stored_hash
+     * @return bool
+     */
+    public static function isLegacyHash($stored_hash){
+        return is_string($stored_hash) && strlen($stored_hash) === 32 && ctype_xdigit($stored_hash);
+    }
+
+    /**
+     * Секрет для подписи cookie "запомнить меня".
+     * Генерируется однократно и сохраняется в config.inc.php.
+     * Если файл недоступен для записи, возвращается пустая строка
+     * и cookie выпускается в legacy-формате.
+     * @param bool $autocreate создавать и сохранять секрет, если его еще нет
+     * @return string
+     */
+    private static function getAuthSecret($autocreate = true){
+        $cfg = cmsConfig::getConfig();
+        if (!empty($cfg['auth_secret'])) { return $cfg['auth_secret']; }
+
+        if (!$autocreate) { return ''; }
+
+        $secret = bin2hex(random_bytes(32));
+
+        $config_file = PATH . '/includes/config.inc.php';
+
+        if (is_writable($config_file)){
+            $cfg['auth_secret'] = $secret;
+            if (cmsConfig::saveToFile($cfg, 'config.inc.php', true)) {
+                return $secret;
+            }
+        }
+
+        return '';
+    }
+
+    /**
+     * Код cookie "запомнить меня": id:HMAC-подпись (предпочтительно)
+     * либо legacy md5, если секрет недоступен.
+     * @param int $user_id
+     * @param string $password_hash
+     * @return string
+     */
+    private static function makeCookieCode($user_id, $password_hash){
+        $secret = self::getAuthSecret();
+
+        if ($secret){
+            return $user_id . ':' . hash_hmac('sha256', $user_id . '.' . $password_hash, $secret);
+        }
+
+        return md5($user_id . $password_hash . PATH);
+    }
+
+// ============================================================================ //
+// ============================================================================ //
+    /**
      * Проверяет наличие кукиса "запомнить меня" и если он найден - авторизует пользователя
      * @return bool
      */
@@ -256,10 +345,21 @@ class cmsUser {
         if (cmsCore::getCookie('userid') && !$user_id){
 
             $cookie_code = (string)cmsCore::getCookie('userid');
+            $user        = false;
 
-            if (!preg_match('/^[0-9a-f]{32}$/i', $cookie_code)){ return false; }
-
-            $user = $this->loadUser(0, "md5(CONCAT(u.id, u.password,'".cmsDatabase::getInstance()->escape_string(PATH)."')) = '$cookie_code'");
+            if (preg_match('/^([0-9]+):([0-9a-f]{64})$/i', $cookie_code, $matches)){
+                // подписанный формат: id:HMAC(id.password, auth_secret)
+                $secret = self::getAuthSecret(false);
+                if ($secret){
+                    $user = $this->loadUser((int)$matches[1]);
+                    if ($user && hash_hmac('sha256', $user['id'] . '.' . $user['password'], $secret) !== $matches[2]){
+                        $user = false;
+                    }
+                }
+            } elseif (preg_match('/^[0-9a-f]{32}$/i', $cookie_code)){
+                // legacy формат, принимается до следующего входа пользователя
+                $user = $this->loadUser(0, "md5(CONCAT(u.id, u.password,'".cmsDatabase::getInstance()->escape_string(PATH)."')) = '$cookie_code'");
+            }
 
             if($user){
 
@@ -268,7 +368,7 @@ class cmsUser {
                 self::setUserLogdate($user['id']);
 
             } else {
-                cmsCore::unsetCookie('user_id');
+                cmsCore::unsetCookie('userid');
             }
 
         }
@@ -1920,10 +2020,27 @@ class cmsUser {
 		} else {
 			$where_login = "u.email = '{$login}'";
 		}
-		$where_pass = $pass_in_md5 ? "u.password = '$passw'" : "u.password = md5('$passw')";
-
 		// Проверяем локальную пару логин + пароль
-		$user = $this->loadUser(0, "$where_login AND $where_pass");
+		// пароль проверяется в PHP: поддерживаются bcrypt-хеши и legacy md5
+		$user = $this->loadUser(0, $where_login);
+
+		if ($user){
+			if ($pass_in_md5){
+				// пароль пришел уже в виде md5-хеша (внешние авторизации)
+				$pass_ok = self::isLegacyHash($user['password']) ? ($user['password'] === $passw) : false;
+			} else {
+				$pass_ok = self::verifyPassword($passw, $user['password']);
+			}
+			if (!$pass_ok){ $user = false; }
+		}
+
+		// прозрачное обновление legacy md5 -> bcrypt при первом успешном входе
+		if ($user && !$pass_in_md5 && self::needsRehash($user['password'])){
+			$new_hash = self::hashPassword($passw);
+			$inDB->query("UPDATE cms_users SET password = '{$new_hash}' WHERE id = '{$user['id']}'");
+			$user['password'] = $new_hash;
+		}
+
 		// иначе пытаемся авторизоваться через плагины
 		if(!$user) {
 			$user = cmsCore::callEvent('SIGNIN_USER', array('login'=>$login,'pass'=>$passw));
@@ -1936,8 +2053,7 @@ class cmsUser {
 		cmsCore::callEvent('USER_LOGIN', $_SESSION['user']);
 
 		if ($remember_pass){
-			$cookie_code = md5($user['id'] . $user['password'] . PATH);
-			cmsCore::setCookie('userid', $cookie_code, time()+2592000);
+			cmsCore::setCookie('userid', self::makeCookieCode($user['id'], $user['password']), time()+2592000);
 		}
 
 		// Флаг первой авторизации

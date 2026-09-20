@@ -84,6 +84,9 @@ function applet_config(){
         $newCFG['seo_url_count'] = cmsCore::request('seo_url_count', 'int', 0);
 		$newCFG['allow_ip']		 = cmsCore::request('allow_ip', 'str', '');
 
+		// служебный секрет не редактируется через форму, но должен сохраняться
+		$newCFG['auth_secret']   = !empty($config['auth_secret']) ? $config['auth_secret'] : '';
+
 		if (cmsConfig::saveToFile($newCFG)){
 			cmsCore::addSessionMessage($_LANG['AD_CONFIG_SAVE_SUCCESS'] , 'success');
         } else {

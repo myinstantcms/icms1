@@ -101,7 +101,8 @@ class cmsConfig {
                 'timediff'=>'',
                 'user_stats'=>1,
                 'seo_url_count'=>40,
-                'allow_ip'=>'');
+                'allow_ip'=>'',
+                'auth_secret'=>'');
 
         $f = PATH.'/includes/config.inc.php';
         if (file_exists($f)){ require($f); } else { $_CFG = array(); }
@@ -143,16 +144,24 @@ class cmsConfig {
     /**
      * Сохраняет массив в файл конфигурации
      * @param array $_CFG
+     * @param string $file
+     * @param bool $soft не прерывать выполнение при ошибке записи, вернуть false
      */
-    public static function saveToFile($_CFG, $file='config.inc.php'){
+    public static function saveToFile($_CFG, $file='config.inc.php', $soft=false){
 
         global $_LANG;
         $filepath = PATH.'/includes/'.$file;
 
         if (file_exists($filepath)){
-            if (!@is_writable($filepath)){ die(sprintf($_LANG['FILE_NOT_WRITABLE'], '/includes/'.$file)); }
+            if (!@is_writable($filepath)){
+                if ($soft) { return false; }
+                die(sprintf($_LANG['FILE_NOT_WRITABLE'], '/includes/'.$file));
+            }
         } else {
-            if (!@is_writable(dirname($filepath))){ die(sprintf($_LANG['DIR_NOT_WRITABLE'], '/includes')); }
+            if (!@is_writable(dirname($filepath))){
+                if ($soft) { return false; }
+                die(sprintf($_LANG['DIR_NOT_WRITABLE'], '/includes'));
+            }
         }
 
         $cfg_file = fopen($filepath, 'w+');

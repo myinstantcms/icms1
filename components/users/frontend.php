@@ -331,7 +331,7 @@ if ($do=='editprofile'){
 		$newpass  = cmsCore::request('newpass', 'str');
 		$newpass2 = cmsCore::request('newpass2', 'str');
 
-		if ($inUser->password != md5($oldpass)) { cmsCore::addSessionMessage($_LANG['OLD_PASS_WRONG'], 'error'); $errors = true;}
+		if (!cmsUser::verifyPassword($oldpass, $inUser->password)) { cmsCore::addSessionMessage($_LANG['OLD_PASS_WRONG'], 'error'); $errors = true;}
 		if ($newpass != $newpass2) { cmsCore::addSessionMessage($_LANG['WRONG_PASS'], 'error'); $errors = true; }
 		if($oldpass && $newpass && $newpass2 && mb_strlen($newpass )<6) { cmsCore::addSessionMessage($_LANG['PASS_SHORT'], 'error'); $errors = true; }
 
@@ -339,7 +339,7 @@ if ($do=='editprofile'){
 
         cmsCore::callEvent('UPDATE_USER_PASSWORD', array('user_id'=>$usr['id'], 'oldpass'=>$oldpass, 'newpass'=>$newpass));
 
-		$sql = "UPDATE cms_users SET password='".md5($newpass)."' WHERE id = '$id' AND password='".md5($oldpass)."'";
+		$sql = "UPDATE cms_users SET password='".cmsUser::hashPassword($newpass)."' WHERE id = '$id'";
 		$inDB->query($sql);
 		cmsCore::addSessionMessage($_LANG['PASS_CHANGED'], 'info');
 		cmsCore::redirect(cmsUser::getProfileURL($inUser->login));

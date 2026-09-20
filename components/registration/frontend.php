@@ -129,9 +129,9 @@ if ($do=='remind'){
 
         if ($errors){ cmsCore::redirectBack(); }
 
-        $md5_pass = md5($pass);
+        $pass_hash = cmsUser::hashPassword($pass);
 
-        $inDB->query("UPDATE cms_users SET password = '{$md5_pass}', logdate = NOW() WHERE id = '{$user['id']}'");
+        $inDB->query("UPDATE cms_users SET password = '{$pass_hash}', logdate = NOW() WHERE id = '{$user['id']}'");
 
         $inDB->query("DELETE FROM cms_users_activate WHERE code = '$usercode'");
 
@@ -261,7 +261,7 @@ if ($do=='register'){
     //////////////////////////////////////////////
 
     $item['is_locked'] = $model->config['act'];
-    $item['password']  = md5($pass);
+    $item['password']  = cmsUser::hashPassword($pass);
     $item['orig_password'] = $pass;
     $item['group_id']  = $model->config['default_gid'];
     $item['regdate']   = date('Y-m-d H:i:s');

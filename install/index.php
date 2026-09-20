@@ -125,9 +125,10 @@ if (cmsCore::inRequest('install')) {
     $_CFG = array_merge($d_cfg, $_CFG);
     $inConf->saveToFile($_CFG);
 
-    $sql = "UPDATE cms_users SET password = md5('{$admin_password}'), login = '{$admin_login}' WHERE id = 1";
+    $admin_pass_hash = cmsUser::hashPassword($admin_password);
+    $sql = "UPDATE cms_users SET password = '{$admin_pass_hash}', login = '{$admin_login}' WHERE id = 1";
     $inDB->query($sql);
-    $sql = "UPDATE cms_users SET password = md5('{$admin_password}') WHERE id > 1";
+    $sql = "UPDATE cms_users SET password = '{$admin_pass_hash}' WHERE id > 1";
     $inDB->query($sql);
 
     $installed = true;

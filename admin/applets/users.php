@@ -220,7 +220,7 @@ function applet_users(){
 
             $items['regdate']  = date('Y-m-d H:i:s');
             $items['logdate']  = date('Y-m-d H:i:s');
-            $items['password'] = md5($items['password']);
+            $items['password'] = cmsUser::hashPassword($items['password']);
 
             $items['user_id'] = $inDB->insert('cms_users', $items);
             if(!$items['user_id']){ cmsCore::error404(); }
@@ -244,7 +244,7 @@ function applet_users(){
             if (!$items['password']){
                 unset($items['password']);
             } else {
-                $items['password'] = md5($items['password']);
+                $items['password'] = cmsUser::hashPassword($items['password']);
             }
 
             $inDB->update('cms_users', $items, $id);
