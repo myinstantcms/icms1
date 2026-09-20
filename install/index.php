@@ -213,7 +213,6 @@ if (cmsCore::inRequest('install')) {
     $inDB = cmsDatabase::getInstance();
 
     $inDB->importFromFile($sql_file);
-
     $d_cfg = $inConf->getDefaultConfig();
     $_CFG = array_merge($d_cfg, $_CFG);
     $inConf->saveToFile($_CFG);

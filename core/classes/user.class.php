@@ -295,11 +295,22 @@ class cmsUser {
      * @param bool $autocreate создавать и сохранять секрет, если его еще нет
      * @return string
      */
-    private static function getAuthSecret($autocreate = true){
-        $cfg = cmsConfig::getConfig();
-        if (!empty($cfg['auth_secret'])) { return $cfg['auth_secret']; }
+    private static $auth_secret_cache = null;
 
-        if (!$autocreate) { return ''; }
+    private static function getAuthSecret($autocreate = true){
+
+        if (self::$auth_secret_cache !== null) { return self::$auth_secret_cache; }
+
+        // Секрет хранится в файле конфигурации: читаем именно файл, чтобы не
+        // затереть сохранённые настройки устаревшим состоянием инстанса
+        // (важно при установке: конфиг уже записан, а инстанс ещё старый)
+        $cfg = cmsConfig::getConfigFromFile();
+
+        if (!empty($cfg['auth_secret'])) {
+            return self::$auth_secret_cache = $cfg['auth_secret'];
+        }
+
+        if (!$autocreate || empty($cfg)) { return self::$auth_secret_cache = ''; }
 
         $secret = bin2hex(random_bytes(32));
 
@@ -308,11 +319,11 @@ class cmsUser {
         if (is_writable($config_file)){
             $cfg['auth_secret'] = $secret;
             if (cmsConfig::saveToFile($cfg, 'config.inc.php', true)) {
-                return $secret;
+                return self::$auth_secret_cache = $secret;
             }
         }
 
-        return '';
+        return self::$auth_secret_cache = '';
     }
 
     /**
